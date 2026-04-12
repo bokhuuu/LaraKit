@@ -41,7 +41,8 @@ class UserRepository
     {
         $user->update([
             'name' => $data['name'],
-            'email' => $data['email']
+            'email' => $data['email'],
+            'is_active' => $data['is_active'],
         ]);
 
         if (!empty($data['password'])) {

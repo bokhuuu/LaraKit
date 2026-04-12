@@ -68,6 +68,9 @@ export default function UsersIndex({ users }: Props) {
                                 <th className="px-4 py-3 text-left font-medium">
                                     Created
                                 </th>
+                                <th className="px-4 py-3 text-left font-medium">
+                                    Actions
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -100,6 +103,15 @@ export default function UsersIndex({ users }: Props) {
                                         {new Date(
                                             user.created_at,
                                         ).toLocaleDateString()}
+                                    </td>
+
+                                    <td className="px-4 py-3">
+                                        <Link
+                                            href={`/admin/users/${user.id}/edit`}
+                                            className="text-sm text-muted-foreground hover:text-foreground"
+                                        >
+                                            Edit
+                                        </Link>
                                     </td>
                                 </tr>
                             ))}
