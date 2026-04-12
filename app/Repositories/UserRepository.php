@@ -31,4 +31,25 @@ class UserRepository
 
         return $user;
     }
+
+    public function findById(int $id)
+    {
+        return User::with('roles')->findOrFail($id);
+    }
+
+    public function update(User $user, array $data)
+    {
+        $user->update([
+            'name' => $data['name'],
+            'email' => $data['email']
+        ]);
+
+        if (!empty($data['password'])) {
+            $user->update(['password' => Hash::make($data['password'])]);
+        }
+
+        $user->syncRoles($data['role']);
+
+        return $user;
+    }
 }

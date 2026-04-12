@@ -23,4 +23,14 @@ class UserService
     {
         return $this->userRepository->store($data);
     }
+
+    public function findById(int $id): User
+    {
+        return $this->userRepository->findById($id);
+    }
+
+    public function update(User $user, array $data): User
+    {
+        return $this->userRepository->update($user, $data);
+    }
 }
