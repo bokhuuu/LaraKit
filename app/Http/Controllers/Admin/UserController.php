@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreUserRequest;
 use App\Http\Requests\Admin\UpdateUserRequest;
-use App\Models\User;
+use App\Enums\UserRole;
 use App\Services\UserService;
 use Inertia\Inertia;
 
@@ -22,8 +22,24 @@ class UserController extends Controller
 
     public function create()
     {
+        $roles = $this->userService->getAllRoles();
+
+        if (!auth()->user()->hasRole(UserRole::SUPER_ADMIN)) {
+            $roles = $roles->filter(
+                fn($role) =>
+                $role->name !== UserRole::SUPER_ADMIN->value &&
+                    $role->name !== UserRole::ADMIN->value
+            )->values();
+        }
+
+        $roles = $roles->map(fn($role) => [
+            'id'    => $role->id,
+            'name'  => $role->name,
+            'label' => UserRole::from($role->name)->label(),
+        ])->values();
+
         return Inertia::render('admin/users/create', [
-            'roles' => $this->userService->getAllRoles()
+            'roles' => $roles
         ]);
     }
 
@@ -31,7 +47,11 @@ class UserController extends Controller
     {
         $data = $request->validated();
 
-        $this->userService->store($data);
+        try {
+            $this->userService->store($data);
+        } catch (\RuntimeException $e) {
+            return back()->withErrors(['general' => $e->getMessage()]);
+        }
 
         return redirect()->route('admin.users.index')
             ->with('success', 'User created successfully.');
@@ -40,10 +60,25 @@ class UserController extends Controller
     public function edit(int $user)
     {
         $foundUser = $this->userService->findById($user);
+        $roles = $this->userService->getAllRoles();
+
+        if (!auth()->user()->hasRole(UserRole::SUPER_ADMIN)) {
+            $roles = $roles->filter(
+                fn($role) =>
+                $role->name !== UserRole::SUPER_ADMIN->value &&
+                    $role->name !== UserRole::ADMIN->value
+            )->values();
+        }
+
+        $roles = $roles->map(fn($role) => [
+            'id'    => $role->id,
+            'name'  => $role->name,
+            'label' => UserRole::from($role->name)->label(),
+        ])->values();
 
         return Inertia::render('admin/users/edit', [
-            'user' => $foundUser,
-            'roles' => $this->userService->getAllRoles()
+            'user'  => $foundUser,
+            'roles' => $roles,
         ]);
     }
 
@@ -52,9 +87,27 @@ class UserController extends Controller
         $data = $request->validated();
         $foundUser = $this->userService->findById($user);
 
-        $this->userService->update($foundUser, $data);
+        try {
+            $this->userService->update($foundUser, $data);
+        } catch (\RuntimeException $e) {
+            return back()->withErrors(['general' => $e->getMessage()]);
+        }
 
         return redirect()->route('admin.users.index')
             ->with('success', 'User updated successfully.');
+    }
+
+    public function destroy(int $user)
+    {
+        $foundUser = $this->userService->findById($user);
+
+        try {
+            $this->userService->delete($foundUser);
+        } catch (\RuntimeException $e) {
+            return back()->with('error', $e->getMessage());
+        }
+
+        return redirect()->route('admin.users.index')
+            ->with('success', 'User deleted successfully.');
     }
 }

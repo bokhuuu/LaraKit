@@ -16,6 +16,16 @@ class UpdateUserRequest extends FormRequest
         return true;
     }
 
+    protected function prepareForValidation(): void
+    {
+        if ($this->password === '' || $this->password === null) {
+            $this->merge([
+                'password' => null,
+                'password_confirmation' => null,
+            ]);
+        }
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -30,7 +40,7 @@ class UpdateUserRequest extends FormRequest
                 'email',
                 Rule::unique('users', 'email')->ignore($this->route('user'))
             ],
-            'password' => ['sometimes', 'nullable', 'string', 'min:8', 'confirmed'],
+            'password' => ['nullable', 'string', 'min:8', 'confirmed'],
             'role'     => ['required', 'string', 'exists:roles,name'],
             'is_active' => ['required', 'boolean'],
         ];
