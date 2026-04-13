@@ -27,10 +27,9 @@ class EnsureUserIsAdmin
                 ->with('error', 'Your account has been disabled.');
         }
 
-        if (!$user->hasRole('admin')) {
+        if (!$user->hasRole('admin') && !$user->hasRole('super_admin')) {
             abort(403);
         }
-
         return $next($request);
     }
 }
