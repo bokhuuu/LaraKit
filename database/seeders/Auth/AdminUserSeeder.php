@@ -19,10 +19,10 @@ class AdminUserSeeder extends Seeder
             ['email' => 'zura.coding@gmail.com'],
             [
                 'name' => 'zura',
-                'password' => Hash::make('zura123')
+                'password' => Hash::make('zura1234')
             ]
         );
 
-        $adminUser->assignRole(UserRole::ADMIN->value);
+        $adminUser->assignRole(UserRole::SUPER_ADMIN->value);
     }
 }
