@@ -13,6 +13,7 @@ import type { BreadcrumbItem } from '@/types';
 interface Role {
     id: number;
     name: string;
+    label: string;
 }
 
 interface Props {
@@ -55,6 +56,12 @@ export default function CreateUser({ roles }: Props) {
 
                     <div className="rounded-lg border p-6">
                         <form onSubmit={handleSubmit} className="space-y-4">
+                            {(errors as Record<string, string>).general && (
+                                <div className="rounded-md bg-red-50 px-4 py-3 text-sm text-red-700">
+                                    {(errors as Record<string, string>).general}
+                                </div>
+                            )}
+
                             <div>
                                 <label className="mb-1 block text-sm font-medium">
                                     Name
@@ -85,6 +92,7 @@ export default function CreateUser({ roles }: Props) {
                                     onChange={(e) =>
                                         setData('email', e.target.value)
                                     }
+                                    autoComplete="off"
                                     className="w-full rounded-md border px-3 py-2 text-sm focus:ring-2 focus:ring-ring focus:outline-none"
                                     placeholder="email@example.com"
                                 />
@@ -105,6 +113,7 @@ export default function CreateUser({ roles }: Props) {
                                     onChange={(e) =>
                                         setData('password', e.target.value)
                                     }
+                                    autoComplete="new-password"
                                     className="w-full rounded-md border px-3 py-2 text-sm focus:ring-2 focus:ring-ring focus:outline-none"
                                     placeholder="Min 8 characters"
                                 />
@@ -128,6 +137,7 @@ export default function CreateUser({ roles }: Props) {
                                             e.target.value,
                                         )
                                     }
+                                    autoComplete="new-password"
                                     className="w-full rounded-md border px-3 py-2 text-sm focus:ring-2 focus:ring-ring focus:outline-none"
                                     placeholder="Repeat password"
                                 />
@@ -152,7 +162,7 @@ export default function CreateUser({ roles }: Props) {
                                                 key={role.id}
                                                 value={role.name}
                                             >
-                                                {role.name}
+                                                {role.label}
                                             </SelectItem>
                                         ))}
                                     </SelectContent>

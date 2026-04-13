@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 interface Flash {
     success?: string;
     error?: string;
+    timestamp?: number;
 }
 
 interface PageProps {
@@ -13,19 +14,20 @@ interface PageProps {
 
 export default function FlashMessage() {
     const { flash } = usePage<PageProps>().props;
-    const [visible, setVisible] = useState(!!flash.success || !!flash.error);
+    const [visible, setVisible] = useState(false);
 
     useEffect(() => {
-        if (!visible) {
-            return;
+        if (flash.success || flash.error) {
+            setVisible(true);
+
+            const timer = setTimeout(() => {
+                setVisible(false);
+            }, 3000);
+
+            return () => clearTimeout(timer);
         }
-
-        const timer = setTimeout(() => {
-            setVisible(false);
-        }, 3000);
-
-        return () => clearTimeout(timer);
-    }, [visible]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [flash.timestamp]);
 
     if (!visible) {
         return null;

@@ -7,12 +7,14 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
+import { useAuth } from '@/hooks/use-auth';
 import AppLayout from '@/layouts/app-layout';
 import type { BreadcrumbItem } from '@/types';
 
 interface Role {
     id: number;
     name: string;
+    label: string;
 }
 
 interface User {
@@ -33,6 +35,11 @@ export default function EditUser({ user, roles }: Props) {
         { title: 'Users', href: '/admin/users' },
         { title: user.name, href: `/admin/users/${user.id}/edit` },
     ];
+    const { isAdmin, user: currentUser } = useAuth();
+    const isEditingSelf = user.id === currentUser?.id;
+    const isEditingSuperAdmin = user.roles[0]?.name === 'super_admin';
+    const canChangeRole = !isEditingSelf && (!isAdmin || !isEditingSuperAdmin);
+    const canChangeStatus = !isEditingSelf;
 
     const { data, setData, put, processing, errors } = useForm({
         name: user.name,
@@ -65,6 +72,12 @@ export default function EditUser({ user, roles }: Props) {
 
                     <div className="rounded-lg border p-6">
                         <form onSubmit={handleSubmit} className="space-y-4">
+                            {(errors as Record<string, string>).general && (
+                                <div className="rounded-md bg-red-50 px-4 py-3 text-sm text-red-700">
+                                    {(errors as Record<string, string>).general}
+                                </div>
+                            )}
+
                             <div>
                                 <label className="mb-1 block text-sm font-medium">
                                     Name
@@ -116,6 +129,7 @@ export default function EditUser({ user, roles }: Props) {
                                     onChange={(e) =>
                                         setData('password', e.target.value)
                                     }
+                                    autoComplete="new-password"
                                     className="w-full rounded-md border px-3 py-2 text-sm focus:ring-2 focus:ring-ring focus:outline-none"
                                     placeholder="Leave blank to keep current"
                                 />
@@ -139,6 +153,7 @@ export default function EditUser({ user, roles }: Props) {
                                             e.target.value,
                                         )
                                     }
+                                    autoComplete="new-password"
                                     className="w-full rounded-md border px-3 py-2 text-sm focus:ring-2 focus:ring-ring focus:outline-none"
                                     placeholder="Leave blank to keep current"
                                 />
@@ -147,12 +162,18 @@ export default function EditUser({ user, roles }: Props) {
                             <div>
                                 <label className="mb-1 block text-sm font-medium">
                                     Role
+                                    {!canChangeRole && (
+                                        <span className="ml-1 text-xs text-muted-foreground">
+                                            (read only)
+                                        </span>
+                                    )}
                                 </label>
                                 <Select
                                     value={data.role}
                                     onValueChange={(value) =>
                                         setData('role', value)
                                     }
+                                    disabled={!canChangeRole}
                                 >
                                     <SelectTrigger className="w-full">
                                         <SelectValue placeholder="Select a role" />
@@ -163,7 +184,7 @@ export default function EditUser({ user, roles }: Props) {
                                                 key={role.id}
                                                 value={role.name}
                                             >
-                                                {role.name}
+                                                {role.label}
                                             </SelectItem>
                                         ))}
                                     </SelectContent>
@@ -183,6 +204,7 @@ export default function EditUser({ user, roles }: Props) {
                                     onChange={(e) =>
                                         setData('is_active', e.target.checked)
                                     }
+                                    disabled={!canChangeStatus}
                                     className="h-4 w-4 rounded border"
                                 />
                                 <label
@@ -190,8 +212,18 @@ export default function EditUser({ user, roles }: Props) {
                                     className="text-sm font-medium"
                                 >
                                     Active
+                                    {!canChangeStatus && (
+                                        <span className="ml-1 text-xs text-muted-foreground">
+                                            (read only)
+                                        </span>
+                                    )}
                                 </label>
                             </div>
+                            {errors.is_active && (
+                                <p className="mt-1 text-xs text-red-500">
+                                    {errors.is_active}
+                                </p>
+                            )}
 
                             <div className="pt-2">
                                 <button

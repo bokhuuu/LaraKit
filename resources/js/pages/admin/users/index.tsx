@@ -1,4 +1,18 @@
 import { Head, Link } from '@inertiajs/react';
+import { router } from '@inertiajs/react';
+import { Pencil, Plus, Trash2 } from 'lucide-react';
+import { useState } from 'react';
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
+import { useAuth } from '@/hooks/use-auth';
 import AppLayout from '@/layouts/app-layout';
 import type { BreadcrumbItem } from '@/types';
 
@@ -34,6 +48,9 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function UsersIndex({ users }: Props) {
+    const [userToDelete, setUserToDelete] = useState<number | null>(null);
+    const { isSuperAdmin, isAdmin, user: currentUser } = useAuth();
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Users" />
@@ -43,8 +60,9 @@ export default function UsersIndex({ users }: Props) {
 
                     <Link
                         href="/admin/users/create"
-                        className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+                        className="flex items-center gap-1 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
                     >
+                        <Plus className="h-4 w-4" />
                         Create User
                     </Link>
                 </div>
@@ -84,6 +102,10 @@ export default function UsersIndex({ users }: Props) {
                                     <td className="px-4 py-3">
                                         {user.roles.length > 0
                                             ? user.roles[0].name
+                                                  .replace('_', ' ')
+                                                  .replace(/\b\w/g, (c) =>
+                                                      c.toUpperCase(),
+                                                  )
                                             : '—'}
                                     </td>
                                     <td className="px-4 py-3">
@@ -106,12 +128,40 @@ export default function UsersIndex({ users }: Props) {
                                     </td>
 
                                     <td className="px-4 py-3">
-                                        <Link
-                                            href={`/admin/users/${user.id}/edit`}
-                                            className="text-sm text-muted-foreground hover:text-foreground"
-                                        >
-                                            Edit
-                                        </Link>
+                                        <div className="flex items-center gap-3">
+                                            {!(
+                                                user.roles[0]?.name ===
+                                                    'super_admin' &&
+                                                !isSuperAdmin
+                                            ) && (
+                                                <Link
+                                                    href={`/admin/users/${user.id}/edit`}
+                                                    className="text-muted-foreground hover:text-foreground"
+                                                >
+                                                    <Pencil className="h-4 w-4" />
+                                                </Link>
+                                            )}
+
+                                            {user.roles[0]?.name !==
+                                                'super_admin' &&
+                                                !(
+                                                    isAdmin &&
+                                                    user.roles[0]?.name ===
+                                                        'admin'
+                                                ) &&
+                                                user.id !== currentUser?.id && (
+                                                    <button
+                                                        onClick={() =>
+                                                            setUserToDelete(
+                                                                user.id,
+                                                            )
+                                                        }
+                                                        className="text-red-400 hover:text-red-600"
+                                                    >
+                                                        <Trash2 className="h-4 w-4" />
+                                                    </button>
+                                                )}
+                                        </div>
                                     </td>
                                 </tr>
                             ))}
@@ -127,6 +177,76 @@ export default function UsersIndex({ users }: Props) {
                         Page {users.current_page} of {users.last_page}
                     </span>
                 </div>
+
+                {users.last_page > 1 && (
+                    <div className="mt-4 flex items-center justify-center gap-2">
+                        {users.current_page > 1 && (
+                            <Link
+                                href={`/admin/users?page=${users.current_page - 1}`}
+                                className="rounded-md border px-3 py-1.5 text-sm hover:bg-muted"
+                            >
+                                Previous
+                            </Link>
+                        )}
+
+                        {Array.from(
+                            { length: users.last_page },
+                            (_, i) => i + 1,
+                        ).map((page) => (
+                            <Link
+                                key={page}
+                                href={`/admin/users?page=${page}`}
+                                className={`rounded-md border px-3 py-1.5 text-sm ${
+                                    page === users.current_page
+                                        ? 'bg-primary text-primary-foreground'
+                                        : 'hover:bg-muted'
+                                }`}
+                            >
+                                {page}
+                            </Link>
+                        ))}
+
+                        {users.current_page < users.last_page && (
+                            <Link
+                                href={`/admin/users?page=${users.current_page + 1}`}
+                                className="rounded-md border px-3 py-1.5 text-sm hover:bg-muted"
+                            >
+                                Next
+                            </Link>
+                        )}
+                    </div>
+                )}
+
+                <AlertDialog
+                    open={userToDelete !== null}
+                    onOpenChange={() => setUserToDelete(null)}
+                >
+                    <AlertDialogContent>
+                        <AlertDialogHeader>
+                            <AlertDialogTitle>Delete User</AlertDialogTitle>
+                            <AlertDialogDescription>
+                                This action cannot be undone. The user will be
+                                soft deleted.
+                            </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction
+                                onClick={() => {
+                                    if (userToDelete) {
+                                        router.delete(
+                                            `/admin/users/${userToDelete}`,
+                                        );
+                                        setUserToDelete(null);
+                                    }
+                                }}
+                                className="bg-red-600 hover:bg-red-700"
+                            >
+                                Delete
+                            </AlertDialogAction>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialog>
             </div>
         </AppLayout>
     );
