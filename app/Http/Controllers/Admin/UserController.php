@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreUserRequest;
 use App\Http\Requests\Admin\UpdateUserRequest;
 use App\Enums\UserRole;
+use App\Models\User;
 use App\Services\UserService;
 use Inertia\Inertia;
 
@@ -40,6 +41,15 @@ class UserController extends Controller
 
         return Inertia::render('admin/users/create', [
             'roles' => $roles
+        ]);
+    }
+
+    public function trashed()
+    {
+        $trashedUsers = $this->userService->trashed();
+
+        return Inertia::render('admin/users/trashed', [
+            'users' => $trashedUsers
         ]);
     }
 
@@ -109,5 +119,33 @@ class UserController extends Controller
 
         return redirect()->route('admin.users.index')
             ->with('success', 'User deleted successfully.');
+    }
+
+    public function restore(int $user)
+    {
+        $foundUser = $this->userService->findTrashedById($user);
+
+        try {
+            $this->userService->restore($foundUser);
+        } catch (\RuntimeException $e) {
+            return back()->with('error', $e->getMessage());
+        }
+
+        return redirect()->route('admin.users.index')
+            ->with('success', 'User was restored successfully.');
+    }
+
+    public function forceDelete(int $user)
+    {
+        $foundUser = $this->userService->findTrashedById($user);
+
+        try {
+            $this->userService->forceDelete($foundUser);
+        } catch (\RuntimeException $e) {
+            return back()->with('error', $e->getMessage());
+        }
+
+        return redirect()->route('admin.users.index')
+            ->with('success', 'User was force deleted successfully.');
     }
 }

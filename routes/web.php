@@ -16,10 +16,13 @@ Route::middleware(['auth', 'admin'])
         Route::prefix('users')->name('users.')->group(function () {
             Route::get('/', [UserController::class, 'index'])->name('index');
             Route::get('/create', [UserController::class, 'create'])->name('create');
+            Route::get('/trashed', [UserController::class, 'trashed'])->name('trashed');
             Route::post('/', [UserController::class, 'store'])->name('store');
             Route::get('/{user}/edit', [UserController::class, 'edit'])->name('edit');
             Route::put('/{user}', [UserController::class, 'update'])->name('update');
             Route::delete('/{user}', [UserController::class, 'destroy'])->name('delete');
+            Route::patch('/{user}/restore', [UserController::class, 'restore'])->name('restore');
+            Route::delete('/{user}/force-delete', [UserController::class, 'forceDelete'])->name('force-delete');
         });
     });
 

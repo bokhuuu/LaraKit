@@ -15,9 +15,19 @@ class UserService
         return $this->userRepository->index();
     }
 
+    public function findById(int $id): User
+    {
+        return $this->userRepository->findById($id);
+    }
+
     public function getAllRoles()
     {
         return $this->userRepository->getAllRoles();
+    }
+
+    public function findTrashedById(int $id): User
+    {
+        return $this->userRepository->findTrashedById($id);
     }
 
     public function store(array $data): User
@@ -29,11 +39,6 @@ class UserService
             throw new \RuntimeException("Only super admin can create admin accounts.");
         }
         return $this->userRepository->store($data);
-    }
-
-    public function findById(int $id): User
-    {
-        return $this->userRepository->findById($id);
     }
 
     public function update(User $user, array $data): User
@@ -61,18 +66,39 @@ class UserService
 
     public function delete(User $user): void
     {
+        $this->assertCanManageUser($user);
+        $this->userRepository->delete($user);
+    }
+
+    public function trashed()
+    {
+        return $this->userRepository->trashed();
+    }
+
+    public function restore(User $user): void
+    {
+        $this->assertCanManageUser($user);
+        $this->userRepository->restore($user);
+    }
+
+    public function forceDelete(User $user): void
+    {
+        $this->assertCanManageUser($user);
+        $this->userRepository->forceDelete($user);
+    }
+
+    private function assertCanManageUser(User $user): void
+    {
         if ($user->hasRole(UserRole::SUPER_ADMIN)) {
-            throw new \RuntimeException("Super admin account cannot be deleted.");
+            throw new \RuntimeException("Super admin account cannot be managed.");
         }
 
         if (auth()->user()->hasRole(UserRole::ADMIN) && $user->hasRole(UserRole::ADMIN)) {
-            throw new \RuntimeException("Admins cannot delete other admin accounts.");
+            throw new \RuntimeException("Admins cannot manage other admin accounts.");
         }
 
         if ($user->id === auth()->id()) {
-            throw new \RuntimeException("You cannot delete your own account.");
+            throw new \RuntimeException("You cannot manage your own account.");
         }
-
-        $this->userRepository->delete($user);
     }
 }

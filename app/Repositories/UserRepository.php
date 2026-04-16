@@ -14,6 +14,16 @@ class UserRepository
         return User::with('roles')->paginate(10);
     }
 
+    public function findById(int $id)
+    {
+        return User::with('roles')->findOrFail($id);
+    }
+
+    public function findTrashedById(int $id): User
+    {
+        return User::onlyTrashed()->with('roles')->findOrFail($id);
+    }
+
     public function getAllRoles()
     {
         return Role::all();
@@ -30,11 +40,6 @@ class UserRepository
         $user->assignRole($data['role']);
 
         return $user;
-    }
-
-    public function findById(int $id)
-    {
-        return User::with('roles')->findOrFail($id);
     }
 
     public function update(User $user, array $data)
@@ -57,5 +62,20 @@ class UserRepository
     public function delete(User $user): void
     {
         $user->delete();
+    }
+
+    public function trashed(): LengthAwarePaginator
+    {
+        return User::onlyTrashed()->with('roles')->paginate(10);
+    }
+
+    public function restore(User $user): void
+    {
+        $user->restore();
+    }
+
+    public function forceDelete(User $user): void
+    {
+        $user->forceDelete();
     }
 }
