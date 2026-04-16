@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { useAuth } from '@/hooks/use-auth';
 import AppLayout from '@/layouts/app-layout';
+import { formatRole } from '@/lib/utils';
 import type { BreadcrumbItem } from '@/types';
 
 interface Role {
@@ -49,7 +50,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 export default function UsersIndex({ users }: Props) {
     const [userToDelete, setUserToDelete] = useState<number | null>(null);
-    const { isSuperAdmin, isAdmin, user: currentUser } = useAuth();
+    const { isSuperAdmin, canManageUser } = useAuth();
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -57,14 +58,22 @@ export default function UsersIndex({ users }: Props) {
             <div className="p-6">
                 <div className="mb-6 flex items-center justify-between">
                     <h1 className="text-2xl font-semibold">Users</h1>
+                    <div className="flex items-center gap-3">
+                        <Link
+                            href="/admin/users/trashed"
+                            className="text-sm text-muted-foreground hover:text-foreground"
+                        >
+                            View Trash
+                        </Link>
 
-                    <Link
-                        href="/admin/users/create"
-                        className="flex items-center gap-1 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
-                    >
-                        <Plus className="h-4 w-4" />
-                        Create User
-                    </Link>
+                        <Link
+                            href="/admin/users/create"
+                            className="flex items-center gap-1 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+                        >
+                            <Plus className="h-4 w-4" />
+                            Create User
+                        </Link>
+                    </div>
                 </div>
 
                 <div className="rounded-lg border">
@@ -101,11 +110,7 @@ export default function UsersIndex({ users }: Props) {
                                     <td className="px-4 py-3">{user.email}</td>
                                     <td className="px-4 py-3">
                                         {user.roles.length > 0
-                                            ? user.roles[0].name
-                                                  .replace('_', ' ')
-                                                  .replace(/\b\w/g, (c) =>
-                                                      c.toUpperCase(),
-                                                  )
+                                            ? formatRole(user.roles[0].name)
                                             : '—'}
                                     </td>
                                     <td className="px-4 py-3">
@@ -142,25 +147,16 @@ export default function UsersIndex({ users }: Props) {
                                                 </Link>
                                             )}
 
-                                            {user.roles[0]?.name !==
-                                                'super_admin' &&
-                                                !(
-                                                    isAdmin &&
-                                                    user.roles[0]?.name ===
-                                                        'admin'
-                                                ) &&
-                                                user.id !== currentUser?.id && (
-                                                    <button
-                                                        onClick={() =>
-                                                            setUserToDelete(
-                                                                user.id,
-                                                            )
-                                                        }
-                                                        className="text-red-400 hover:text-red-600"
-                                                    >
-                                                        <Trash2 className="h-4 w-4" />
-                                                    </button>
-                                                )}
+                                            {canManageUser(user) && (
+                                                <button
+                                                    onClick={() =>
+                                                        setUserToDelete(user.id)
+                                                    }
+                                                    className="text-red-400 hover:text-red-600"
+                                                >
+                                                    <Trash2 className="h-4 w-4" />
+                                                </button>
+                                            )}
                                         </div>
                                     </td>
                                 </tr>

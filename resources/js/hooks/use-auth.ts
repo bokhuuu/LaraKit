@@ -24,10 +24,30 @@ export function useAuth() {
     const user = auth.user;
     const role = user?.roles?.[0]?.name ?? '';
 
+    function canManageUser(targetUser: {
+        id: number;
+        roles: { name: string }[];
+    }): boolean {
+        if (targetUser.roles[0]?.name === 'super_admin') {
+            return false;
+        }
+
+        if (role === 'admin' && targetUser.roles[0]?.name === 'admin') {
+            return false;
+        }
+
+        if (targetUser.id === user?.id) {
+            return false;
+        }
+
+        return true;
+    }
+
     return {
         user,
         role,
         isSuperAdmin: role === 'super_admin',
         isAdmin: role === 'admin',
+        canManageUser,
     };
 }
