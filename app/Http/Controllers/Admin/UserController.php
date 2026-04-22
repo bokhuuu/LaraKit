@@ -6,18 +6,21 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreUserRequest;
 use App\Http\Requests\Admin\UpdateUserRequest;
 use App\Enums\UserRole;
-use App\Models\User;
 use App\Services\UserService;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class UserController extends Controller
 {
     public function __construct(protected UserService $userService) {}
 
-    public function index()
+    public function index(Request $request)
     {
+        $filters = $request->only(['search', 'role', 'status']);
+
         return Inertia::render('admin/users/index', [
-            'users' => $this->userService->index()
+            'users' => $this->userService->index($filters),
+            'filters' => $filters,
         ]);
     }
 

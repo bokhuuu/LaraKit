@@ -10,9 +10,9 @@ class UserService
 {
     public function __construct(protected UserRepository $userRepository) {}
 
-    public function index()
+    public function index(array $filters = [])
     {
-        return $this->userRepository->index();
+        return $this->userRepository->index($filters);
     }
 
     public function findById(int $id): User

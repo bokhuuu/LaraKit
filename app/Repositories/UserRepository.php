@@ -9,9 +9,21 @@ use Spatie\Permission\Models\Role;
 
 class UserRepository
 {
-    public function index(): LengthAwarePaginator
+    public function index(array $filters = []): LengthAwarePaginator
     {
-        return User::with('roles')->paginate(10);
+        return User::with('roles')
+            ->when($filters['search'] ?? null, function ($query, $search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%")
+                        ->orWhere('email', 'like', "%{$search}%");
+                });
+            })
+            ->when($filters['role'] ?? null, function ($query, $role) {
+                $query->whereHas('roles', fn($q) => $q->where('name', $role));
+            })
+            ->when(isset($filters['status']), function ($query) use ($filters) {
+                $query->where('is_active', $filters['status'] === 'active');
+            })->paginate(10);
     }
 
     public function findById(int $id)
