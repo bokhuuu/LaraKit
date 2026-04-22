@@ -82,7 +82,7 @@ index.form = indexForm
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::create
-* @see app/Http/Controllers/Admin/UserController.php:24
+* @see app/Http/Controllers/Admin/UserController.php:27
 * @route '/admin/users/create'
 */
 export const create = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -97,7 +97,7 @@ create.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::create
-* @see app/Http/Controllers/Admin/UserController.php:24
+* @see app/Http/Controllers/Admin/UserController.php:27
 * @route '/admin/users/create'
 */
 create.url = (options?: RouteQueryOptions) => {
@@ -106,7 +106,7 @@ create.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::create
-* @see app/Http/Controllers/Admin/UserController.php:24
+* @see app/Http/Controllers/Admin/UserController.php:27
 * @route '/admin/users/create'
 */
 create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -116,7 +116,7 @@ create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::create
-* @see app/Http/Controllers/Admin/UserController.php:24
+* @see app/Http/Controllers/Admin/UserController.php:27
 * @route '/admin/users/create'
 */
 create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -126,7 +126,7 @@ create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::create
-* @see app/Http/Controllers/Admin/UserController.php:24
+* @see app/Http/Controllers/Admin/UserController.php:27
 * @route '/admin/users/create'
 */
 const createForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -136,7 +136,7 @@ const createForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => 
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::create
-* @see app/Http/Controllers/Admin/UserController.php:24
+* @see app/Http/Controllers/Admin/UserController.php:27
 * @route '/admin/users/create'
 */
 createForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -146,7 +146,7 @@ createForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::create
-* @see app/Http/Controllers/Admin/UserController.php:24
+* @see app/Http/Controllers/Admin/UserController.php:27
 * @route '/admin/users/create'
 */
 createForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -163,7 +163,7 @@ create.form = createForm
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::trashed
-* @see app/Http/Controllers/Admin/UserController.php:47
+* @see app/Http/Controllers/Admin/UserController.php:50
 * @route '/admin/users/trashed'
 */
 export const trashed = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -178,7 +178,7 @@ trashed.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::trashed
-* @see app/Http/Controllers/Admin/UserController.php:47
+* @see app/Http/Controllers/Admin/UserController.php:50
 * @route '/admin/users/trashed'
 */
 trashed.url = (options?: RouteQueryOptions) => {
@@ -187,7 +187,7 @@ trashed.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::trashed
-* @see app/Http/Controllers/Admin/UserController.php:47
+* @see app/Http/Controllers/Admin/UserController.php:50
 * @route '/admin/users/trashed'
 */
 trashed.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -197,7 +197,7 @@ trashed.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::trashed
-* @see app/Http/Controllers/Admin/UserController.php:47
+* @see app/Http/Controllers/Admin/UserController.php:50
 * @route '/admin/users/trashed'
 */
 trashed.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -207,7 +207,7 @@ trashed.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::trashed
-* @see app/Http/Controllers/Admin/UserController.php:47
+* @see app/Http/Controllers/Admin/UserController.php:50
 * @route '/admin/users/trashed'
 */
 const trashedForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -217,7 +217,7 @@ const trashedForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> =>
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::trashed
-* @see app/Http/Controllers/Admin/UserController.php:47
+* @see app/Http/Controllers/Admin/UserController.php:50
 * @route '/admin/users/trashed'
 */
 trashedForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -227,7 +227,7 @@ trashedForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::trashed
-* @see app/Http/Controllers/Admin/UserController.php:47
+* @see app/Http/Controllers/Admin/UserController.php:50
 * @route '/admin/users/trashed'
 */
 trashedForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -244,7 +244,7 @@ trashed.form = trashedForm
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::store
-* @see app/Http/Controllers/Admin/UserController.php:56
+* @see app/Http/Controllers/Admin/UserController.php:59
 * @route '/admin/users'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -259,7 +259,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::store
-* @see app/Http/Controllers/Admin/UserController.php:56
+* @see app/Http/Controllers/Admin/UserController.php:59
 * @route '/admin/users'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -268,7 +268,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::store
-* @see app/Http/Controllers/Admin/UserController.php:56
+* @see app/Http/Controllers/Admin/UserController.php:59
 * @route '/admin/users'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -278,7 +278,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::store
-* @see app/Http/Controllers/Admin/UserController.php:56
+* @see app/Http/Controllers/Admin/UserController.php:59
 * @route '/admin/users'
 */
 const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -288,7 +288,7 @@ const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => 
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::store
-* @see app/Http/Controllers/Admin/UserController.php:56
+* @see app/Http/Controllers/Admin/UserController.php:59
 * @route '/admin/users'
 */
 storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -300,7 +300,7 @@ store.form = storeForm
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::edit
-* @see app/Http/Controllers/Admin/UserController.php:70
+* @see app/Http/Controllers/Admin/UserController.php:73
 * @route '/admin/users/{user}/edit'
 */
 export const edit = (args: { user: string | number } | [user: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -315,7 +315,7 @@ edit.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::edit
-* @see app/Http/Controllers/Admin/UserController.php:70
+* @see app/Http/Controllers/Admin/UserController.php:73
 * @route '/admin/users/{user}/edit'
 */
 edit.url = (args: { user: string | number } | [user: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -342,7 +342,7 @@ edit.url = (args: { user: string | number } | [user: string | number ] | string 
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::edit
-* @see app/Http/Controllers/Admin/UserController.php:70
+* @see app/Http/Controllers/Admin/UserController.php:73
 * @route '/admin/users/{user}/edit'
 */
 edit.get = (args: { user: string | number } | [user: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -352,7 +352,7 @@ edit.get = (args: { user: string | number } | [user: string | number ] | string 
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::edit
-* @see app/Http/Controllers/Admin/UserController.php:70
+* @see app/Http/Controllers/Admin/UserController.php:73
 * @route '/admin/users/{user}/edit'
 */
 edit.head = (args: { user: string | number } | [user: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -362,7 +362,7 @@ edit.head = (args: { user: string | number } | [user: string | number ] | string
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::edit
-* @see app/Http/Controllers/Admin/UserController.php:70
+* @see app/Http/Controllers/Admin/UserController.php:73
 * @route '/admin/users/{user}/edit'
 */
 const editForm = (args: { user: string | number } | [user: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -372,7 +372,7 @@ const editForm = (args: { user: string | number } | [user: string | number ] | s
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::edit
-* @see app/Http/Controllers/Admin/UserController.php:70
+* @see app/Http/Controllers/Admin/UserController.php:73
 * @route '/admin/users/{user}/edit'
 */
 editForm.get = (args: { user: string | number } | [user: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -382,7 +382,7 @@ editForm.get = (args: { user: string | number } | [user: string | number ] | str
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::edit
-* @see app/Http/Controllers/Admin/UserController.php:70
+* @see app/Http/Controllers/Admin/UserController.php:73
 * @route '/admin/users/{user}/edit'
 */
 editForm.head = (args: { user: string | number } | [user: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -399,7 +399,7 @@ edit.form = editForm
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::update
-* @see app/Http/Controllers/Admin/UserController.php:95
+* @see app/Http/Controllers/Admin/UserController.php:98
 * @route '/admin/users/{user}'
 */
 export const update = (args: { user: string | number } | [user: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -414,7 +414,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::update
-* @see app/Http/Controllers/Admin/UserController.php:95
+* @see app/Http/Controllers/Admin/UserController.php:98
 * @route '/admin/users/{user}'
 */
 update.url = (args: { user: string | number } | [user: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -441,7 +441,7 @@ update.url = (args: { user: string | number } | [user: string | number ] | strin
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::update
-* @see app/Http/Controllers/Admin/UserController.php:95
+* @see app/Http/Controllers/Admin/UserController.php:98
 * @route '/admin/users/{user}'
 */
 update.put = (args: { user: string | number } | [user: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -451,7 +451,7 @@ update.put = (args: { user: string | number } | [user: string | number ] | strin
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::update
-* @see app/Http/Controllers/Admin/UserController.php:95
+* @see app/Http/Controllers/Admin/UserController.php:98
 * @route '/admin/users/{user}'
 */
 const updateForm = (args: { user: string | number } | [user: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -466,7 +466,7 @@ const updateForm = (args: { user: string | number } | [user: string | number ] |
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::update
-* @see app/Http/Controllers/Admin/UserController.php:95
+* @see app/Http/Controllers/Admin/UserController.php:98
 * @route '/admin/users/{user}'
 */
 updateForm.put = (args: { user: string | number } | [user: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -483,7 +483,7 @@ update.form = updateForm
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::destroy
-* @see app/Http/Controllers/Admin/UserController.php:110
+* @see app/Http/Controllers/Admin/UserController.php:113
 * @route '/admin/users/{user}'
 */
 export const destroy = (args: { user: string | number } | [user: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -498,7 +498,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::destroy
-* @see app/Http/Controllers/Admin/UserController.php:110
+* @see app/Http/Controllers/Admin/UserController.php:113
 * @route '/admin/users/{user}'
 */
 destroy.url = (args: { user: string | number } | [user: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -525,7 +525,7 @@ destroy.url = (args: { user: string | number } | [user: string | number ] | stri
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::destroy
-* @see app/Http/Controllers/Admin/UserController.php:110
+* @see app/Http/Controllers/Admin/UserController.php:113
 * @route '/admin/users/{user}'
 */
 destroy.delete = (args: { user: string | number } | [user: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -535,7 +535,7 @@ destroy.delete = (args: { user: string | number } | [user: string | number ] | s
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::destroy
-* @see app/Http/Controllers/Admin/UserController.php:110
+* @see app/Http/Controllers/Admin/UserController.php:113
 * @route '/admin/users/{user}'
 */
 const destroyForm = (args: { user: string | number } | [user: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -550,7 +550,7 @@ const destroyForm = (args: { user: string | number } | [user: string | number ] 
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::destroy
-* @see app/Http/Controllers/Admin/UserController.php:110
+* @see app/Http/Controllers/Admin/UserController.php:113
 * @route '/admin/users/{user}'
 */
 destroyForm.delete = (args: { user: string | number } | [user: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -567,7 +567,7 @@ destroy.form = destroyForm
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::restore
-* @see app/Http/Controllers/Admin/UserController.php:124
+* @see app/Http/Controllers/Admin/UserController.php:127
 * @route '/admin/users/{user}/restore'
 */
 export const restore = (args: { user: string | number } | [user: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -582,7 +582,7 @@ restore.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::restore
-* @see app/Http/Controllers/Admin/UserController.php:124
+* @see app/Http/Controllers/Admin/UserController.php:127
 * @route '/admin/users/{user}/restore'
 */
 restore.url = (args: { user: string | number } | [user: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -609,7 +609,7 @@ restore.url = (args: { user: string | number } | [user: string | number ] | stri
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::restore
-* @see app/Http/Controllers/Admin/UserController.php:124
+* @see app/Http/Controllers/Admin/UserController.php:127
 * @route '/admin/users/{user}/restore'
 */
 restore.patch = (args: { user: string | number } | [user: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -619,7 +619,7 @@ restore.patch = (args: { user: string | number } | [user: string | number ] | st
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::restore
-* @see app/Http/Controllers/Admin/UserController.php:124
+* @see app/Http/Controllers/Admin/UserController.php:127
 * @route '/admin/users/{user}/restore'
 */
 const restoreForm = (args: { user: string | number } | [user: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -634,7 +634,7 @@ const restoreForm = (args: { user: string | number } | [user: string | number ] 
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::restore
-* @see app/Http/Controllers/Admin/UserController.php:124
+* @see app/Http/Controllers/Admin/UserController.php:127
 * @route '/admin/users/{user}/restore'
 */
 restoreForm.patch = (args: { user: string | number } | [user: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -651,7 +651,7 @@ restore.form = restoreForm
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::forceDelete
-* @see app/Http/Controllers/Admin/UserController.php:138
+* @see app/Http/Controllers/Admin/UserController.php:141
 * @route '/admin/users/{user}/force-delete'
 */
 export const forceDelete = (args: { user: string | number } | [user: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -666,7 +666,7 @@ forceDelete.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::forceDelete
-* @see app/Http/Controllers/Admin/UserController.php:138
+* @see app/Http/Controllers/Admin/UserController.php:141
 * @route '/admin/users/{user}/force-delete'
 */
 forceDelete.url = (args: { user: string | number } | [user: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -693,7 +693,7 @@ forceDelete.url = (args: { user: string | number } | [user: string | number ] | 
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::forceDelete
-* @see app/Http/Controllers/Admin/UserController.php:138
+* @see app/Http/Controllers/Admin/UserController.php:141
 * @route '/admin/users/{user}/force-delete'
 */
 forceDelete.delete = (args: { user: string | number } | [user: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -703,7 +703,7 @@ forceDelete.delete = (args: { user: string | number } | [user: string | number ]
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::forceDelete
-* @see app/Http/Controllers/Admin/UserController.php:138
+* @see app/Http/Controllers/Admin/UserController.php:141
 * @route '/admin/users/{user}/force-delete'
 */
 const forceDeleteForm = (args: { user: string | number } | [user: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -718,7 +718,7 @@ const forceDeleteForm = (args: { user: string | number } | [user: string | numbe
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::forceDelete
-* @see app/Http/Controllers/Admin/UserController.php:138
+* @see app/Http/Controllers/Admin/UserController.php:141
 * @route '/admin/users/{user}/force-delete'
 */
 forceDeleteForm.delete = (args: { user: string | number } | [user: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

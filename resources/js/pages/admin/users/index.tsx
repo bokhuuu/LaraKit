@@ -1,7 +1,6 @@
-import { Head, Link } from '@inertiajs/react';
-import { router } from '@inertiajs/react';
-import { Pencil, Plus, Trash2 } from 'lucide-react';
-import { useState } from 'react';
+import { Head, Link, router } from '@inertiajs/react';
+import { Pencil, Plus, Trash2, Search } from 'lucide-react';
+import { useState, useRef } from 'react';
 import {
     AlertDialog,
     AlertDialogAction,
@@ -40,17 +39,64 @@ interface PaginatedUsers {
     total: number;
 }
 
+interface Filters {
+    search?: string;
+    role?: string;
+    status?: string;
+}
+
 interface Props {
     users: PaginatedUsers;
+    filters: Filters;
 }
 
 const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Users', href: '/admin/users' },
 ];
 
-export default function UsersIndex({ users }: Props) {
+export default function UsersIndex({ users, filters }: Props) {
     const [userToDelete, setUserToDelete] = useState<number | null>(null);
+    const searchRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const [searchValue, setSearchValue] = useState(filters.search ?? '');
     const { isSuperAdmin, canManageUser } = useAuth();
+
+    function handleSearch(value: string) {
+        if (searchRef.current) {
+            clearTimeout(searchRef.current);
+        }
+
+        searchRef.current = setTimeout(() => {
+            router.get(
+                '/admin/users',
+                {
+                    search: value,
+                    role: filters.role ?? '',
+                    status: filters.status ?? '',
+                },
+                {
+                    preserveState: true,
+                    preserveScroll: true,
+                    replace: true,
+                },
+            );
+        }, 300);
+    }
+
+    function handleFilter(key: string, value: string) {
+        router.get(
+            '/admin/users',
+            {
+                search: filters.search ?? '',
+                role: key === 'role' ? value : (filters.role ?? ''),
+                status: key === 'status' ? value : (filters.status ?? ''),
+            },
+            {
+                preserveState: true,
+                preserveScroll: true,
+                replace: true,
+            },
+        );
+    }
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -74,6 +120,60 @@ export default function UsersIndex({ users }: Props) {
                             Create User
                         </Link>
                     </div>
+                </div>
+
+                <div className="mb-4 flex items-center gap-3">
+                    <div className="relative flex-1">
+                        <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                        <input
+                            type="text"
+                            value={searchValue}
+                            onChange={(e) => {
+                                setSearchValue(e.target.value);
+                                handleSearch(e.target.value);
+                            }}
+                            placeholder="Search by name or email..."
+                            className="w-full rounded-md border py-2 pr-4 pl-9 text-sm focus:ring-2 focus:ring-ring focus:outline-none"
+                        />
+                    </div>
+
+                    <select
+                        value={filters.role ?? ''}
+                        onChange={(e) => handleFilter('role', e.target.value)}
+                        className="rounded-md border bg-background px-3 py-2 text-sm text-foreground focus:ring-2 focus:ring-ring focus:outline-none"
+                    >
+                        <option value="">All Roles</option>
+                        <option value="super_admin">Super Admin</option>
+                        <option value="admin">Admin</option>
+                        <option value="editor">Editor</option>
+                        <option value="viewer">Viewer</option>
+                    </select>
+
+                    <select
+                        value={filters.status ?? ''}
+                        onChange={(e) => handleFilter('status', e.target.value)}
+                        className="rounded-md border bg-background px-3 py-2 text-sm text-foreground focus:ring-2 focus:ring-ring focus:outline-none"
+                    >
+                        <option value="">All Status</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+
+                    {(filters.search || filters.role || filters.status) && (
+                        <button
+                            onClick={() => {
+                                setSearchValue('');
+                                router.get(
+                                    '/admin/users',
+                                    {},
+                                    { preserveState: true, replace: true },
+                                );
+                            }}
+                            className="text-sm text-muted-foreground hover:text-foreground"
+                        >
+                            Clear
+                        </button>
+                    )}
                 </div>
 
                 <div className="rounded-lg border">
@@ -178,7 +278,7 @@ export default function UsersIndex({ users }: Props) {
                     <div className="mt-4 flex items-center justify-center gap-2">
                         {users.current_page > 1 && (
                             <Link
-                                href={`/admin/users?page=${users.current_page - 1}`}
+                                href={`/admin/users?page=${users.current_page - 1}&search=${filters.search ?? ''}&role=${filters.role ?? ''}&status=${filters.status ?? ''}`}
                                 className="rounded-md border px-3 py-1.5 text-sm hover:bg-muted"
                             >
                                 Previous
@@ -191,7 +291,7 @@ export default function UsersIndex({ users }: Props) {
                         ).map((page) => (
                             <Link
                                 key={page}
-                                href={`/admin/users?page=${page}`}
+                                href={`/admin/users?page=${page}&search=${filters.search ?? ''}&role=${filters.role ?? ''}&status=${filters.status ?? ''}`}
                                 className={`rounded-md border px-3 py-1.5 text-sm ${
                                     page === users.current_page
                                         ? 'bg-primary text-primary-foreground'
@@ -204,7 +304,7 @@ export default function UsersIndex({ users }: Props) {
 
                         {users.current_page < users.last_page && (
                             <Link
-                                href={`/admin/users?page=${users.current_page + 1}`}
+                                href={`/admin/users?page=${users.current_page + 1}&search=${filters.search ?? ''}&role=${filters.role ?? ''}&status=${filters.status ?? ''}`}
                                 className="rounded-md border px-3 py-1.5 text-sm hover:bg-muted"
                             >
                                 Next
