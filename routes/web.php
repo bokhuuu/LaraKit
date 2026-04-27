@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\SettingController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 
@@ -24,6 +25,10 @@ Route::middleware(['auth', 'admin'])
             Route::delete('/{user}', [UserController::class, 'destroy'])->name('delete');
             Route::patch('/{user}/restore', [UserController::class, 'restore'])->name('restore');
             Route::delete('/{user}/force-delete', [UserController::class, 'forceDelete'])->name('force-delete');
+        });
+        Route::prefix('settings')->name('settings.')->group(function () {
+            Route::get('/', [SettingController::class, 'index'])->name('index');
+            Route::put('/', [SettingController::class, 'update'])->name('update');
         });
     });
 
