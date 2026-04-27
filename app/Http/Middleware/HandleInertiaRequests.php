@@ -23,7 +23,11 @@ class HandleInertiaRequests extends Middleware
      */
     public function version(Request $request): ?string
     {
-        return parent::version($request);
+        if (!cache()->has('inertia_version')) {
+            cache()->forever('inertia_version', 1);
+        }
+
+        return (string) cache()->get('inertia_version', 1);
     }
 
     /**
@@ -43,8 +47,8 @@ class HandleInertiaRequests extends Middleware
             ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
             'flash' => [
-                'success' => $request->session()->get('success'),
-                'error'   => $request->session()->get('error'),
+                'success' => fn() => $request->session()->get('success'),
+                'error'   => fn() => $request->session()->get('error'),
                 'timestamp' => now()->timestamp,
             ],
         ];
