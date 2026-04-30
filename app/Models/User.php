@@ -12,11 +12,20 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Spatie\Permission\Traits\HasRoles;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class User extends Authenticatable
+class User extends Authenticatable implements HasMedia
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable, TwoFactorAuthenticatable, HasRoles, SoftDeletes, ClearsInertiaCache;
+    use HasFactory,
+        Notifiable,
+        TwoFactorAuthenticatable,
+        HasRoles,
+        SoftDeletes,
+        ClearsInertiaCache,
+        InteractsWithMedia;
 
     /**
      * The attributes that are mass assignable.
@@ -56,5 +65,27 @@ class User extends Authenticatable
             'two_factor_confirmed_at' => 'datetime',
             'is_active' => 'boolean'
         ];
+    }
+
+    protected $appends = ['avatar_url'];
+
+    public function getAvatarUrlAttribute(): string
+    {
+        return $this->getFirstMediaUrl('avatar', 'thumb');
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('avatar')
+            ->singleFile()
+            ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/webp']);
+    }
+
+    public function registerMediaConversions(?Media $media = null): void
+    {
+        $this->addMediaConversion('thumb')
+            ->width(100)
+            ->height(100)
+            ->nonQueued();
     }
 }

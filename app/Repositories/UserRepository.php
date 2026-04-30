@@ -11,7 +11,7 @@ class UserRepository
 {
     public function index(array $filters = []): LengthAwarePaginator
     {
-        return User::with('roles')
+        return User::with(['roles', 'media'])
             ->when($filters['search'] ?? null, function ($query, $search) {
                 $query->where(function ($q) use ($search) {
                     $q->where('name', 'like', "%{$search}%")
@@ -69,6 +69,15 @@ class UserRepository
         }
 
         $user->syncRoles($data['role']);
+
+        if (!empty($data['remove_avatar'])) {
+            $user->clearMediaCollection('avatar');
+        }
+
+        if (isset($data['avatar']) && $data['avatar'] instanceof \Illuminate\Http\UploadedFile) {
+            $user->addMedia($data['avatar'])
+                ->toMediaCollection('avatar');
+        }
 
         return $user;
     }

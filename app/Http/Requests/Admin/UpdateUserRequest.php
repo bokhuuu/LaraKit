@@ -43,6 +43,8 @@ class UpdateUserRequest extends FormRequest
             'password' => ['nullable', 'string', 'min:8', 'confirmed'],
             'role'     => ['required', 'string', 'exists:roles,name'],
             'is_active' => ['required', 'boolean'],
+            'avatar' => ['nullable', 'image', 'max:2048'],
+            'remove_avatar' => ['boolean']
         ];
     }
 }
