@@ -1,5 +1,5 @@
 import { Head, Link, router } from '@inertiajs/react';
-import { Pencil, Plus, Trash2, Search } from 'lucide-react';
+import { Pencil, Plus, Trash2, Trash, Search, X } from 'lucide-react';
 import { useState, useRef } from 'react';
 import {
     AlertDialog,
@@ -108,22 +108,23 @@ export default function UsersIndex({ users, filters }: Props) {
                     <div className="flex items-center gap-3">
                         <Link
                             href="/admin/users/trashed"
-                            className="text-sm text-muted-foreground hover:text-foreground"
+                            className="flex items-center gap-1 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+                            title="View trash"
                         >
-                            View Trash
+                            <Trash className="h-4 w-4" />
                         </Link>
 
                         <Link
                             href="/admin/users/create"
                             className="flex items-center gap-1 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+                            title="Create user"
                         >
                             <Plus className="h-4 w-4" />
-                            Create User
                         </Link>
                     </div>
                 </div>
 
-                <div className="mb-4 flex items-center gap-3">
+                <div className="mb-4 flex flex-wrap items-center gap-3">
                     <div className="relative flex-1">
                         <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                         <input
@@ -171,13 +172,14 @@ export default function UsersIndex({ users, filters }: Props) {
                                 );
                             }}
                             className="text-sm text-muted-foreground hover:text-foreground"
+                            title="Clear filters"
                         >
-                            Clear
+                            <X className="h-6 w-6" />
                         </button>
                     )}
                 </div>
 
-                <div className="rounded-lg border">
+                <div className="overflow-x-auto rounded-lg border">
                     <table className="w-full text-sm">
                         <thead>
                             <tr className="border-b bg-muted/50">
@@ -260,6 +262,7 @@ export default function UsersIndex({ users, filters }: Props) {
                                                 <Link
                                                     href={`/admin/users/${user.id}/edit`}
                                                     className="text-muted-foreground hover:text-foreground"
+                                                    title="Edit"
                                                 >
                                                     <Pencil className="h-4 w-4" />
                                                 </Link>
@@ -271,6 +274,7 @@ export default function UsersIndex({ users, filters }: Props) {
                                                         setUserToDelete(user.id)
                                                     }
                                                     className="text-red-400 hover:text-red-600"
+                                                    title="Delete"
                                                 >
                                                     <Trash2 className="h-4 w-4" />
                                                 </button>
