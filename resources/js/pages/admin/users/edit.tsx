@@ -1,5 +1,7 @@
 import { Head, Link, useForm } from '@inertiajs/react';
+import { Camera, Trash2 } from 'lucide-react';
 import type { FormEvent } from 'react';
+import { useRef, useState } from 'react';
 import {
     Select,
     SelectContent,
@@ -28,9 +30,10 @@ interface User {
 interface Props {
     user: User;
     roles: Role[];
+    avatarUrl: string;
 }
 
-export default function EditUser({ user, roles }: Props) {
+export default function EditUser({ user, roles, avatarUrl }: Props) {
     const breadcrumbs: BreadcrumbItem[] = [
         { title: 'Users', href: '/admin/users' },
         { title: user.name, href: `/admin/users/${user.id}/edit` },
@@ -41,18 +44,47 @@ export default function EditUser({ user, roles }: Props) {
     const canChangeRole = !isEditingSelf && (!isAdmin || !isEditingSuperAdmin);
     const canChangeStatus = !isEditingSelf;
 
+    const fileInputRef = useRef<HTMLInputElement>(null);
+    const [preview, setPreview] = useState<string | null>(avatarUrl || null);
+
     const { data, setData, put, processing, errors } = useForm({
+        _method: 'PUT',
         name: user.name,
         email: user.email,
         password: '',
         password_confirmation: '',
         role: user.roles[0]?.name ?? '',
         is_active: user.is_active,
+        avatar: null as File | null,
+        remove_avatar: false,
     });
 
     function handleSubmit(e: FormEvent) {
         e.preventDefault();
-        put(`/admin/users/${user.id}`);
+        put(`/admin/users/${user.id}`, {
+            forceFormData: true,
+        });
+    }
+
+    function handleAvatarChange(e: React.ChangeEvent<HTMLInputElement>) {
+        const file = e.target.files?.[0] ?? null;
+        setData('avatar', file);
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = () => setPreview(reader.result as string);
+            reader.readAsDataURL(file);
+        }
+    }
+
+    function handleRemoveAvatar() {
+        setData('avatar', null);
+        setData('remove_avatar', true);
+        setPreview(null);
+
+        if (fileInputRef.current) {
+            fileInputRef.current.value = '';
+        }
     }
 
     return (
@@ -77,6 +109,60 @@ export default function EditUser({ user, roles }: Props) {
                                     {(errors as Record<string, string>).general}
                                 </div>
                             )}
+
+                            <div className="flex items-center gap-4">
+                                <div className="flex h-16 w-16 items-center justify-center overflow-hidden rounded-full border bg-muted">
+                                    {preview ? (
+                                        <img
+                                            src={preview}
+                                            alt="Avatar"
+                                            className="h-full w-full object-cover"
+                                        />
+                                    ) : (
+                                        <span className="text-xl font-semibold text-muted-foreground">
+                                            {user.name.charAt(0).toUpperCase()}
+                                        </span>
+                                    )}
+                                </div>
+
+                                <div className="flex items-center gap-2">
+                                    <button
+                                        type="button"
+                                        onClick={() =>
+                                            fileInputRef.current?.click()
+                                        }
+                                        className="rounded-md border p-2 text-muted-foreground hover:text-foreground"
+                                        title={
+                                            preview
+                                                ? 'Change avatar'
+                                                : 'Upload avatar'
+                                        }
+                                    >
+                                        <Camera className="h-4 w-4" />
+                                    </button>
+                                    {preview && (
+                                        <button
+                                            type="button"
+                                            onClick={handleRemoveAvatar}
+                                            className="rounded-md border p-2 text-red-400 hover:text-red-600"
+                                            title="Remove avatar"
+                                        >
+                                            <Trash2 className="h-4 w-4" />
+                                        </button>
+                                    )}
+                                    <p className="text-xs text-muted-foreground">
+                                        JPG, PNG or WebP. Max 2MB.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <input
+                                ref={fileInputRef}
+                                type="file"
+                                accept="image/jpeg,image/png,image/webp"
+                                onChange={handleAvatarChange}
+                                className="hidden"
+                            />
 
                             <div>
                                 <label className="mb-1 block text-sm font-medium">

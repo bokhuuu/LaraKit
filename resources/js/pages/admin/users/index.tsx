@@ -27,6 +27,7 @@ interface User {
     email: string;
     is_active: boolean;
     avatar: string | null;
+    avatar_url: string;
     roles: Role[];
     created_at: string;
 }
@@ -206,7 +207,24 @@ export default function UsersIndex({ users, filters }: Props) {
                                     key={user.id}
                                     className="border-b last:border-0"
                                 >
-                                    <td className="px-4 py-3">{user.name}</td>
+                                    <td className="px-4 py-3">
+                                        <div className="flex items-center gap-2">
+                                            <div className="flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-full border bg-muted text-xs font-semibold">
+                                                {user.avatar_url ? (
+                                                    <img
+                                                        src={user.avatar_url}
+                                                        alt={user.name}
+                                                        className="h-full w-full object-cover"
+                                                    />
+                                                ) : (
+                                                    user.name
+                                                        .charAt(0)
+                                                        .toUpperCase()
+                                                )}
+                                            </div>
+                                            {user.name}
+                                        </div>
+                                    </td>
                                     <td className="px-4 py-3">{user.email}</td>
                                     <td className="px-4 py-3">
                                         {user.roles.length > 0
