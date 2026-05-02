@@ -1,4 +1,4 @@
-import { Head, useForm } from '@inertiajs/react';
+import { Head, useForm, router } from '@inertiajs/react';
 import type { FormEvent } from 'react';
 import { useState } from 'react';
 import AppLayout from '@/layouts/app-layout';
@@ -18,6 +18,7 @@ interface Setting {
 interface Props {
     settings: Record<string, Setting[]>;
     groups: string[];
+    fileUrls: Record<string, string>;
 }
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -28,7 +29,7 @@ function formatGroup(group: string): string {
     return group.charAt(0).toUpperCase() + group.slice(1);
 }
 
-export default function SettingsIndex({ settings, groups }: Props) {
+export default function SettingsIndex({ settings, groups, fileUrls }: Props) {
     const initialData = Object.values(settings)
         .flat()
         .reduce(
@@ -40,15 +41,36 @@ export default function SettingsIndex({ settings, groups }: Props) {
             {} as Record<string, string>,
         );
 
-    const { data, setData, put, processing } = useForm({
+    const { data, setData, processing } = useForm({
+        _method: 'PUT',
         settings: initialData,
     });
 
     const [activeGroup, setActiveGroup] = useState(groups[0] ?? 'general');
+    const [files, setFiles] = useState<Record<string, File | null>>({});
+    const [filePreviews, setFilePreviews] = useState<Record<string, string>>(
+        {},
+    );
 
     function handleSubmit(e: FormEvent) {
         e.preventDefault();
-        put('/admin/settings');
+
+        const formData = new FormData();
+        formData.append('_method', 'PUT');
+
+        Object.entries(data.settings).forEach(([key, value]) => {
+            formData.append(`settings[${key}]`, value ?? '');
+        });
+
+        Object.entries(files).forEach(([key, file]) => {
+            if (file) {
+                formData.append(`files[${key}]`, file);
+            }
+        });
+
+        router.post('/admin/settings', formData, {
+            forceFormData: true,
+        });
     }
 
     function updateSetting(key: string, value: string) {
@@ -102,13 +124,42 @@ export default function SettingsIndex({ settings, groups }: Props) {
 
             case 'file':
                 return (
-                    <div className="rounded-md border border-dashed px-4 py-3 text-sm text-muted-foreground">
-                        File upload available after Media Library setup.
-                        {value && (
-                            <p className="mt-1 text-xs text-foreground">
-                                Current: {value}
-                            </p>
+                    <div className="space-y-2">
+                        {(filePreviews[setting.key] ||
+                            fileUrls[setting.key]) && (
+                            <img
+                                src={
+                                    filePreviews[setting.key] ||
+                                    fileUrls[setting.key]
+                                }
+                                alt={setting.label}
+                                className="h-16 w-16 rounded-md border object-cover"
+                            />
                         )}
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => {
+                                const file = e.target.files?.[0] ?? null;
+                                setFiles((prev) => ({
+                                    ...prev,
+                                    [setting.key]: file,
+                                }));
+
+                                if (file) {
+                                    const reader = new FileReader();
+
+                                    reader.onload = () =>
+                                        setFilePreviews((prev) => ({
+                                            ...prev,
+                                            [setting.key]:
+                                                reader.result as string,
+                                        }));
+                                    reader.readAsDataURL(file);
+                                }
+                            }}
+                            className="w-full rounded-md border bg-background px-3 py-2 text-sm text-foreground"
+                        />
                     </div>
                 );
 
