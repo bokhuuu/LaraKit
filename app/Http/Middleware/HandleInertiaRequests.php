@@ -41,7 +41,12 @@ class HandleInertiaRequests extends Middleware
     {
         return [
             ...parent::share($request),
-            'name' => config('app.name'),
+            'name' => cache()->remember(
+                'site_name',
+                3600,
+                fn() =>
+                \App\Models\Setting::where('key', 'site_name')->value('value') ?? config('app.name')
+            ),
             'auth' => [
                 'user' => $request->user()?->load('roles'),
             ],
@@ -51,6 +56,10 @@ class HandleInertiaRequests extends Middleware
                 'error'   => fn() => $request->session()->get('error'),
                 'timestamp' => now()->timestamp,
             ],
+            'siteSettings' => cache()->remember('site_settings', 3600, fn() => [
+                'logo'    => \App\Models\Setting::where('key', 'site_logo')->first()?->getFirstMediaUrl('site_logo'),
+                'favicon' => \App\Models\Setting::where('key', 'site_favicon')->first()?->getFirstMediaUrl('site_favicon'),
+            ]),
         ];
     }
 }
