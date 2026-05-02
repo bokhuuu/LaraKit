@@ -53,6 +53,11 @@ class UserRepository
 
         $user->assignRole($data['role']);
 
+        if (isset($data['avatar']) && $data['avatar'] instanceof \Illuminate\Http\UploadedFile) {
+            $user->addMedia($data['avatar'])
+                ->toMediaCollection('avatar');
+        }
+
         return $user;
     }
 

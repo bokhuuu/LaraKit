@@ -1,15 +1,16 @@
 import { Head, Link, useForm } from '@inertiajs/react';
+import { Camera } from 'lucide-react';
+import { useRef, useState } from 'react';
 import React from 'react';
 import {
+    SelectTrigger,
     Select,
     SelectContent,
     SelectItem,
-    SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
 import AppLayout from '@/layouts/app-layout';
 import type { BreadcrumbItem } from '@/types';
-
 interface Role {
     id: number;
     name: string;
@@ -32,11 +33,27 @@ export default function CreateUser({ roles }: Props) {
         password: '',
         password_confirmation: '',
         role: '',
+        avatar: null as File | null,
     });
+
+    const fileInputRef = useRef<HTMLInputElement>(null);
+    const [preview, setPreview] = useState<string | null>(null);
 
     function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
-        post('/admin/users');
+        post('/admin/users', { forceFormData: true });
+    }
+
+    function handleAvatarChange(e: React.ChangeEvent<HTMLInputElement>) {
+        const file = e.target.files?.[0] ?? null;
+        setData('avatar', file);
+
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = () => setPreview(reader.result as string);
+            reader.readAsDataURL(file);
+        }
     }
 
     return (
@@ -61,6 +78,54 @@ export default function CreateUser({ roles }: Props) {
                                     {(errors as Record<string, string>).general}
                                 </div>
                             )}
+
+                            <div>
+                                <label className="mb-2 block text-sm font-medium">
+                                    Avatar
+                                </label>
+                                <div className="flex items-center gap-4">
+                                    <div className="flex h-16 w-16 items-center justify-center overflow-hidden rounded-full border bg-muted">
+                                        {preview ? (
+                                            <img
+                                                src={preview}
+                                                alt="Avatar"
+                                                className="h-full w-full object-cover"
+                                            />
+                                        ) : (
+                                            <span className="text-xl font-semibold text-muted-foreground">
+                                                ?
+                                            </span>
+                                        )}
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <button
+                                            type="button"
+                                            onClick={() =>
+                                                fileInputRef.current?.click()
+                                            }
+                                            className="rounded-md border p-2 text-muted-foreground hover:text-foreground"
+                                            title="Upload avatar"
+                                        >
+                                            <Camera className="h-4 w-4" />
+                                        </button>
+                                        <p className="text-xs text-muted-foreground">
+                                            JPG, PNG or WebP. Max 2MB.
+                                        </p>
+                                    </div>
+                                </div>
+                                <input
+                                    ref={fileInputRef}
+                                    type="file"
+                                    accept="image/jpeg,image/png,image/webp"
+                                    onChange={handleAvatarChange}
+                                    className="hidden"
+                                />
+                                {errors.avatar && (
+                                    <p className="mt-1 text-xs text-red-500">
+                                        {errors.avatar}
+                                    </p>
+                                )}
+                            </div>
 
                             <div>
                                 <label className="mb-1 block text-sm font-medium">
