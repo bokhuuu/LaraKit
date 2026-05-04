@@ -140,9 +140,9 @@ export default function ActivityLog({ activities }: Props) {
                                                             {String(
                                                                 activity
                                                                     .attribute_changes
-                                                                    ?.attributes[
+                                                                    ?.attributes?.[
                                                                     key
-                                                                ],
+                                                                ] ?? '—',
                                                             )}
                                                         </span>
                                                     </div>
