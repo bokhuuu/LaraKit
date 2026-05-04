@@ -1,5 +1,6 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
 import { formatDistanceToNow } from 'date-fns';
+import { X } from 'lucide-react';
 import AppLayout from '@/layouts/app-layout';
 import type { BreadcrumbItem } from '@/types';
 
@@ -27,6 +28,7 @@ interface PaginatedActivities {
 
 interface Props {
     activities: PaginatedActivities;
+    filters: { event?: string; model?: string };
 }
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -46,7 +48,7 @@ function eventBadgeClass(event: string): string {
     }
 }
 
-export default function ActivityLog({ activities }: Props) {
+export default function ActivityLog({ activities, filters = {} }: Props) {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Activity Log" />
@@ -56,6 +58,63 @@ export default function ActivityLog({ activities }: Props) {
                     <p className="text-sm text-muted-foreground">
                         Full audit trail of all actions in the panel.
                     </p>
+                </div>
+
+                <div className="mb-4 flex items-center gap-3">
+                    <select
+                        value={filters.event ?? ''}
+                        onChange={(e) =>
+                            router.get(
+                                '/admin/activity-log',
+                                {
+                                    event: e.target.value,
+                                    model: filters.model ?? '',
+                                },
+                                { replace: true, preserveState: false },
+                            )
+                        }
+                        className="rounded-md border bg-background px-3 py-2 text-sm text-foreground focus:ring-2 focus:ring-ring focus:outline-none"
+                    >
+                        <option value="">All Events</option>
+                        <option value="created">Created</option>
+                        <option value="updated">Updated</option>
+                        <option value="deleted">Deleted</option>
+                        <option value="restored">Restored</option>
+                    </select>
+
+                    <select
+                        value={filters.model ?? ''}
+                        onChange={(e) =>
+                            router.get(
+                                '/admin/activity-log',
+                                {
+                                    event: filters.event ?? '',
+                                    model: e.target.value,
+                                },
+                                { replace: true, preserveState: false },
+                            )
+                        }
+                        className="rounded-md border bg-background px-3 py-2 text-sm text-foreground focus:ring-2 focus:ring-ring focus:outline-none"
+                    >
+                        <option value="">All Models</option>
+                        <option value="User">User</option>
+                        <option value="Setting">Setting</option>
+                    </select>
+
+                    {(filters.event || filters.model) && (
+                        <button
+                            onClick={() =>
+                                router.get(
+                                    '/admin/activity-log',
+                                    {},
+                                    { replace: true, preserveState: false },
+                                )
+                            }
+                            className="rounded-md border p-2 text-muted-foreground hover:text-foreground"
+                        >
+                            <X className="h-4 w-4" />
+                        </button>
+                    )}
                 </div>
 
                 <div className="overflow-x-auto rounded-lg border">
@@ -191,7 +250,7 @@ export default function ActivityLog({ activities }: Props) {
                     <div className="mt-4 flex items-center justify-center gap-2">
                         {activities.current_page > 1 && (
                             <Link
-                                href={`/admin/activity-log?page=${activities.current_page - 1}`}
+                                href={`/admin/activity-log?page=${activities.current_page - 1}&event=${filters.event ?? ''}&model=${filters.model ?? ''}`}
                                 className="rounded-md border px-3 py-1.5 text-sm hover:bg-muted"
                             >
                                 Previous
@@ -203,7 +262,7 @@ export default function ActivityLog({ activities }: Props) {
                         ).map((page) => (
                             <Link
                                 key={page}
-                                href={`/admin/activity-log?page=${page}`}
+                                href={`/admin/activity-log?page=${page}&event=${filters.event ?? ''}&model=${filters.model ?? ''}`}
                                 className={`rounded-md border px-3 py-1.5 text-sm ${page === activities.current_page ? 'bg-primary text-primary-foreground' : 'hover:bg-muted'}`}
                             >
                                 {page}
@@ -211,7 +270,7 @@ export default function ActivityLog({ activities }: Props) {
                         ))}
                         {activities.current_page < activities.last_page && (
                             <Link
-                                href={`/admin/activity-log?page=${activities.current_page + 1}`}
+                                href={`/admin/activity-log?page=${activities.current_page + 1}&event=${filters.event ?? ''}&model=${filters.model ?? ''}`}
                                 className="rounded-md border px-3 py-1.5 text-sm hover:bg-muted"
                             >
                                 Next
