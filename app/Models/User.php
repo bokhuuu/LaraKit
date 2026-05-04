@@ -15,6 +15,8 @@ use Spatie\Permission\Traits\HasRoles;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\Activitylog\Models\Concerns\LogsActivity;
+use Spatie\Activitylog\Support\LogOptions;
 
 class User extends Authenticatable implements HasMedia
 {
@@ -25,7 +27,9 @@ class User extends Authenticatable implements HasMedia
         HasRoles,
         SoftDeletes,
         ClearsInertiaCache,
-        InteractsWithMedia;
+        InteractsWithMedia,
+        LogsActivity;
+
 
     /**
      * The attributes that are mass assignable.
@@ -87,5 +91,13 @@ class User extends Authenticatable implements HasMedia
             ->width(100)
             ->height(100)
             ->nonQueued();
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['name', 'email', 'is_active'])
+            ->logOnlyDirty()
+            ->dontLogEmptyChanges();
     }
 }

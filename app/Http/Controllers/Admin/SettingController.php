@@ -40,12 +40,17 @@ class SettingController extends Controller
         ]);
 
         foreach ($request->settings as $key => $value) {
-            Setting::where('key', $key)->update(['value' => $value]);
+            $setting = Setting::where('key', $key)->first();
+
+            if ($setting) {
+                $setting->update(['value' => $value]);
+            }
         }
 
         if ($request->hasFile('files')) {
             foreach ($request->file('files') as $key => $file) {
                 $setting = Setting::where('key', $key)->first();
+
                 if ($setting) {
                     $setting->addMedia($file)
                         ->toMediaCollection($key);
@@ -54,12 +59,6 @@ class SettingController extends Controller
         }
 
         Setting::invalidateCache();
-
-        if (cache()->has('inertia_version')) {
-            cache()->increment('inertia_version');
-        } else {
-            cache()->forever('inertia_version', 1);
-        }
 
         return redirect()->route('admin.settings.index')
             ->with('success', 'Site settings updated successfully.');

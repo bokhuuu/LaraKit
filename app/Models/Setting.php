@@ -8,10 +8,12 @@ use App\Traits\ClearsInertiaCache;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\Activitylog\Models\Concerns\LogsActivity;
+use Spatie\Activitylog\Support\LogOptions;
 
 class Setting extends Model implements HasMedia
 {
-    use ClearsInertiaCache, InteractsWithMedia;
+    use ClearsInertiaCache, InteractsWithMedia, LogsActivity;
 
     protected $fillable = [
         'key',
@@ -34,5 +36,14 @@ class Setting extends Model implements HasMedia
         $this->addMediaCollection('site_logo')->singleFile();
         $this->addMediaCollection('site_favicon')->singleFile();
         $this->addMediaCollection('og_image')->singleFile();
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['value'])
+            ->logOnlyDirty()
+            ->dontLogEmptyChanges()
+            ->useLogName('settings');
     }
 }
