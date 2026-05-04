@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react';
-import { Settings, Users, LayoutGrid } from 'lucide-react';
+import { Settings, Users, LayoutGrid, Activity } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -31,6 +31,11 @@ const mainNavItems: NavItem[] = [
         title: 'Site Settings',
         href: '/admin/settings',
         icon: Settings,
+    },
+    {
+        title: 'Activity Log',
+        href: '/admin/activity-log',
+        icon: Activity,
     },
 ];
 
