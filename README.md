@@ -13,7 +13,7 @@ Every Laravel project eventually needs an admin panel. The usual options:
 | Frontend | Livewire | Blade/Vue | React + Inertia |
 | Customization | Opinionated | Limited | Fully yours |
 | Source | Open | Closed | Open |
-| Learning value | Low | Low | High |
+
 
 LaraKit is built to be read and understood, not just used. Every architectural decision has a reason behind it.
 
