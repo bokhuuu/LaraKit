@@ -36,6 +36,10 @@ export function useAuth() {
             return false;
         }
 
+        if (role === 'editor' || role === 'viewer') {
+            return false;
+        }
+
         if (targetUser.id === user?.id) {
             return false;
         }
