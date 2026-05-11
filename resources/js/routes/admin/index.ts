@@ -1,6 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../wayfinder'
 import users from './users'
 import settings from './settings'
+import roles from './roles'
 import activityLog from './activity-log'
 /**
 * @see \App\Http\Controllers\Admin\DashboardController::dashboard
@@ -87,6 +88,7 @@ const admin = {
     dashboard: Object.assign(dashboard, dashboard),
     users: Object.assign(users, users),
     settings: Object.assign(settings, settings),
+    roles: Object.assign(roles, roles),
     activityLog: Object.assign(activityLog, activityLog),
 }
 
