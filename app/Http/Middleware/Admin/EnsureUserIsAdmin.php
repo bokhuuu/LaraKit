@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware\Admin;
 
-use App\Enums\UserRole;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,10 +27,9 @@ class EnsureUserIsAdmin
                 ->with('error', 'Your account has been disabled.');
         }
 
-        if (!$user->hasAnyRole(array_column(UserRole::cases(), 'value'))) {
+        if (!$user->hasRole('admin') && !$user->hasRole('super_admin')) {
             abort(403);
         }
-
         return $next($request);
     }
 }

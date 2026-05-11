@@ -23,7 +23,18 @@ class PermissionSeeder extends Seeder
             }
         }
 
+        $superAdmin = Role::findByName('super_admin');
+        $superAdmin->syncPermissions(Permission::all());
+
         $admin = Role::findByName('admin');
-        $admin->syncPermissions(Permission::all());
+        $admin->syncPermissions(
+            Permission::whereNotIn('name', ['roles.view', 'roles.edit'])->get()
+        );
+
+        $editor = Role::findByName('editor');
+        $editor->syncPermissions([]);
+
+        $viewer = Role::findByName('viewer');
+        $viewer->syncPermissions([]);
     }
 }

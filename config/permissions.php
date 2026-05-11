@@ -2,6 +2,7 @@
 
 return [
     'users' => ['view', 'create', 'edit', 'delete'],
-    'roles' => ['view', 'create', 'edit', 'delete'],
-    'settings' => ['view', 'edit']
+    'roles' => ['view', 'edit'],
+    'settings' => ['view', 'edit'],
+    'activity' => ['view'],
 ];
