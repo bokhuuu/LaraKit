@@ -1,5 +1,11 @@
 import { Link } from '@inertiajs/react';
-import { Settings, Users, LayoutGrid, Activity } from 'lucide-react';
+import {
+    Settings,
+    Users,
+    LayoutGrid,
+    Activity,
+    ShieldCheck,
+} from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -13,35 +19,47 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
+import { useAuth } from '@/hooks/use-auth';
 import { dashboard } from '@/routes/admin';
 import type { NavItem } from '@/types';
-
-const mainNavItems: NavItem[] = [
-    {
-        title: 'Dashboard',
-        href: dashboard(),
-        icon: LayoutGrid,
-    },
-    {
-        title: 'Users',
-        href: '/admin/users',
-        icon: Users,
-    },
-    {
-        title: 'Site Settings',
-        href: '/admin/settings',
-        icon: Settings,
-    },
-    {
-        title: 'Activity Log',
-        href: '/admin/activity-log',
-        icon: Activity,
-    },
-];
 
 const footerNavItems: NavItem[] = [];
 
 export function AppSidebar() {
+    const { isSuperAdmin } = useAuth();
+
+    const mainNavItems: NavItem[] = [
+        {
+            title: 'Dashboard',
+            href: dashboard(),
+            icon: LayoutGrid,
+        },
+        {
+            title: 'Users',
+            href: '/admin/users',
+            icon: Users,
+        },
+        ...(isSuperAdmin
+            ? [
+                  {
+                      title: 'Roles & Permissions',
+                      href: '/admin/roles',
+                      icon: ShieldCheck,
+                  },
+              ]
+            : []),
+        {
+            title: 'Site Settings',
+            href: '/admin/settings',
+            icon: Settings,
+        },
+        {
+            title: 'Activity Log',
+            href: '/admin/activity-log',
+            icon: Activity,
+        },
+    ];
+
     return (
         <Sidebar collapsible="icon" variant="inset">
             <SidebarHeader>
