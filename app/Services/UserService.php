@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\User;
 use App\Repositories\UserRepository;
 use App\Enums\UserRole;
+use App\Events\UserCreated;
 
 class UserService
 {
@@ -38,7 +39,12 @@ class UserService
         ) {
             throw new \RuntimeException("Only super admin can create admin accounts.");
         }
-        return $this->userRepository->store($data);
+
+        $user = $this->userRepository->store($data);
+
+        UserCreated::dispatch($user);
+
+        return $user;
     }
 
     public function update(User $user, array $data): User
