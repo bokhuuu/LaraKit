@@ -8,12 +8,11 @@ A production-ready Laravel admin panel starter template built with React, Inerti
 
 Every Laravel project eventually needs an admin panel. The usual options:
 
-| | Filament | Nova | LaraKit |
-|---|---|---|---|
-| Frontend | Livewire | Blade/Vue | React + Inertia |
-| Customization | Opinionated | Limited | Fully yours |
-| Source | Open | Closed | Open |
-
+|               | Filament    | Nova      | LaraKit         |
+| ------------- | ----------- | --------- | --------------- |
+| Frontend      | Livewire    | Blade/Vue | React + Inertia |
+| Customization | Opinionated | Limited   | Fully yours     |
+| Source        | Open        | Closed    | Open            |
 
 LaraKit is built to be read and understood, not just used. Every architectural decision has a reason behind it.
 
@@ -21,17 +20,17 @@ LaraKit is built to be read and understood, not just used. Every architectural d
 
 ## Tech Stack
 
-| Layer | Technology |
-|---|---|
-| Backend | Laravel 12, PHP 8.3 |
-| Frontend | React 19, TypeScript |
-| Bridge | Inertia.js |
-| Styling | Tailwind CSS, shadcn/ui |
-| Auth | Laravel Fortify |
+| Layer       | Technology                |
+| ----------- | ------------------------- |
+| Backend     | Laravel 12, PHP 8.3       |
+| Frontend    | React 19, TypeScript      |
+| Bridge      | Inertia.js                |
+| Styling     | Tailwind CSS, shadcn/ui   |
+| Auth        | Laravel Fortify           |
 | Permissions | Spatie Laravel Permission |
-| Media | Spatie Media Library |
-| Activity | Spatie Activity Log |
-| Icons | Lucide React |
+| Media       | Spatie Media Library      |
+| Activity    | Spatie Activity Log       |
+| Icons       | Lucide React              |
 
 ---
 
@@ -59,13 +58,16 @@ This separation makes the codebase testable, swappable and easy to reason about.
 ## Features
 
 ### Authentication & Authorization
+
 - ✅ Laravel Fortify (login, logout, 2FA ready)
 - ✅ Role-based access control via Spatie Permission
 - ✅ Four roles: `super_admin`, `admin`, `editor`, `viewer`
 - ✅ `EnsureUserIsAdmin` middleware on all admin routes
 - ✅ Fine-grained protection rules (super admin cannot be edited by others, admins cannot edit admins, nobody deactivates themselves)
+- ✅ Roles & Permissions UI Manager - manage roles and assign permissions from the panel
 
 ### Users Module
+
 - ✅ Full CRUD with pagination
 - ✅ Search by name/email (debounced)
 - ✅ Filter by role and status
@@ -74,10 +76,12 @@ This separation makes the codebase testable, swappable and easy to reason about.
 - ✅ Activity logging on all mutations
 
 ### Dashboard
+
 - ✅ Stats: Total Users, Active, Inactive, Trashed, Activity count
 - ✅ All cards link to relevant filtered pages
 
 ### Site Settings
+
 - ✅ Key-value store with 18 default settings
 - ✅ Grouped tabs: General, Social, SEO, Mail
 - ✅ Dynamic input types: text, email, url, textarea, file, boolean, color
@@ -85,11 +89,17 @@ This separation makes the codebase testable, swappable and easy to reason about.
 - ✅ Cache-driven (1h TTL, invalidated on change)
 
 ### Activity Log
+
 - ✅ Full audit trail: who, what, which model, old → new values
 - ✅ Filter by event type and model
 - ✅ Pagination with filter preservation
 
+### System
+
+- ✅ Events & Listeners - `UserCreated` → `SendWelcomeEmail`
+
 ### UI / UX
+
 - ✅ Dark / light mode
 - ✅ Fully responsive - mobile horizontal scroll on tables
 - ✅ Flash messages with timestamp-based re-triggering
@@ -99,8 +109,6 @@ This separation makes the codebase testable, swappable and easy to reason about.
 
 ### Coming Soon
 
-- ⬜ Roles & Permissions UI Manager - manage roles and assign permissions from the panel
-- ⬜ Events & Listeners - `UserCreated` → `SendWelcomeEmail`
 - ⬜ Jobs & Queues - async email, Laravel Horizon
 - ⬜ Notifications - in-app bell, email, database notifications
 - ⬜ Posts Module - full CRUD with categories, tags, TipTap editor, SEO fields, scheduling
