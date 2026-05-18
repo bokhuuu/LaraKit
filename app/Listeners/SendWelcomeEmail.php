@@ -3,8 +3,9 @@
 namespace App\Listeners;
 
 use App\Events\UserCreated;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
-class SendWelcomeEmail
+class SendWelcomeEmail implements ShouldQueue
 {
     /**
      * Create the event listener.
