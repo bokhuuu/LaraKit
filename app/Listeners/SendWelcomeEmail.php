@@ -4,6 +4,8 @@ namespace App\Listeners;
 
 use App\Events\UserCreated;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use App\Mail\WelcomeEmail;
+use Illuminate\Support\Facades\Mail;
 
 class SendWelcomeEmail implements ShouldQueue
 {
@@ -20,8 +22,6 @@ class SendWelcomeEmail implements ShouldQueue
      */
     public function handle(UserCreated $event): void
     {
-        $user = $event->user;
-
-        \Log::info('Welcome email should be sent to: ' . $user->email);
+        Mail::to($event->user->email)->send(new WelcomeEmail($event->user));
     }
 }

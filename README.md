@@ -98,6 +98,7 @@ This separation makes the codebase testable, swappable and easy to reason about.
 
 - ✅ Events & Listeners - `UserCreated` → `SendWelcomeEmail`
 - ✅ Jobs & Queues - async email processing via Redis, Laravel Horizon for monitoring
+- ✅ Mailable - `WelcomeEmail` sent on user creation via queued listener
 
 ### UI / UX
 
