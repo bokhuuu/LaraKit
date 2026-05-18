@@ -97,6 +97,7 @@ This separation makes the codebase testable, swappable and easy to reason about.
 ### System
 
 - ✅ Events & Listeners - `UserCreated` → `SendWelcomeEmail`
+- ✅ Jobs & Queues - async email processing via Redis, Laravel Horizon for monitoring
 
 ### UI / UX
 
@@ -109,7 +110,6 @@ This separation makes the codebase testable, swappable and easy to reason about.
 
 ### Coming Soon
 
-- ⬜ Jobs & Queues - async email, Laravel Horizon
 - ⬜ Notifications - in-app bell, email, database notifications
 - ⬜ Posts Module - full CRUD with categories, tags, TipTap editor, SEO fields, scheduling
 - ⬜ API Layer - Sanctum token management, versioned API, rate limiting
