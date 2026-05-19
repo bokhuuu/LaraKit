@@ -3,6 +3,7 @@ import users from './users'
 import settings from './settings'
 import roles from './roles'
 import activityLog from './activity-log'
+import notifications from './notifications'
 /**
 * @see \App\Http\Controllers\Admin\DashboardController::dashboard
 * @see app/Http/Controllers/Admin/DashboardController.php:12
@@ -90,6 +91,7 @@ const admin = {
     settings: Object.assign(settings, settings),
     roles: Object.assign(roles, roles),
     activityLog: Object.assign(activityLog, activityLog),
+    notifications: Object.assign(notifications, notifications),
 }
 
 export default admin
