@@ -60,6 +60,22 @@ class HandleInertiaRequests extends Middleware
                 'logo'    => \App\Models\Setting::where('key', 'site_logo')->first()?->getFirstMediaUrl('site_logo'),
                 'favicon' => \App\Models\Setting::where('key', 'site_favicon')->first()?->getFirstMediaUrl('site_favicon'),
             ]),
+            'notifications' => function () use ($request) {
+                if (! $request->user()) return [];
+
+                return $request->user()
+                    ->unreadNotifications()
+                    ->latest()
+                    ->take(10)
+                    ->get()
+                    ->map(fn($n) => [
+                        'id' => $n->id,
+                        'message' => $n->data['message'],
+                        'user_id' => $n->data['user_id'],
+                        'event' => $n->data['event'],
+                        'created_at' => $n->created_at->diffForHumans(),
+                    ]);
+            },
         ];
     }
 }

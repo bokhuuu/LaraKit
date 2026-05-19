@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\ActivityLogController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\SettingController;
@@ -37,6 +38,11 @@ Route::middleware(['auth', 'admin'])
             Route::put('/{role}', [RoleController::class, 'update'])->name('update');
         });
         Route::get('activity-log', [ActivityLogController::class, 'index'])->name('activity-log.index');
+
+        Route::prefix('notifications')->name('notifications.')->group(function () {
+            Route::post('/{id}/read', [NotificationController::class, 'markAsRead'])->name('read');
+            Route::post('/read-all', [NotificationController::class, 'markAllAsRead'])->name('read-all');
+        });
     });
 
 require __DIR__ . '/settings.php';

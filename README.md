@@ -59,62 +59,62 @@ This separation makes the codebase testable, swappable and easy to reason about.
 
 ### Authentication & Authorization
 
-- ✅ Laravel Fortify (login, logout, 2FA ready)
-- ✅ Role-based access control via Spatie Permission
-- ✅ Four roles: `super_admin`, `admin`, `editor`, `viewer`
-- ✅ `EnsureUserIsAdmin` middleware on all admin routes
-- ✅ Fine-grained protection rules (super admin cannot be edited by others, admins cannot edit admins, nobody deactivates themselves)
-- ✅ Roles & Permissions UI Manager - manage roles and assign permissions from the panel
+- Laravel Fortify (login, logout, 2FA ready)
+- Role-based access control via Spatie Permission
+- Four roles: `super_admin`, `admin`, `editor`, `viewer`
+- `EnsureUserIsAdmin` middleware on all admin routes
+- Fine-grained protection rules (super admin cannot be edited by others, admins cannot edit admins, nobody deactivates themselves)
+- Roles & Permissions UI Manager - manage roles and assign permissions from the panel
 
 ### Users Module
 
-- ✅ Full CRUD with pagination
-- ✅ Search by name/email (debounced)
-- ✅ Filter by role and status
-- ✅ Soft delete with trash / restore / force delete
-- ✅ Avatar upload via Spatie Media Library
-- ✅ Activity logging on all mutations
+- Full CRUD with pagination
+- Search by name/email (debounced)
+- Filter by role and status
+- Soft delete with trash / restore / force delete
+- Avatar upload via Spatie Media Library
+- Activity logging on all mutations
 
 ### Dashboard
 
-- ✅ Stats: Total Users, Active, Inactive, Trashed, Activity count
-- ✅ All cards link to relevant filtered pages
+- Stats: Total Users, Active, Inactive, Trashed, Activity count
+- All cards link to relevant filtered pages
 
 ### Site Settings
 
-- ✅ Key-value store with 18 default settings
-- ✅ Grouped tabs: General, Social, SEO, Mail
-- ✅ Dynamic input types: text, email, url, textarea, file, boolean, color
-- ✅ Logo, favicon, OG image via Media Library
-- ✅ Cache-driven (1h TTL, invalidated on change)
+- Key-value store with 18 default settings
+- Grouped tabs: General, Social, SEO, Mail
+- Dynamic input types: text, email, url, textarea, file, boolean, color
+- Logo, favicon, OG image via Media Library
+- Cache-driven (1h TTL, invalidated on change)
 
 ### Activity Log
 
-- ✅ Full audit trail: who, what, which model, old → new values
-- ✅ Filter by event type and model
-- ✅ Pagination with filter preservation
+- Full audit trail: who, what, which model, old → new values
+- Filter by event type and model
+- Pagination with filter preservation
 
 ### System
 
-- ✅ Events & Listeners - `UserCreated` → `SendWelcomeEmail`
-- ✅ Jobs & Queues - async email processing via Redis, Laravel Horizon for monitoring
-- ✅ Mailable - `WelcomeEmail` sent on user creation via queued listener
+- Events & Listeners - `UserCreated` → `SendWelcomeEmail`
+- Jobs & Queues - async email processing via Redis, Laravel Horizon for monitoring
+- Mailable - `WelcomeEmail` sent on user creation via queued listener
+- Notifications - in-app bell icon with unread count, database + email notifications to admins on new user registration, mark as read / mark all as read
 
 ### UI / UX
 
-- ✅ Dark / light mode
-- ✅ Fully responsive - mobile horizontal scroll on tables
-- ✅ Flash messages with timestamp-based re-triggering
-- ✅ Confirmation dialogs for destructive actions
+- Dark / light mode
+- Fully responsive - mobile horizontal scroll on tables
+- Flash messages with timestamp-based re-triggering
+- Confirmation dialogs for destructive actions
 
 ---
 
 ### Coming Soon
 
-- ⬜ Notifications - in-app bell, email, database notifications
-- ⬜ Posts Module - full CRUD with categories, tags, TipTap editor, SEO fields, scheduling
-- ⬜ API Layer - Sanctum token management, versioned API, rate limiting
-- ⬜ Login History - last login, IP tracking
-- ⬜ Global Search - Ctrl+K across all modules
-- ⬜ Pest Test Suite - full coverage, CI-ready
-- ⬜ Docker + GitHub Actions CI/CD
+- Posts Module - full CRUD with categories, tags, TipTap editor, SEO fields, scheduling
+- API Layer - Sanctum token management, versioned API, rate limiting
+- Login History - last login, IP tracking
+- Global Search - Ctrl+K across all modules
+- Pest Test Suite - full coverage, CI-ready
+- Docker + GitHub Actions CI/CD
