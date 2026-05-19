@@ -30,6 +30,7 @@ LaraKit is built to be read and understood, not just used. Every architectural d
 | Permissions | Spatie Laravel Permission |
 | Media       | Spatie Media Library      |
 | Activity    | Spatie Activity Log       |
+| Queue       | Redis + Laravel Horizon   |
 | Icons       | Lucide React              |
 
 ---
@@ -49,6 +50,9 @@ Repository   →  Database queries only
 FormRequest  →  Validation rules
 Enum         →  Type-safe constants
 Trait        →  Reusable model behaviour
+Event        →  Something happened in the system
+Listener     →  React to an event (queued)
+Notification →  Alert users through multiple channels
 ```
 
 This separation makes the codebase testable, swappable and easy to reason about. Controllers stay thin. Business rules live in one place.
@@ -97,9 +101,10 @@ This separation makes the codebase testable, swappable and easy to reason about.
 ### System
 
 - Events & Listeners - `UserCreated` → `SendWelcomeEmail`
-- Jobs & Queues - async email processing via Redis, Laravel Horizon for monitoring
+- Jobs & Queues - async email processing via Redis
+- Laravel Horizon - queue monitoring dashboard
 - Mailable - `WelcomeEmail` sent on user creation via queued listener
-- Notifications - in-app bell icon with unread count, database + email notifications to admins on new user registration, mark as read / mark all as read
+- Notifications - in-app bell icon with unread count, database + email notifications to admins on new user registration, mark as read / mark all as read, click to navigate directly to the new user
 
 ### UI / UX
 
@@ -112,9 +117,39 @@ This separation makes the codebase testable, swappable and easy to reason about.
 
 ### Coming Soon
 
-- Posts Module - full CRUD with categories, tags, TipTap editor, SEO fields, scheduling
-- API Layer - Sanctum token management, versioned API, rate limiting
-- Login History - last login, IP tracking
+### Core
+
+- Login History - last login timestamp, IP tracking per user
+- Profile Page - avatar management, 2FA setup/recovery improvements
+- UI Translations - Laravel lang system, English + Georgian, admin-switchable
+
+### Content
+
+- Posts Module - full CRUD with categories, tags, TipTap rich text editor, SEO fields, draft/published/scheduled status, featured image, soft delete, activity logging
+
+### API
+
+- API Layer - Sanctum token management, versioned API (v1/), API Resources, rate limiting, Postman collection
+
+### Quality
+
+- Docblocks - every class and method documented
+- Pint - code formatting enforced, `strict_types` everywhere
+- Pest Test Suite - full coverage (auth, users, settings, API), mocking/fakes
+- N+1 Protection - `preventLazyLoading()` in development, DB indexes
+
+### Advanced
+
+- Security Hardening - rate limiting on login, OWASP basics, Sentry error tracking
+- Cache / Maintenance Panel - clear cache button, maintenance mode toggle, system info
 - Global Search - Ctrl+K across all modules
-- Pest Test Suite - full coverage, CI-ready
-- Docker + GitHub Actions CI/CD
+- Role-Based Sidebar Visibility - editors see only content modules
+- Telescope - Laravel debugbar for development
+
+### Deployment
+
+- Docker + docker-compose.yml
+- GitHub Actions CI/CD
+- Deployment guides (VPS)
+
+---
