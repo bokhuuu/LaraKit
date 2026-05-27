@@ -40,7 +40,7 @@ class UserRepository
                 $query->where('is_active', $filters['status'] === 'active');
             })
             ->orderBy('created_at', 'desc')
-            ->paginate(10);
+            ->paginate(config('larakit.pagination'));
     }
 
     public function findById(int $id)
@@ -73,7 +73,7 @@ class UserRepository
 
         if (isset($data['avatar']) && $data['avatar'] instanceof UploadedFile) {
             $user->addMedia($data['avatar'])
-                ->toMediaCollection('avatar');
+                ->toMediaCollection(config('larakit.media.avatar_collection'));
         }
 
         return $user;
@@ -100,12 +100,12 @@ class UserRepository
         $user->syncRoles($data['role']);
 
         if (! empty($data['remove_avatar'])) {
-            $user->clearMediaCollection('avatar');
+            $user->clearMediaCollection(config('larakit.media.avatar_collection'));
         }
 
         if (isset($data['avatar']) && $data['avatar'] instanceof UploadedFile) {
             $user->addMedia($data['avatar'])
-                ->toMediaCollection('avatar');
+                ->toMediaCollection(config('larakit.media.avatar_collection'));
         }
 
         return $user;
@@ -118,7 +118,7 @@ class UserRepository
 
     public function trashed(): LengthAwarePaginator
     {
-        return User::onlyTrashed()->with('roles')->paginate(10);
+        return User::onlyTrashed()->with('roles')->paginate(config('larakit.pagination'));
     }
 
     public function restore(User $user): void

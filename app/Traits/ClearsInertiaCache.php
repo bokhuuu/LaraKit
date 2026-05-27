@@ -27,10 +27,10 @@ trait ClearsInertiaCache
             cache()->forever('inertia_version', 1);
         }
 
-        cache()->forget('site_settings');
-        cache()->forget('site_name');
-        cache()->forget('favicon_url');
-        cache()->forget('og_image_url');
+        cache()->forget(config('larakit.cache.keys.site_settings'));
+        cache()->forget(config('larakit.cache.keys.site_name'));
+        cache()->forget(config('larakit.cache.keys.favicon_url'));
+        cache()->forget(config('larakit.cache.keys.og_image_url'));
     }
 
     /**

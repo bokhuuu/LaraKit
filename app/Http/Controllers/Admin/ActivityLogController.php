@@ -37,7 +37,7 @@ class ActivityLogController extends Controller
                 fn($q, $model) => $q->where('subject_type', 'like', "%{$model}%")
             )
             ->latest()
-            ->paginate(20);
+            ->paginate(config('larakit.pagination'));
 
         return Inertia::render('admin/activity-log', [
             'activities' => $activities,

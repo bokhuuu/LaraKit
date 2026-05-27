@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Listeners;
 
+use App\Enums\UserRole;
 use App\Events\UserCreated;
 use App\Models\User;
 use App\Notifications\NewUserRegistered;
@@ -32,7 +33,7 @@ class NotifyAdminsOfNewUser implements ShouldQueue
      */
     public function handle(UserCreated $event): void
     {
-        $admins = User::role(['super_admin', 'admin'])->get();
+        $admins = User::role([UserRole::SUPER_ADMIN->value, UserRole::ADMIN->value])->get();
 
         Notification::send($admins, new NewUserRegistered($event->user));
     }

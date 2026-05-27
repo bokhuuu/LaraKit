@@ -110,7 +110,7 @@ class UserController extends Controller
         return Inertia::render('admin/users/edit', [
             'user' => $foundUser,
             'roles' => $roles,
-            'avatarUrl' => $foundUser->getFirstMediaUrl('avatar', 'thumb'),
+            'avatarUrl' => $foundUser->getFirstMediaUrl(config('larakit.media.avatar_collection'), 'thumb'),
         ]);
     }
 

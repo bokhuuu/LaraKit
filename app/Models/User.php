@@ -89,7 +89,7 @@ class User extends Authenticatable implements HasMedia
      */
     public function getAvatarUrlAttribute(): string
     {
-        return $this->getFirstMediaUrl('avatar', 'thumb');
+        return $this->getFirstMediaUrl(config('larakit.media.avatar_collection'), 'thumb');
     }
 
     /**

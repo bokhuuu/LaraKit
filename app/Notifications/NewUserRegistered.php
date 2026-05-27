@@ -44,10 +44,10 @@ class NewUserRegistered extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('New User Registered')
+            ->subject(config('larakit.notifications.new_user_subject'))
             ->line("{$this->user->name} ({$this->user->email}) just created an account.")
-            ->action('View User', url("/admin/users/{$this->user->id}/edit"))
-            ->line('This is an automated notification from LaraKit.');
+            ->action('View User', route('admin.users.edit', $this->user->id))
+            ->line(config('larakit.notifications.footer'));
     }
 
     /**

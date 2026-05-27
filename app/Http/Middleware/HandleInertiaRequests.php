@@ -59,8 +59,8 @@ class HandleInertiaRequests extends Middleware
         return [
             ...parent::share($request),
             'name' => cache()->remember(
-                'site_name',
-                3600,
+                config('larakit.cache.keys.site_name'),
+                config('larakit.cache.site_settings_ttl'),
                 fn() => Setting::where('key', 'site_name')->value('value') ?? config('app.name')
             ),
             'auth' => [
@@ -72,10 +72,14 @@ class HandleInertiaRequests extends Middleware
                 'error' => fn() => $request->session()->get('error'),
                 'timestamp' => now()->timestamp,
             ],
-            'siteSettings' => cache()->remember('site_settings', 3600, fn() => [
-                'logo' => Setting::where('key', 'site_logo')->first()?->getFirstMediaUrl('site_logo'),
-                'favicon' => Setting::where('key', 'site_favicon')->first()?->getFirstMediaUrl('site_favicon'),
-            ]),
+            'siteSettings' => cache()->remember(
+                config('larakit.cache.keys.site_settings'),
+                config('larakit.cache.site_settings_ttl'),
+                fn() => [
+                    'logo' => Setting::where('key', 'site_logo')->first()?->getFirstMediaUrl(config('larakit.media.logo_collection')),
+                    'favicon' => Setting::where('key', 'site_favicon')->first()?->getFirstMediaUrl(config('larakit.media.favicon_collection')),
+                ]
+            ),
             'notifications' => function () use ($request) {
                 if (! $request->user()) {
                     return [];
@@ -84,7 +88,7 @@ class HandleInertiaRequests extends Middleware
                 return $request->user()
                     ->unreadNotifications()
                     ->latest()
-                    ->take(10)
+                    ->take(config('larakit.notifications.unread_limit'))
                     ->get()
                     ->map(fn($n) => [
                         'id' => $n->id,
