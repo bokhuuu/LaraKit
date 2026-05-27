@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Admin\NotificationController::read
-* @see app/Http/Controllers/Admin/NotificationController.php:11
+* @see app/Http/Controllers/Admin/NotificationController.php:26
 * @route '/admin/notifications/{id}/read'
 */
 export const read = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ read.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\NotificationController::read
-* @see app/Http/Controllers/Admin/NotificationController.php:11
+* @see app/Http/Controllers/Admin/NotificationController.php:26
 * @route '/admin/notifications/{id}/read'
 */
 read.url = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -43,7 +43,7 @@ read.url = (args: { id: string | number } | [id: string | number ] | string | nu
 
 /**
 * @see \App\Http\Controllers\Admin\NotificationController::read
-* @see app/Http/Controllers/Admin/NotificationController.php:11
+* @see app/Http/Controllers/Admin/NotificationController.php:26
 * @route '/admin/notifications/{id}/read'
 */
 read.post = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -53,7 +53,7 @@ read.post = (args: { id: string | number } | [id: string | number ] | string | n
 
 /**
 * @see \App\Http\Controllers\Admin\NotificationController::read
-* @see app/Http/Controllers/Admin/NotificationController.php:11
+* @see app/Http/Controllers/Admin/NotificationController.php:26
 * @route '/admin/notifications/{id}/read'
 */
 const readForm = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -63,7 +63,7 @@ const readForm = (args: { id: string | number } | [id: string | number ] | strin
 
 /**
 * @see \App\Http\Controllers\Admin\NotificationController::read
-* @see app/Http/Controllers/Admin/NotificationController.php:11
+* @see app/Http/Controllers/Admin/NotificationController.php:26
 * @route '/admin/notifications/{id}/read'
 */
 readForm.post = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -75,7 +75,7 @@ read.form = readForm
 
 /**
 * @see \App\Http\Controllers\Admin\NotificationController::readAll
-* @see app/Http/Controllers/Admin/NotificationController.php:22
+* @see app/Http/Controllers/Admin/NotificationController.php:37
 * @route '/admin/notifications/read-all'
 */
 export const readAll = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -90,7 +90,7 @@ readAll.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\NotificationController::readAll
-* @see app/Http/Controllers/Admin/NotificationController.php:22
+* @see app/Http/Controllers/Admin/NotificationController.php:37
 * @route '/admin/notifications/read-all'
 */
 readAll.url = (options?: RouteQueryOptions) => {
@@ -99,7 +99,7 @@ readAll.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\NotificationController::readAll
-* @see app/Http/Controllers/Admin/NotificationController.php:22
+* @see app/Http/Controllers/Admin/NotificationController.php:37
 * @route '/admin/notifications/read-all'
 */
 readAll.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -109,7 +109,7 @@ readAll.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\NotificationController::readAll
-* @see app/Http/Controllers/Admin/NotificationController.php:22
+* @see app/Http/Controllers/Admin/NotificationController.php:37
 * @route '/admin/notifications/read-all'
 */
 const readAllForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -119,7 +119,7 @@ const readAllForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> =
 
 /**
 * @see \App\Http\Controllers\Admin\NotificationController::readAll
-* @see app/Http/Controllers/Admin/NotificationController.php:22
+* @see app/Http/Controllers/Admin/NotificationController.php:37
 * @route '/admin/notifications/read-all'
 */
 readAllForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

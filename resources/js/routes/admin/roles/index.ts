@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Admin\RoleController::index
-* @see app/Http/Controllers/Admin/RoleController.php:18
+* @see app/Http/Controllers/Admin/RoleController.php:27
 * @route '/admin/roles'
 */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\RoleController::index
-* @see app/Http/Controllers/Admin/RoleController.php:18
+* @see app/Http/Controllers/Admin/RoleController.php:27
 * @route '/admin/roles'
 */
 index.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ index.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\RoleController::index
-* @see app/Http/Controllers/Admin/RoleController.php:18
+* @see app/Http/Controllers/Admin/RoleController.php:27
 * @route '/admin/roles'
 */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\RoleController::index
-* @see app/Http/Controllers/Admin/RoleController.php:18
+* @see app/Http/Controllers/Admin/RoleController.php:27
 * @route '/admin/roles'
 */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +45,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\RoleController::index
-* @see app/Http/Controllers/Admin/RoleController.php:18
+* @see app/Http/Controllers/Admin/RoleController.php:27
 * @route '/admin/roles'
 */
 const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -55,7 +55,7 @@ const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 
 /**
 * @see \App\Http\Controllers\Admin\RoleController::index
-* @see app/Http/Controllers/Admin/RoleController.php:18
+* @see app/Http/Controllers/Admin/RoleController.php:27
 * @route '/admin/roles'
 */
 indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -65,7 +65,7 @@ indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\RoleController::index
-* @see app/Http/Controllers/Admin/RoleController.php:18
+* @see app/Http/Controllers/Admin/RoleController.php:27
 * @route '/admin/roles'
 */
 indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -82,7 +82,7 @@ index.form = indexForm
 
 /**
 * @see \App\Http\Controllers\Admin\RoleController::update
-* @see app/Http/Controllers/Admin/RoleController.php:30
+* @see app/Http/Controllers/Admin/RoleController.php:44
 * @route '/admin/roles/{role}'
 */
 export const update = (args: { role: number | { id: number } } | [role: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -97,7 +97,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\RoleController::update
-* @see app/Http/Controllers/Admin/RoleController.php:30
+* @see app/Http/Controllers/Admin/RoleController.php:44
 * @route '/admin/roles/{role}'
 */
 update.url = (args: { role: number | { id: number } } | [role: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -130,7 +130,7 @@ update.url = (args: { role: number | { id: number } } | [role: number | { id: nu
 
 /**
 * @see \App\Http\Controllers\Admin\RoleController::update
-* @see app/Http/Controllers/Admin/RoleController.php:30
+* @see app/Http/Controllers/Admin/RoleController.php:44
 * @route '/admin/roles/{role}'
 */
 update.put = (args: { role: number | { id: number } } | [role: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -140,7 +140,7 @@ update.put = (args: { role: number | { id: number } } | [role: number | { id: nu
 
 /**
 * @see \App\Http\Controllers\Admin\RoleController::update
-* @see app/Http/Controllers/Admin/RoleController.php:30
+* @see app/Http/Controllers/Admin/RoleController.php:44
 * @route '/admin/roles/{role}'
 */
 const updateForm = (args: { role: number | { id: number } } | [role: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -155,7 +155,7 @@ const updateForm = (args: { role: number | { id: number } } | [role: number | { 
 
 /**
 * @see \App\Http\Controllers\Admin\RoleController::update
-* @see app/Http/Controllers/Admin/RoleController.php:30
+* @see app/Http/Controllers/Admin/RoleController.php:44
 * @route '/admin/roles/{role}'
 */
 updateForm.put = (args: { role: number | { id: number } } | [role: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
