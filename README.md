@@ -26,12 +26,13 @@ LaraKit is built to be read and understood, not just used. Every architectural d
 | Frontend    | React 19, TypeScript      |
 | Bridge      | Inertia.js                |
 | Styling     | Tailwind CSS, shadcn/ui   |
-| Auth        | Laravel Fortify           |
+| Auth        | Laravel Fortify, Sanctum  |
 | Permissions | Spatie Laravel Permission |
 | Media       | Spatie Media Library      |
 | Activity    | Spatie Activity Log       |
 | Queue       | Redis + Laravel Horizon   |
 | Icons       | Lucide React              |
+| Testing     | Pest                      |
 
 ---
 
@@ -53,9 +54,12 @@ Trait        →  Reusable model behaviour
 Event        →  Something happened in the system
 Listener     →  React to an event (queued)
 Notification →  Alert users through multiple channels
+Job           →  Async task processing
+Resource      →  Transform models for API output
 ```
 
-This separation makes the codebase testable, swappable and easy to reason about. Controllers stay thin. Business rules live in one place.
+This separation makes the codebase testable, swappable and easy to reason about.
+Controllers stay thin. Business rules live in one place.
 
 ---
 
@@ -67,8 +71,17 @@ This separation makes the codebase testable, swappable and easy to reason about.
 - Role-based access control via Spatie Permission
 - Four roles: `super_admin`, `admin`, `editor`, `viewer`
 - `EnsureUserIsAdmin` middleware on all admin routes
-- Fine-grained protection rules (super admin cannot be edited by others, admins cannot edit admins, nobody deactivates themselves)
-- Roles & Permissions UI Manager - manage roles and assign permissions from the panel
+- Fine-grained protection rules:
+    - Super admin cannot be edited by anyone except themselves
+    - Admins cannot edit other admins
+    - Nobody can change their own role or deactivate themselves
+    - Only super_admin can create admin accounts
+
+### Roles & Permissions UI Manager
+
+- Manage roles directly from the panel
+- Assign and revoke permissions per role
+- Permission changes reflected immediately without re-seeding
 
 ### Users Module
 
@@ -77,6 +90,7 @@ This separation makes the codebase testable, swappable and easy to reason about.
 - Filter by role and status
 - Soft delete with trash / restore / force delete
 - Avatar upload via Spatie Media Library
+- Role assignment with permission-based restrictions
 - Activity logging on all mutations
 
 ### Dashboard
@@ -86,7 +100,7 @@ This separation makes the codebase testable, swappable and easy to reason about.
 
 ### Site Settings
 
-- Key-value store with 18 default settings
+- Key-value store with default settings
 - Grouped tabs: General, Social, SEO, Mail
 - Dynamic input types: text, email, url, textarea, file, boolean, color
 - Logo, favicon, OG image via Media Library
@@ -95,16 +109,30 @@ This separation makes the codebase testable, swappable and easy to reason about.
 ### Activity Log
 
 - Full audit trail: who, what, which model, old → new values
-- Filter by event type and model
+- Filter by event type (created / updated / deleted / restored) and model
 - Pagination with filter preservation
+- Relative timestamps
 
-### System
+### Events, Listeners & Queues
 
-- Events & Listeners - `UserCreated` → `SendWelcomeEmail`
-- Jobs & Queues - async email processing via Redis
-- Laravel Horizon - queue monitoring dashboard
-- Mailable - `WelcomeEmail` sent on user creation via queued listener
-- Notifications - in-app bell icon with unread count, database + email notifications to admins on new user registration, mark as read / mark all as read, click to navigate directly to the new user
+- `UserCreated` event fired on new user creation
+- `SendWelcomeEmail` listener - queued, sends `WelcomeEmail` mailable
+- `NotifyAdminsOfNewUser` listener - queued, notifies all admins
+- Redis-backed queue for all async processing
+- Laravel Horizon - real-time queue monitoring dashboard
+
+### Notifications
+
+- In-app bell icon with unread count badge
+- Dropdown list of recent notifications
+- Mark as read / mark all as read
+- Click navigates directly to the relevant resource
+- Database + email channels, fully queued
+
+### Code Quality
+
+- Pint - Laravel code formatter configured, `strict_types=1` enforced across all PHP files
+- Docblocks - every class and public method documented
 
 ### UI / UX
 
@@ -113,19 +141,14 @@ This separation makes the codebase testable, swappable and easy to reason about.
 - Flash messages with timestamp-based re-triggering
 - Confirmation dialogs for destructive actions
 
-### Code Quality
-
-- Pint - Laravel code formatter configured, `strict_types=1` enforced across all PHP files
-- Docblocks - every class and complex method documented throughout the codebase
-
 ---
 
 ### Coming Soon
 
 ### Core
 
-- Login History - last login timestamp, IP tracking per user
-- Profile Page - avatar management, 2FA setup/recovery improvements
+- Login History - last login timestamp, IP address and user agent per user
+- Profile Page - avatar management, better 2FA setup and recovery codes UI
 - UI Translations - Laravel lang system, English + Georgian, admin-switchable
 
 ### Content
@@ -138,21 +161,21 @@ This separation makes the codebase testable, swappable and easy to reason about.
 
 ### Quality
 
-- Pest Test Suite - full coverage (auth, users, settings, API), mocking/fakes
-- N+1 Protection - `preventLazyLoading()` in development, DB indexes
+- Pest Test Suite - full coverage (auth, users, settings,notifications, API),`Mail::fake()`, `Notification::fake()`, `Queue::fake()`
+- N+1 Protection - `preventLazyLoading()` in development, DB indexes on all foreign keys
 
 ### Advanced
 
 - Security Hardening - rate limiting on login, OWASP basics, Sentry error tracking
-- Cache / Maintenance Panel - clear cache button, maintenance mode toggle, system info
-- Global Search - Ctrl+K across all modules
+- Cache / Maintenance Panel - clear config/route/view cache, maintenance mode toggle, system info
+- Global Search - Ctrl+K across users, settings, posts
 - Role-Based Sidebar Visibility - editors see only content modules
 - Telescope - Laravel debugbar for development
 
 ### Deployment
 
-- Docker + docker-compose.yml
-- GitHub Actions CI/CD
-- Deployment guides (VPS)
+- Docker - `docker-compose.yml` with app, MySQL, Redis, Horizon
+- GitHub Actions CI/CD - run Pest and Pint on every push, deploy on merge to main
+- Deployment guides - VPS and Vultr, `.env.example` fully documented, production checklist
 
 ---
