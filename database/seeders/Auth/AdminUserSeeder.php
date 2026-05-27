@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders\Auth;
 
 use App\Enums\UserRole;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -19,7 +20,7 @@ class AdminUserSeeder extends Seeder
             ['email' => 'zura.coding@gmail.com'],
             [
                 'name' => 'zura',
-                'password' => Hash::make('zura1234')
+                'password' => Hash::make('zura1234'),
             ]
         );
 

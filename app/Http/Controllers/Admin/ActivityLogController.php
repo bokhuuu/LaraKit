@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -16,20 +18,18 @@ class ActivityLogController extends Controller
         $activities = Activity::with(['causer'])
             ->when(
                 $filters['event'] ?? null,
-                fn($q, $event) =>
-                $q->where('event', $event)
+                fn ($q, $event) => $q->where('event', $event)
             )
             ->when(
                 $filters['model'] ?? null,
-                fn($q, $model) =>
-                $q->where('subject_type', 'like', "%{$model}%")
+                fn ($q, $model) => $q->where('subject_type', 'like', "%{$model}%")
             )
             ->latest()
             ->paginate(20);
 
         return Inertia::render('admin/activity-log', [
             'activities' => $activities,
-            'filters' => $filters
+            'filters' => $filters,
         ]);
     }
 }

@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\UserRole;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreUserRequest;
 use App\Http\Requests\Admin\UpdateUserRequest;
-use App\Enums\UserRole;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -28,22 +30,21 @@ class UserController extends Controller
     {
         $roles = $this->userService->getAllRoles();
 
-        if (!auth()->user()->hasRole(UserRole::SUPER_ADMIN)) {
+        if (! auth()->user()->hasRole(UserRole::SUPER_ADMIN)) {
             $roles = $roles->filter(
-                fn($role) =>
-                $role->name !== UserRole::SUPER_ADMIN->value &&
+                fn ($role) => $role->name !== UserRole::SUPER_ADMIN->value &&
                     $role->name !== UserRole::ADMIN->value
             )->values();
         }
 
-        $roles = $roles->map(fn($role) => [
-            'id'    => $role->id,
-            'name'  => $role->name,
+        $roles = $roles->map(fn ($role) => [
+            'id' => $role->id,
+            'name' => $role->name,
             'label' => UserRole::from($role->name)->label(),
         ])->values();
 
         return Inertia::render('admin/users/create', [
-            'roles' => $roles
+            'roles' => $roles,
         ]);
     }
 
@@ -52,7 +53,7 @@ class UserController extends Controller
         $trashedUsers = $this->userService->trashed();
 
         return Inertia::render('admin/users/trashed', [
-            'users' => $trashedUsers
+            'users' => $trashedUsers,
         ]);
     }
 
@@ -75,22 +76,21 @@ class UserController extends Controller
         $foundUser = $this->userService->findById($user);
         $roles = $this->userService->getAllRoles();
 
-        if (!auth()->user()->hasRole(UserRole::SUPER_ADMIN)) {
+        if (! auth()->user()->hasRole(UserRole::SUPER_ADMIN)) {
             $roles = $roles->filter(
-                fn($role) =>
-                $role->name !== UserRole::SUPER_ADMIN->value &&
+                fn ($role) => $role->name !== UserRole::SUPER_ADMIN->value &&
                     $role->name !== UserRole::ADMIN->value
             )->values();
         }
 
-        $roles = $roles->map(fn($role) => [
-            'id'    => $role->id,
-            'name'  => $role->name,
+        $roles = $roles->map(fn ($role) => [
+            'id' => $role->id,
+            'name' => $role->name,
             'label' => UserRole::from($role->name)->label(),
         ])->values();
 
         return Inertia::render('admin/users/edit', [
-            'user'  => $foundUser,
+            'user' => $foundUser,
             'roles' => $roles,
             'avatarUrl' => $foundUser->getFirstMediaUrl('avatar', 'thumb'),
         ]);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests\Admin;
 
 use Illuminate\Contracts\Validation\ValidationRule;
@@ -34,17 +36,17 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'     => ['required', 'string', 'min:3'],
+            'name' => ['required', 'string', 'min:3'],
             'email' => [
                 'required',
                 'email',
-                Rule::unique('users', 'email')->ignore($this->route('user'))
+                Rule::unique('users', 'email')->ignore($this->route('user')),
             ],
             'password' => ['nullable', 'string', 'min:8', 'confirmed'],
-            'role'     => ['required', 'string', 'exists:roles,name'],
+            'role' => ['required', 'string', 'exists:roles,name'],
             'is_active' => ['required', 'boolean'],
             'avatar' => ['nullable', 'image', 'max:2048'],
-            'remove_avatar' => ['boolean']
+            'remove_avatar' => ['boolean'],
         ];
     }
 }

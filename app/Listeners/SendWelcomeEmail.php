@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Listeners;
 
 use App\Events\UserCreated;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Mail\WelcomeEmail;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Mail;
 
 class SendWelcomeEmail implements ShouldQueue

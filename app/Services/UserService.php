@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
-use App\Models\User;
-use App\Repositories\UserRepository;
 use App\Enums\UserRole;
 use App\Events\UserCreated;
+use App\Models\User;
+use App\Repositories\UserRepository;
 
 class UserService
 {
@@ -35,9 +37,9 @@ class UserService
     {
         if (
             in_array($data['role'], [UserRole::ADMIN->value, UserRole::SUPER_ADMIN->value])
-            && !auth()->user()->hasRole(UserRole::SUPER_ADMIN)
+            && ! auth()->user()->hasRole(UserRole::SUPER_ADMIN)
         ) {
-            throw new \RuntimeException("Only super admin can create admin accounts.");
+            throw new \RuntimeException('Only super admin can create admin accounts.');
         }
 
         $user = $this->userRepository->store($data);
@@ -50,20 +52,20 @@ class UserService
     public function update(User $user, array $data): User
     {
         if ($user->hasRole(UserRole::SUPER_ADMIN) && $user->id !== auth()->id()) {
-            throw new \RuntimeException("Super admin account cannot be modified.");
+            throw new \RuntimeException('Super admin account cannot be modified.');
         }
 
         if (auth()->user()->hasRole(UserRole::ADMIN) && $user->hasRole(UserRole::ADMIN) && $user->id !== auth()->id()) {
-            throw new \RuntimeException("Admins cannot modify other admin accounts.");
+            throw new \RuntimeException('Admins cannot modify other admin accounts.');
         }
 
         if ($user->id === auth()->id()) {
-            if (isset($data['is_active']) && !$data['is_active']) {
-                throw new \RuntimeException("You cannot deactivate your own account.");
+            if (isset($data['is_active']) && ! $data['is_active']) {
+                throw new \RuntimeException('You cannot deactivate your own account.');
             }
 
             if (isset($data['role']) && $data['role'] !== auth()->user()->getRoleNames()->first()) {
-                throw new \RuntimeException("You cannot change your own role.");
+                throw new \RuntimeException('You cannot change your own role.');
             }
         }
 
@@ -96,15 +98,15 @@ class UserService
     private function assertCanManageUser(User $user): void
     {
         if ($user->hasRole(UserRole::SUPER_ADMIN)) {
-            throw new \RuntimeException("Super admin account cannot be managed.");
+            throw new \RuntimeException('Super admin account cannot be managed.');
         }
 
         if (auth()->user()->hasRole(UserRole::ADMIN) && $user->hasRole(UserRole::ADMIN)) {
-            throw new \RuntimeException("Admins cannot manage other admin accounts.");
+            throw new \RuntimeException('Admins cannot manage other admin accounts.');
         }
 
         if ($user->id === auth()->id()) {
-            throw new \RuntimeException("You cannot manage your own account.");
+            throw new \RuntimeException('You cannot manage your own account.');
         }
     }
 }

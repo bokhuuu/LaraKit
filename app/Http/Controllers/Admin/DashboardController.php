@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -12,8 +14,8 @@ class DashboardController extends Controller
     public function index()
     {
         $stats = [
-            'total_users'   => User::count(),
-            'active_users'  => User::where('is_active', true)->count(),
+            'total_users' => User::count(),
+            'active_users' => User::where('is_active', true)->count(),
             'inactive_users' => User::where('is_active', false)->count(),
             'trashed_users' => User::onlyTrashed()->count(),
             'total_activities' => Activity::count(),
@@ -21,7 +23,7 @@ class DashboardController extends Controller
         ];
 
         return Inertia::render('admin/dashboard', [
-            'stats' => $stats
+            'stats' => $stats,
         ]);
     }
 }

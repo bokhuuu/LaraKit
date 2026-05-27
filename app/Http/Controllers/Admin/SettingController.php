@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
 use App\Enums\Settings\SettingType;
@@ -19,13 +21,13 @@ class SettingController extends Controller
 
         $fileUrls = Setting::where('type', SettingType::FILE)
             ->get()
-            ->mapWithKeys(fn($setting) => [
-                $setting->key => $setting->getFirstMediaUrl($setting->key)
+            ->mapWithKeys(fn ($setting) => [
+                $setting->key => $setting->getFirstMediaUrl($setting->key),
             ]);
 
         return Inertia::render('admin/settings/index', [
             'settings' => $settings,
-            'groups'   => array_keys($settings->toArray()),
+            'groups' => array_keys($settings->toArray()),
             'fileUrls' => $fileUrls,
         ]);
     }

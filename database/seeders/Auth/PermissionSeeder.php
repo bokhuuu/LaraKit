@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders\Auth;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -17,7 +18,7 @@ class PermissionSeeder extends Seeder
         foreach (config('permissions') as $module => $actions) {
             foreach ($actions as $action) {
                 Permission::firstOrCreate([
-                    'name' => $module . '.' . $action,
+                    'name' => $module.'.'.$action,
                     'guard_name' => 'web',
                 ]);
             }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Traits;
 
 trait ClearsInertiaCache
@@ -20,7 +22,7 @@ trait ClearsInertiaCache
 
     protected static function bootClearsInertiaCache(): void
     {
-        $invalidate = fn() => static::invalidateCache();
+        $invalidate = fn () => static::invalidateCache();
 
         static::created($invalidate);
         static::updated($invalidate);

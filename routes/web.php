@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Http\Controllers\Admin\ActivityLogController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\RoleController;
-use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 
@@ -45,4 +47,4 @@ Route::middleware(['auth', 'admin'])
         });
     });
 
-require __DIR__ . '/settings.php';
+require __DIR__.'/settings.php';

@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Middleware;
 
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -23,7 +26,7 @@ class HandleInertiaRequests extends Middleware
      */
     public function version(Request $request): ?string
     {
-        if (!cache()->has('inertia_version')) {
+        if (! cache()->has('inertia_version')) {
             cache()->forever('inertia_version', 1);
         }
 
@@ -44,31 +47,32 @@ class HandleInertiaRequests extends Middleware
             'name' => cache()->remember(
                 'site_name',
                 3600,
-                fn() =>
-                \App\Models\Setting::where('key', 'site_name')->value('value') ?? config('app.name')
+                fn () => Setting::where('key', 'site_name')->value('value') ?? config('app.name')
             ),
             'auth' => [
                 'user' => $request->user()?->load('roles'),
             ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
             'flash' => [
-                'success' => fn() => $request->session()->get('success'),
-                'error'   => fn() => $request->session()->get('error'),
+                'success' => fn () => $request->session()->get('success'),
+                'error' => fn () => $request->session()->get('error'),
                 'timestamp' => now()->timestamp,
             ],
-            'siteSettings' => cache()->remember('site_settings', 3600, fn() => [
-                'logo'    => \App\Models\Setting::where('key', 'site_logo')->first()?->getFirstMediaUrl('site_logo'),
-                'favicon' => \App\Models\Setting::where('key', 'site_favicon')->first()?->getFirstMediaUrl('site_favicon'),
+            'siteSettings' => cache()->remember('site_settings', 3600, fn () => [
+                'logo' => Setting::where('key', 'site_logo')->first()?->getFirstMediaUrl('site_logo'),
+                'favicon' => Setting::where('key', 'site_favicon')->first()?->getFirstMediaUrl('site_favicon'),
             ]),
             'notifications' => function () use ($request) {
-                if (! $request->user()) return [];
+                if (! $request->user()) {
+                    return [];
+                }
 
                 return $request->user()
                     ->unreadNotifications()
                     ->latest()
                     ->take(10)
                     ->get()
-                    ->map(fn($n) => [
+                    ->map(fn ($n) => [
                         'id' => $n->id,
                         'message' => $n->data['message'],
                         'user_id' => $n->data['user_id'],

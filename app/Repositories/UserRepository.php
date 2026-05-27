@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repositories;
 
 use App\Models\User;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
@@ -19,7 +22,7 @@ class UserRepository
                 });
             })
             ->when($filters['role'] ?? null, function ($query, $role) {
-                $query->whereHas('roles', fn($q) => $q->where('name', $role));
+                $query->whereHas('roles', fn ($q) => $q->where('name', $role));
             })
             ->when(isset($filters['status']), function ($query) use ($filters) {
                 $query->where('is_active', $filters['status'] === 'active');
@@ -53,7 +56,7 @@ class UserRepository
 
         $user->assignRole($data['role']);
 
-        if (isset($data['avatar']) && $data['avatar'] instanceof \Illuminate\Http\UploadedFile) {
+        if (isset($data['avatar']) && $data['avatar'] instanceof UploadedFile) {
             $user->addMedia($data['avatar'])
                 ->toMediaCollection('avatar');
         }
@@ -69,17 +72,17 @@ class UserRepository
             'is_active' => $data['is_active'],
         ]);
 
-        if (!empty($data['password'])) {
+        if (! empty($data['password'])) {
             $user->update(['password' => Hash::make($data['password'])]);
         }
 
         $user->syncRoles($data['role']);
 
-        if (!empty($data['remove_avatar'])) {
+        if (! empty($data['remove_avatar'])) {
             $user->clearMediaCollection('avatar');
         }
 
-        if (isset($data['avatar']) && $data['avatar'] instanceof \Illuminate\Http\UploadedFile) {
+        if (isset($data['avatar']) && $data['avatar'] instanceof UploadedFile) {
             $user->addMedia($data['avatar'])
                 ->toMediaCollection('avatar');
         }
