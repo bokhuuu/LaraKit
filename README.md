@@ -113,6 +113,11 @@ This separation makes the codebase testable, swappable and easy to reason about.
 - Flash messages with timestamp-based re-triggering
 - Confirmation dialogs for destructive actions
 
+### Code Quality
+
+- Pint - Laravel code formatter configured, `strict_types=1` enforced across all PHP files
+- Docblocks - every class and complex method documented throughout the codebase
+
 ---
 
 ### Coming Soon
@@ -133,8 +138,6 @@ This separation makes the codebase testable, swappable and easy to reason about.
 
 ### Quality
 
-- Docblocks - every class and method documented
-- Pint - code formatting enforced, `strict_types` everywhere
 - Pest Test Suite - full coverage (auth, users, settings, API), mocking/fakes
 - N+1 Protection - `preventLazyLoading()` in development, DB indexes
 
