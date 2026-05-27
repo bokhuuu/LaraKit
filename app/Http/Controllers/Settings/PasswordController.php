@@ -10,6 +10,9 @@ use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
 
+/**
+ * Handles password update for the authenticated user's settings.
+ */
 class PasswordController extends Controller
 {
     /**

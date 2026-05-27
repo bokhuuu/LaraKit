@@ -14,6 +14,12 @@ use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
 
+/**
+ * Handles profile settings for the authenticated user.
+ *
+ * Covers profile information updates, email verification reset,
+ * and account deletion with proper session cleanup.
+ */
 class ProfileController extends Controller
 {
     /**
@@ -44,7 +50,11 @@ class ProfileController extends Controller
     }
 
     /**
-     * Delete the user's profile.
+     * Deletes the user's account and terminates their session.
+     *
+     * Logs the user out before deleting to prevent any post-delete
+     * session state, then invalidates the session and regenerates
+     * the CSRF token before redirecting to the homepage.
      */
     public function destroy(ProfileDeleteRequest $request): RedirectResponse
     {

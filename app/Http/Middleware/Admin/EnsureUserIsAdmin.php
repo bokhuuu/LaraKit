@@ -8,6 +8,13 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Guards all admin routes with three sequential checks.
+ *
+ * Verifies the user is authenticated, their account is active,
+ * and they hold either the admin or super_admin role.
+ * Inactive users are logged out rather than just redirected.
+ */
 class EnsureUserIsAdmin
 {
     /**

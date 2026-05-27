@@ -9,6 +9,13 @@ use App\Events\UserCreated;
 use App\Models\User;
 use App\Repositories\UserRepository;
 
+/**
+ * Handles business logic and protection rules for user management.
+ *
+ * All role-based restrictions, self-protection guards and side effects
+ * (such as firing events) live here. The repository handles queries,
+ * this service decides whether those queries are allowed to run.
+ */
 class UserService
 {
     public function __construct(protected UserRepository $userRepository) {}
@@ -33,6 +40,12 @@ class UserService
         return $this->userRepository->findTrashedById($id);
     }
 
+    /**
+     * Creates a new user and fires the UserCreated event.
+     *
+     * Only super admins can create admin or super admin accounts.
+     * The UserCreated event triggers the welcome email and admin notification listeners.
+     */
     public function store(array $data): User
     {
         if (
@@ -49,6 +62,14 @@ class UserService
         return $user;
     }
 
+    /**
+     * Updates a user after validating role-based edit permissions.
+     *
+     * Rules enforced:
+     * - Super admin accounts cannot be modified by anyone else.
+     * - Admins cannot modify other admin accounts.
+     * - Users cannot deactivate their own account or change their own role.
+     */
     public function update(User $user, array $data): User
     {
         if ($user->hasRole(UserRole::SUPER_ADMIN) && $user->id !== auth()->id()) {
@@ -95,6 +116,12 @@ class UserService
         $this->userRepository->forceDelete($user);
     }
 
+    /**
+     * Shared guard used before any delete, restore, or force delete operation.
+     *
+     * Prevents managing super admin accounts, admins managing other admins
+     * and users managing their own account.
+     */
     private function assertCanManageUser(User $user): void
     {
         if ($user->hasRole(UserRole::SUPER_ADMIN)) {

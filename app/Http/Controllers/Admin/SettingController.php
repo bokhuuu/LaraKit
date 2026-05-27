@@ -10,8 +10,21 @@ use App\Models\Setting;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
+/**
+ * Handles HTTP requests for the site settings module.
+ *
+ * Settings are stored as key-value pairs grouped by tabs.
+ * File-based settings (logo, favicon, OG image) are managed
+ * separately via Spatie Media Library.
+ */
 class SettingController extends Controller
 {
+    /**
+     * Renders the settings page with all settings grouped by tab.
+     *
+     * File-based settings are resolved to their Media Library URLs separately,
+     * since their value column doesn't hold the file path directly.
+     */
     public function index()
     {
         $settings = Setting::orderBy('group')
@@ -21,7 +34,7 @@ class SettingController extends Controller
 
         $fileUrls = Setting::where('type', SettingType::FILE)
             ->get()
-            ->mapWithKeys(fn ($setting) => [
+            ->mapWithKeys(fn($setting) => [
                 $setting->key => $setting->getFirstMediaUrl($setting->key),
             ]);
 
@@ -32,6 +45,13 @@ class SettingController extends Controller
         ]);
     }
 
+    /**
+     * Persists updated settings and handles file uploads.
+     *
+     * Processes two payloads in a single request: regular key-value settings
+     * and file uploads. Invalidates the settings cache after saving so
+     * changes are reflected immediately across the panel.
+     */
     public function update(Request $request)
     {
         $request->validate([

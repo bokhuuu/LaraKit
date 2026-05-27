@@ -12,6 +12,13 @@ use App\Services\UserService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
+/**
+ * Handles HTTP requests for the users management module.
+ *
+ * Delegates all business logic to UserService.
+ * This controller is responsible only for receiving requests,
+ * passing data to the service and returning Inertia responses or redirects.
+ */
 class UserController extends Controller
 {
     public function __construct(protected UserService $userService) {}
@@ -26,18 +33,24 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+     * Renders the create user form with a role list filtered by the current user's permissions.
+     *
+     * Non-super-admins cannot see or assign admin or super admin roles.
+     * This mirrors the protection rule enforced in UserService::store().
+     */
     public function create()
     {
         $roles = $this->userService->getAllRoles();
 
         if (! auth()->user()->hasRole(UserRole::SUPER_ADMIN)) {
             $roles = $roles->filter(
-                fn ($role) => $role->name !== UserRole::SUPER_ADMIN->value &&
+                fn($role) => $role->name !== UserRole::SUPER_ADMIN->value &&
                     $role->name !== UserRole::ADMIN->value
             )->values();
         }
 
-        $roles = $roles->map(fn ($role) => [
+        $roles = $roles->map(fn($role) => [
             'id' => $role->id,
             'name' => $role->name,
             'label' => UserRole::from($role->name)->label(),
@@ -71,6 +84,11 @@ class UserController extends Controller
             ->with('success', 'User created successfully.');
     }
 
+    /**
+     * Renders the edit form with the user's current data and permitted role options.
+     *
+     * Role list is filtered by the same rules as the create form.
+     */
     public function edit(int $user)
     {
         $foundUser = $this->userService->findById($user);
@@ -78,12 +96,12 @@ class UserController extends Controller
 
         if (! auth()->user()->hasRole(UserRole::SUPER_ADMIN)) {
             $roles = $roles->filter(
-                fn ($role) => $role->name !== UserRole::SUPER_ADMIN->value &&
+                fn($role) => $role->name !== UserRole::SUPER_ADMIN->value &&
                     $role->name !== UserRole::ADMIN->value
             )->values();
         }
 
-        $roles = $roles->map(fn ($role) => [
+        $roles = $roles->map(fn($role) => [
             'id' => $role->id,
             'name' => $role->name,
             'label' => UserRole::from($role->name)->label(),

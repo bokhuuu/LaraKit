@@ -9,6 +9,13 @@ use Illuminate\Foundation\Http\FormRequest;
 use Laravel\Fortify\Features;
 use Laravel\Fortify\InteractsWithTwoFactorState;
 
+/**
+ * Validates access to the two-factor authentication settings page.
+ *
+ * Authorization checks whether the 2FA feature is enabled in
+ * config/fortify.php rather than checking the user's role.
+ * If 2FA is disabled application-wide, this request returns 403.
+ */
 class TwoFactorAuthenticationRequest extends FormRequest
 {
     use InteractsWithTwoFactorState;

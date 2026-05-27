@@ -9,6 +9,12 @@ use App\Models\User;
 use Inertia\Inertia;
 use Spatie\Activitylog\Models\Activity;
 
+/**
+ * Handles the admin dashboard page.
+ *
+ * Queries aggregate stats across users and activity logs
+ * and passes them to the frontend as summary cards.
+ */
 class DashboardController extends Controller
 {
     public function index()

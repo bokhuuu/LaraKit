@@ -7,6 +7,12 @@ namespace App\Http\Requests\Admin;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Validates the request for creating a new user.
+ *
+ * Authorization is handled by EnsureUserIsAdmin middleware
+ * and role-based checks in UserService, not here.
+ */
 class StoreUserRequest extends FormRequest
 {
     /**

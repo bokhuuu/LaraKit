@@ -10,8 +10,20 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
+/**
+ * Handles all database operations for the User model.
+ *
+ * This is the only place in the application that directly queries users.
+ * Business logic and protection rules live in UserService, not here.
+ */
 class UserRepository
 {
+    /**
+     * Returns a paginated list of users with optional search, role, and status filters.
+     *
+     * Uses Laravel's when() to conditionally apply each filter,
+     * keeping the query clean without nested if statements.
+     */
     public function index(array $filters = []): LengthAwarePaginator
     {
         return User::with(['roles', 'media'])
@@ -22,7 +34,7 @@ class UserRepository
                 });
             })
             ->when($filters['role'] ?? null, function ($query, $role) {
-                $query->whereHas('roles', fn ($q) => $q->where('name', $role));
+                $query->whereHas('roles', fn($q) => $q->where('name', $role));
             })
             ->when(isset($filters['status']), function ($query) use ($filters) {
                 $query->where('is_active', $filters['status'] === 'active');
@@ -46,6 +58,9 @@ class UserRepository
         return Role::all();
     }
 
+    /**
+     * Creates a new user, assigns their role and handles avatar upload if provided.
+     */
     public function store(array $data)
     {
         $user = User::create([
@@ -64,6 +79,12 @@ class UserRepository
         return $user;
     }
 
+    /**
+     * Updates user details, syncs their role and manages avatar changes.
+     *
+     * Password is only updated if a new one is provided.
+     * Avatar is cleared first if remove_avatar is set, then replaced if a new file is uploaded.
+     */
     public function update(User $user, array $data)
     {
         $user->update([

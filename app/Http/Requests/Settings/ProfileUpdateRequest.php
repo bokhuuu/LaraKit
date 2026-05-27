@@ -8,6 +8,12 @@ use App\Concerns\ProfileValidationRules;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Validates profile information updates.
+ *
+ * Passes the current user's ID to profileRules() so the unique
+ * email check ignores the user's own existing address.
+ */
 class ProfileUpdateRequest extends FormRequest
 {
     use ProfileValidationRules;

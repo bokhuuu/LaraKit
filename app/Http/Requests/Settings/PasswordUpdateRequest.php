@@ -8,6 +8,12 @@ use App\Concerns\PasswordValidationRules;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Validates the password update form.
+ *
+ * Rules are sourced from the PasswordValidationRules concern
+ * to stay consistent with other password-related requests.
+ */
 class PasswordUpdateRequest extends FormRequest
 {
     use PasswordValidationRules;

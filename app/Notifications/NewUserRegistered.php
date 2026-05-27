@@ -10,6 +10,15 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
+/**
+ * Notification dispatched to all admins when a new user registers.
+ *
+ * Delivered through two channels in parallel:
+ * - mail → email alert with a direct link to the new user's edit page
+ * - database → stored in the notifications table for the bell icon in the panel
+ *
+ * Queued via ShouldQueue so both channels are processed in the background.
+ */
 class NewUserRegistered extends Notification implements ShouldQueue
 {
     use Queueable;
@@ -42,10 +51,13 @@ class NewUserRegistered extends Notification implements ShouldQueue
     }
 
     /**
-     * Get the array representation of the notification.
+     * Stores the notification payload in the database channel.
      *
-     * @return array<string, mixed>
+     * This array is what the bell icon reads to render each notification
+     * in the dropdown - message for display, user_id for the link,
+     * event for filtering.
      */
+
     public function toArray(object $notifiable): array
     {
         return [

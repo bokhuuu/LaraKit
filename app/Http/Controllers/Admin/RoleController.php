@@ -11,10 +11,19 @@ use App\Services\RoleService;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Role;
 
+/**
+ * Handles HTTP requests for the roles and permissions manager.
+ *
+ * Restricted to super admin only - no other role can view
+ * or modify permission assignments.
+ */
 class RoleController extends Controller
 {
     public function __construct(protected RoleService $roleService) {}
 
+    /**
+     * Renders the permissions matrix with all roles and their assigned permissions.
+     */
     public function index()
     {
         if (! auth()->user()->hasRole(UserRole::SUPER_ADMIN)) {
@@ -27,6 +36,11 @@ class RoleController extends Controller
         ]);
     }
 
+    /**
+     * Replaces the role's current permissions with the submitted set.
+     *
+     * Uses sync, so any permissions not included in the request are detached.
+     */
     public function update(UpdateRolePermissionsRequest $request, Role $role)
     {
         if (! auth()->user()->hasRole(UserRole::SUPER_ADMIN)) {

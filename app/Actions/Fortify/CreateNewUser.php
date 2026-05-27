@@ -10,6 +10,13 @@ use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 
+/**
+ * Handles new user creation via Laravel Fortify's registration flow.
+ *
+ * Implements the CreatesNewUsers contract, which Fortify calls
+ * automatically during registration. Validation rules are sourced
+ * from the PasswordValidationRules and ProfileValidationRules concerns.
+ */
 class CreateNewUser implements CreatesNewUsers
 {
     use PasswordValidationRules, ProfileValidationRules;

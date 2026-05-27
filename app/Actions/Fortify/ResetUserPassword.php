@@ -9,6 +9,13 @@ use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\ResetsUserPasswords;
 
+/**
+ * Handles password reset via Laravel Fortify's forgot password flow.
+ *
+ * Implements the ResetsUserPasswords contract, which Fortify calls
+ * automatically when processing a password reset link. Uses forceFill
+ * to bypass mass assignment protection since password is in $hidden.
+ */
 class ResetUserPassword implements ResetsUserPasswords
 {
     use PasswordValidationRules;

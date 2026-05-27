@@ -9,6 +9,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Reads the user's appearance preference from a cookie and shares it with all views.
+ *
+ * Defaults to 'system' if no preference has been set.
+ * The frontend uses this value to apply the correct dark/light mode class.
+ */
 class HandleAppearance
 {
     /**

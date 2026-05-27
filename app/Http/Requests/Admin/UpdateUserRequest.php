@@ -8,6 +8,12 @@ use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
+/**
+ * Validates the request for updating an existing user.
+ *
+ * Password is optional on update - if left blank it is normalised
+ * to null before validation so the current password is preserved.
+ */
 class UpdateUserRequest extends FormRequest
 {
     /**
@@ -18,6 +24,12 @@ class UpdateUserRequest extends FormRequest
         return true;
     }
 
+    /**
+     * Normalises an empty password field to null before validation runs.
+     *
+     * Without this, an empty string would fail the min:8 rule
+     * even when the user has no intention of changing their password.
+     */
     protected function prepareForValidation(): void
     {
         if ($this->password === '' || $this->password === null) {

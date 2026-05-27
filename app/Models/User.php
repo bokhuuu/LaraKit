@@ -20,6 +20,13 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Permission\Traits\HasRoles;
 
+/**
+ * Represents an admin panel user.
+ *
+ * Combines authentication, role-based permissions, avatar management,
+ * activity logging, soft deletes and two-factor authentication.
+ * Acts as the central model that most other systems in LaraKit interact with.
+ */
 class User extends Authenticatable implements HasMedia
 {
     /** @use HasFactory<UserFactory> */
@@ -74,11 +81,22 @@ class User extends Authenticatable implements HasMedia
 
     protected $appends = ['avatar_url'];
 
+    /**
+     * Returns the URL of the user's avatar thumbnail.
+     *
+     * Falls back to an empty string if no avatar has been uploaded,
+     * which the frontend handles by showing a default placeholder.
+     */
     public function getAvatarUrlAttribute(): string
     {
         return $this->getFirstMediaUrl('avatar', 'thumb');
     }
 
+    /**
+     * Registers the avatar media collection.
+     *
+     * Restricted to a single file and accepts only common image formats.
+     */
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('avatar')
@@ -86,6 +104,12 @@ class User extends Authenticatable implements HasMedia
             ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/webp']);
     }
 
+    /**
+     * Registers the thumbnail conversion applied to uploaded avatars.
+     *
+     * Generates a 100x100 crop synchronously (non-queued) so the
+     * avatar is immediately available after upload.
+     */
     public function registerMediaConversions(?Media $media = null): void
     {
         $this->addMediaConversion('thumb')
@@ -94,6 +118,12 @@ class User extends Authenticatable implements HasMedia
             ->nonQueued();
     }
 
+    /**
+     * Configures which fields Spatie Activity Log tracks for this model.
+     *
+     * Only logs name, email and is_active - ignores password changes
+     * and only records changes when a value actually differs.
+     */
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()

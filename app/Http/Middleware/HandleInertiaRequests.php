@@ -8,6 +8,13 @@ use App\Models\Setting;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
+/**
+ * Injects shared data into every Inertia response.
+ *
+ * This middleware runs on every request and is the single source of truth
+ * for data available globally on the frontend: authenticated user, flash messages,
+ * site settings, notifications and the asset version key used for cache busting.
+ */
 class HandleInertiaRequests extends Middleware
 {
     /**
@@ -21,6 +28,9 @@ class HandleInertiaRequests extends Middleware
 
     /**
      * Determines the current asset version.
+     *
+     * Returns a cache-stored integer that is incremented by ClearsInertiaCache
+     * whenever a model is mutated, forcing Inertia to reload shared data.
      *
      * @see https://inertiajs.com/asset-versioning
      */
@@ -36,6 +46,10 @@ class HandleInertiaRequests extends Middleware
     /**
      * Define the props that are shared by default.
      *
+     * Shared on every request: auth user with roles, flash messages with a timestamp
+     * to force re-triggering, site name and logo from cache and up to 10 unread
+     * notifications for the bell icon.
+     *
      * @see https://inertiajs.com/shared-data
      *
      * @return array<string, mixed>
@@ -47,18 +61,18 @@ class HandleInertiaRequests extends Middleware
             'name' => cache()->remember(
                 'site_name',
                 3600,
-                fn () => Setting::where('key', 'site_name')->value('value') ?? config('app.name')
+                fn() => Setting::where('key', 'site_name')->value('value') ?? config('app.name')
             ),
             'auth' => [
                 'user' => $request->user()?->load('roles'),
             ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
             'flash' => [
-                'success' => fn () => $request->session()->get('success'),
-                'error' => fn () => $request->session()->get('error'),
+                'success' => fn() => $request->session()->get('success'),
+                'error' => fn() => $request->session()->get('error'),
                 'timestamp' => now()->timestamp,
             ],
-            'siteSettings' => cache()->remember('site_settings', 3600, fn () => [
+            'siteSettings' => cache()->remember('site_settings', 3600, fn() => [
                 'logo' => Setting::where('key', 'site_logo')->first()?->getFirstMediaUrl('site_logo'),
                 'favicon' => Setting::where('key', 'site_favicon')->first()?->getFirstMediaUrl('site_favicon'),
             ]),
@@ -72,7 +86,7 @@ class HandleInertiaRequests extends Middleware
                     ->latest()
                     ->take(10)
                     ->get()
-                    ->map(fn ($n) => [
+                    ->map(fn($n) => [
                         'id' => $n->id,
                         'message' => $n->data['message'],
                         'user_id' => $n->data['user_id'],

@@ -9,6 +9,12 @@ use App\Mail\WelcomeEmail;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Mail;
 
+/**
+ * Sends a welcome email to a newly created user.
+ *
+ * Queued via ShouldQueue so it runs in the background
+ * without delaying the HTTP response.
+ */
 class SendWelcomeEmail implements ShouldQueue
 {
     /**
@@ -20,7 +26,7 @@ class SendWelcomeEmail implements ShouldQueue
     }
 
     /**
-     * Handle the event.
+     * Sends the WelcomeEmail mailable to the newly created user's email address.
      */
     public function handle(UserCreated $event): void
     {

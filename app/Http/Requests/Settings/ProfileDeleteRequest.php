@@ -8,6 +8,11 @@ use App\Concerns\PasswordValidationRules;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Validates account deletion by requiring the user's current password.
+ *
+ * Acts as a confirmation step to prevent accidental or unauthorised deletion.
+ */
 class ProfileDeleteRequest extends FormRequest
 {
     use PasswordValidationRules;

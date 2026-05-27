@@ -12,10 +12,19 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Laravel\Fortify\Features;
 
+/**
+ * Handles the two-factor authentication settings page.
+ *
+ * Conditionally requires password confirmation before showing
+ * 2FA settings, based on the Fortify feature configuration.
+ */
 class TwoFactorAuthenticationController extends Controller implements HasMiddleware
 {
     /**
-     * Get the middleware that should be assigned to the controller.
+     * Conditionally applies password confirmation middleware to the show action.
+     *
+     * Whether confirmation is required is driven by the 'confirmPassword'
+     * option in config/fortify.php, so no code change is needed to toggle it.
      */
     public static function middleware(): array
     {

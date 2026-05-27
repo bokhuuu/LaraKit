@@ -8,6 +8,13 @@ use Illuminate\Support\Facades\Gate;
 use Laravel\Horizon\Horizon;
 use Laravel\Horizon\HorizonApplicationServiceProvider;
 
+/**
+ * Configures Laravel Horizon for queue monitoring.
+ *
+ * Controls dashboard access via a Gate definition.
+ * In local environments Horizon is always accessible.
+ * In production only explicitly whitelisted emails can view it.
+ */
 class HorizonServiceProvider extends HorizonApplicationServiceProvider
 {
     /**
@@ -23,9 +30,10 @@ class HorizonServiceProvider extends HorizonApplicationServiceProvider
     }
 
     /**
-     * Register the Horizon gate.
+     * Defines which users can access the Horizon dashboard in production.
      *
-     * This gate determines who can access Horizon in non-local environments.
+     * Add authorised email addresses to the array to grant access.
+     * The gate is bypassed entirely in local environments.
      */
     protected function gate(): void
     {
