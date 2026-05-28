@@ -25,6 +25,9 @@ interface User {
     email: string;
     is_active: boolean;
     roles: Role[];
+    last_login_at: string | null;
+    last_login_ip: string | null;
+    last_login_agent: string | null;
 }
 
 interface Props {
@@ -309,6 +312,25 @@ export default function EditUser({ user, roles, avatarUrl }: Props) {
                                 <p className="mt-1 text-xs text-red-500">
                                     {errors.is_active}
                                 </p>
+                            )}
+
+                            {user.last_login_at && (
+                                <div className="space-y-1 rounded-md border bg-muted/40 px-4 py-3 text-sm">
+                                    <p className="font-medium text-muted-foreground">
+                                        Last Login
+                                    </p>
+                                    <p>
+                                        {new Date(
+                                            user.last_login_at,
+                                        ).toLocaleString()}
+                                    </p>
+                                    <p className="text-muted-foreground">
+                                        {user.last_login_ip}
+                                    </p>
+                                    <p className="text-xs text-muted-foreground">
+                                        {user.last_login_agent}
+                                    </p>
+                                </div>
                             )}
 
                             <div className="pt-2">
