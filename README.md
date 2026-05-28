@@ -132,6 +132,7 @@ Controllers stay thin. Business rules live in one place.
 ### System
 
 - Login History - last login timestamp, IP address and user agent tracked per user, displayed on edit page
+- 403 error page with logout button
 
 ### Code Quality
 
@@ -149,11 +150,10 @@ Controllers stay thin. Business rules live in one place.
 
 ---
 
-### Coming Soon
+## Coming Soon
 
 ### Core
 
-- Profile Page - avatar management, better 2FA setup and recovery codes UI
 - UI Translations - Laravel lang system, English + Georgian, admin-switchable
 
 ### Content
