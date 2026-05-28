@@ -152,17 +152,13 @@ Controllers stay thin. Business rules live in one place.
 
 ## Coming Soon
 
-### Core
-
-- UI Translations - Laravel lang system, English + Georgian, admin-switchable
-
 ### Content
 
-- Posts Module - full CRUD with categories, tags, TipTap rich text editor, SEO fields, draft/published/scheduled status, featured image, soft delete, activity logging
+- Posts Module - full CRUD with categories, tags, TipTap rich text editor, SEO fields, draft/published/scheduled status, featured image, soft delete, activity logging, multilingual content (EN + KA), PDF export, Excel export
 
 ### API
 
-- API Layer - Sanctum token management, versioned API (v1/), API Resources, rate limiting, Postman collection
+- API Layer - Sanctum token management, versioned API (v1/), API Resources, rate limiting on all endpoints, health check endpoint, Postman collection
 
 ### Quality
 
