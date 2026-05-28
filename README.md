@@ -133,6 +133,8 @@ Controllers stay thin. Business rules live in one place.
 
 - Pint - Laravel code formatter configured, `strict_types=1` enforced across all PHP files
 - Docblocks - every class and public method documented
+- N+1 Protection - `preventLazyLoading()` in development, DB indexes on performance-critical columns
+- Telescope - query, request, mail and job inspection dashboard at `/telescope`
 
 ### UI / UX
 
@@ -162,7 +164,6 @@ Controllers stay thin. Business rules live in one place.
 ### Quality
 
 - Pest Test Suite - full coverage (auth, users, settings,notifications, API),`Mail::fake()`, `Notification::fake()`, `Queue::fake()`
-- N+1 Protection - `preventLazyLoading()` in development, DB indexes on all foreign keys
 
 ### Advanced
 
@@ -170,7 +171,6 @@ Controllers stay thin. Business rules live in one place.
 - Cache / Maintenance Panel - clear config/route/view cache, maintenance mode toggle, system info
 - Global Search - Ctrl+K across users, settings, posts
 - Role-Based Sidebar Visibility - editors see only content modules
-- Telescope - Laravel debugbar for development
 
 ### Deployment
 

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('key')->unique();
             $table->text('value')->nullable();
-            $table->string('group');
+            $table->string('group')->index();
             $table->string('type')->default('text');
             $table->string('label');
             $table->text('description')->nullable();

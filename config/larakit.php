@@ -56,4 +56,12 @@ return [
         'unread_limit'     => env('LARAKIT_UNREAD_NOTIFICATIONS_LIMIT', 10),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Telescope Access Email
+    |--------------------------------------------------------------------------
+    | The email address allowed to access Telescope in non-local environments.
+    | Set this in your .env file. Leave empty to disable access entirely.
+    */
+    'telescope_access_email' => env('TELESCOPE_ACCESS_EMAIL', ''),
 ];
