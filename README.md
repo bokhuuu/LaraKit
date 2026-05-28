@@ -129,6 +129,10 @@ Controllers stay thin. Business rules live in one place.
 - Click navigates directly to the relevant resource
 - Database + email channels, fully queued
 
+### System
+
+- Login History - last login timestamp, IP address and user agent tracked per user, displayed on edit page
+
 ### Code Quality
 
 - Pint - Laravel code formatter configured, `strict_types=1` enforced across all PHP files
@@ -149,7 +153,6 @@ Controllers stay thin. Business rules live in one place.
 
 ### Core
 
-- Login History - last login timestamp, IP address and user agent per user
 - Profile Page - avatar management, better 2FA setup and recovery codes UI
 - UI Translations - Laravel lang system, English + Georgian, admin-switchable
 
