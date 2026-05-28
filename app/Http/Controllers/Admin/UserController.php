@@ -108,7 +108,9 @@ class UserController extends Controller
         ])->values();
 
         return Inertia::render('admin/users/edit', [
-            'user' => $foundUser,
+            'user' => array_merge($foundUser->toArray(), [
+                'last_login_at' => $foundUser->last_login_at?->format('M d, Y H:i'),
+            ]),
             'roles' => $roles,
             'avatarUrl' => $foundUser->getFirstMediaUrl(config('larakit.media.avatar_collection'), 'thumb'),
         ]);

@@ -50,6 +50,9 @@ class User extends Authenticatable implements HasMedia
         'password',
         'avatar',
         'is_active',
+        'last_login_at',
+        'last_login_ip',
+        'last_login_agent',
     ];
 
     /**
@@ -76,6 +79,7 @@ class User extends Authenticatable implements HasMedia
             'password' => 'hashed',
             'two_factor_confirmed_at' => 'datetime',
             'is_active' => 'boolean',
+            'last_login_at' => 'datetime',
         ];
     }
 
