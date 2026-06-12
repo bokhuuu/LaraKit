@@ -7,6 +7,7 @@ import {
     Search,
     Trash2,
     X,
+    FileSpreadsheet,
 } from 'lucide-react';
 import { useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
@@ -121,6 +122,15 @@ export default function PostsIndex({ posts, filters }: Props) {
                             <Trash2 className="h-4 w-4" />
                             <span className="hidden sm:inline">View Trash</span>
                         </Link>
+                        <a
+                            href={PostController.exportExcel.url()}
+                            className="flex items-center gap-1 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+                        >
+                            <FileSpreadsheet className="h-4 w-4" />
+                            <span className="hidden sm:inline">
+                                Export Excel
+                            </span>
+                        </a>
                         <Link
                             href={PostController.create.url()}
                             className="flex items-center gap-1 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"

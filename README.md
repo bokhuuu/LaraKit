@@ -160,6 +160,7 @@ Controllers stay thin. Business rules live in one place.
 - Activity logging on all mutations
 - Fully separated module — removable without touching LaraKit core
 - PDF export via DomPDF - streams a styled PDF directly from the posts index
+- Excel export via Laravel Excel - downloads all posts as a formatted .xlsx file
 
 ---
 
