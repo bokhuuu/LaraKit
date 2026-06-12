@@ -158,17 +158,22 @@ Controllers stay thin. Business rules live in one place.
 - Author assignment
 - Soft delete with trash / restore / force delete
 - Activity logging on all mutations
-- Fully separated module — removable without touching LaraKit core
+- Fully separated module - removable without touching LaraKit core
 - PDF export via DomPDF - streams a styled PDF directly from the posts index
 - Excel export via Laravel Excel - downloads all posts as a formatted .xlsx file
+
+### ✅ API Layer
+
+- Versioned REST API at `/api/v1/`
+- Health check endpoint - `/api/v1/health`
+- Posts endpoints - paginated list and single post by slug
+- API Resources - clean JSON output, no raw DB fields exposed
+- Sanctum token authentication - Bearer token in Authorization header
+- Token management UI - create, list, revoke tokens from admin panel
 
 ---
 
 ## Coming Soon
-
-### ⬜ API
-
-- API Layer - Sanctum token management, versioned API (v1/), API Resources, rate limiting on all endpoints, health check endpoint, Postman collection
 
 ### ⬜ Quality
 

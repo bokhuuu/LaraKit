@@ -6,6 +6,7 @@ import {
     Activity,
     ShieldCheck,
     FileText,
+    KeyRound,
 } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
@@ -63,6 +64,11 @@ export function AppSidebar() {
             title: 'Posts',
             href: '/admin/posts',
             icon: FileText,
+        },
+        {
+            title: 'API Tokens',
+            href: '/admin/tokens',
+            icon: KeyRound,
         },
     ];
 
