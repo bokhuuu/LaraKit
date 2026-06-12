@@ -21,4 +21,6 @@ Route::prefix('admin/posts')
         Route::delete('/{id}/force-delete', [PostController::class, 'forceDelete'])->name('forceDelete');
 
         Route::get('/{post}/pdf', [PostController::class, 'exportPdf'])->name('exportPdf');
+
+        Route::get('/export/excel', [PostController::class, 'exportExcel'])->name('exportExcel');
     });

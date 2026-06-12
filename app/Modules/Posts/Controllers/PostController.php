@@ -9,11 +9,13 @@ use App\Modules\Posts\Models\Post;
 use App\Modules\Posts\Requests\StorePostRequest;
 use App\Modules\Posts\Requests\UpdatePostRequest;
 use App\Modules\Posts\Services\PostService;
+use App\Services\ExcelService;
 use App\Services\PdfService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**
  * Handles HTTP requests for the Posts admin module.
@@ -23,6 +25,7 @@ class PostController extends Controller
     public function __construct(
         private readonly PostService $service,
         private readonly PdfService $pdfService,
+        private readonly ExcelService $excelService,
     ) {}
 
     /**
@@ -128,5 +131,13 @@ class PostController extends Controller
     public function exportPdf(Post $post): \Illuminate\Http\Response
     {
         return $this->pdfService->generatePostPdf($post);
+    }
+
+    /**
+     * Download all posts as an Excel export.
+     */
+    public function exportExcel(): BinaryFileResponse
+    {
+        return $this->excelService->exportPosts();
     }
 }
