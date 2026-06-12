@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
+use Laravel\Sanctum\HasApiTokens;
 use Spatie\Activitylog\Models\Concerns\LogsActivity;
 use Spatie\Activitylog\Support\LogOptions;
 use Spatie\MediaLibrary\HasMedia;
@@ -39,7 +40,8 @@ class User extends Authenticatable implements HasMedia
         LogsActivity,
         Notifiable,
         SoftDeletes,
-        TwoFactorAuthenticatable;
+        TwoFactorAuthenticatable,
+        HasApiTokens;
 
     /**
      * The attributes that are mass assignable.

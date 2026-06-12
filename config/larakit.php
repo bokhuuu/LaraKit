@@ -38,6 +38,7 @@ return [
     | Change here to rename a collection without touching any other file.
     */
     'media' => [
+        'disk'               => env('LARAKIT_MEDIA_DISK', 'public'),
         'avatar_collection'  => 'avatar',
         'logo_collection'    => 'site_logo',
         'favicon_collection' => 'site_favicon',

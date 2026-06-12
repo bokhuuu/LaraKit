@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\TokenController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
@@ -44,6 +45,12 @@ Route::middleware(['auth', 'admin'])
         Route::prefix('notifications')->name('notifications.')->group(function () {
             Route::post('/{id}/read', [NotificationController::class, 'markAsRead'])->name('read');
             Route::post('/read-all', [NotificationController::class, 'markAllAsRead'])->name('read-all');
+        });
+
+        Route::prefix('tokens')->name('tokens.')->group(function () {
+            Route::get('/', [TokenController::class, 'index'])->name('index');
+            Route::post('/', [TokenController::class, 'store'])->name('store');
+            Route::delete('/{id}', [TokenController::class, 'destroy'])->name('destroy');
         });
     });
 
