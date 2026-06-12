@@ -5,6 +5,7 @@ import {
     LayoutGrid,
     Activity,
     ShieldCheck,
+    FileText,
 } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
@@ -57,6 +58,11 @@ export function AppSidebar() {
             title: 'Activity Log',
             href: '/admin/activity-log',
             icon: Activity,
+        },
+        {
+            title: 'Posts',
+            href: '/admin/posts',
+            icon: FileText,
         },
     ];
 
