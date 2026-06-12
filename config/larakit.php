@@ -52,8 +52,9 @@ return [
     */
     'notifications' => [
         'new_user_subject' => env('LARAKIT_NEW_USER_SUBJECT', 'New User Registered'),
-        'footer'           => env('LARAKIT_NOTIFICATION_FOOTER', 'This is an automated notification from LaraKit.'),
+        'footer'                => env('LARAKIT_NOTIFICATION_FOOTER', ''),
         'unread_limit'     => env('LARAKIT_UNREAD_NOTIFICATIONS_LIMIT', 10),
+        'welcome_email_subject' => env('LARAKIT_WELCOME_EMAIL_SUBJECT', 'Welcome'),
     ],
 
     /*
@@ -64,4 +65,15 @@ return [
     | Set this in your .env file. Leave empty to disable access entirely.
     */
     'telescope_access_email' => env('TELESCOPE_ACCESS_EMAIL', ''),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Permissions
+    |--------------------------------------------------------------------------
+    | Permissions excluded from admin role by default.
+    | Super admin always receives all permissions regardless of this list.
+    */
+    'permissions' => [
+        'admin_excluded' => ['roles.view', 'roles.edit'],
+    ],
 ];
