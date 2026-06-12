@@ -9,6 +9,7 @@ use App\Modules\Posts\Models\Post;
 use App\Modules\Posts\Requests\StorePostRequest;
 use App\Modules\Posts\Requests\UpdatePostRequest;
 use App\Modules\Posts\Services\PostService;
+use App\Services\PdfService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -21,6 +22,7 @@ class PostController extends Controller
 {
     public function __construct(
         private readonly PostService $service,
+        private readonly PdfService $pdfService,
     ) {}
 
     /**
@@ -118,5 +120,13 @@ class PostController extends Controller
 
         return redirect()->route('admin.posts.trash')
             ->with('success', 'Post permanently deleted.');
+    }
+
+    /**
+     * Stream a PDF export of the post.
+     */
+    public function exportPdf(Post $post): \Illuminate\Http\Response
+    {
+        return $this->pdfService->generatePostPdf($post);
     }
 }
