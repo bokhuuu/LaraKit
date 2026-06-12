@@ -194,6 +194,20 @@ Controllers stay thin. Business rules live in one place.
 
 ---
 
+## Developer Notes
+
+### Regenerating Wayfinder
+
+LaraKit uses Wayfinder for typed route helpers. Due to a breaking change in v0.1.7, `form` helpers are no longer generated automatically.
+
+Always use the provided script instead of running `php artisan wayfinder:generate` directly:
+
+```bash
+bash scripts/wayfinder.sh
+```
+
+This regenerates all route types and restores the form helpers needed by auth and settings pages.
+
 ## Known Limitations
 
 - No multi-tenancy support - see larakit-saas (planned)

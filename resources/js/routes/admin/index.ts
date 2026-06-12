@@ -1,11 +1,9 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../wayfinder'
 import users from './users'
 import settings from './settings'
 import roles from './roles'
 import activityLog from './activity-log'
 import notifications from './notifications'
-import tokens from './tokens'
-import posts from './posts'
 /**
 * @see \App\Http\Controllers\Admin\DashboardController::dashboard
 * @see app/Http/Controllers/Admin/DashboardController.php:20
@@ -50,6 +48,43 @@ dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     method: 'head',
 })
 
+/**
+* @see \App\Http\Controllers\Admin\DashboardController::dashboard
+* @see app/Http/Controllers/Admin/DashboardController.php:20
+* @route '/admin/dashboard'
+*/
+const dashboardForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: dashboard.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Admin\DashboardController::dashboard
+* @see app/Http/Controllers/Admin/DashboardController.php:20
+* @route '/admin/dashboard'
+*/
+dashboardForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: dashboard.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Admin\DashboardController::dashboard
+* @see app/Http/Controllers/Admin/DashboardController.php:20
+* @route '/admin/dashboard'
+*/
+dashboardForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: dashboard.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+dashboard.form = dashboardForm
+
 const admin = {
     dashboard: Object.assign(dashboard, dashboard),
     users: Object.assign(users, users),
@@ -57,8 +92,6 @@ const admin = {
     roles: Object.assign(roles, roles),
     activityLog: Object.assign(activityLog, activityLog),
     notifications: Object.assign(notifications, notifications),
-    tokens: Object.assign(tokens, tokens),
-    posts: Object.assign(posts, posts),
 }
 
 export default admin
