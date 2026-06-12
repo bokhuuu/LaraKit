@@ -1,5 +1,13 @@
 import { Head, Link, router } from '@inertiajs/react';
-import { Edit, FileText, Plus, Search, Trash2, X } from 'lucide-react';
+import {
+    Edit,
+    FileText,
+    FileDown,
+    Plus,
+    Search,
+    Trash2,
+    X,
+} from 'lucide-react';
 import { useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import {
@@ -257,6 +265,17 @@ export default function PostsIndex({ posts, filters }: Props) {
                                                 >
                                                     <Edit className="h-4 w-4" />
                                                 </Link>
+
+                                                <a
+                                                    href={PostController.exportPdf.url(
+                                                        { post: post.id },
+                                                    )}
+                                                    target="_blank"
+                                                    className="text-muted-foreground hover:text-foreground"
+                                                    title="Export PDF"
+                                                >
+                                                    <FileDown className="h-4 w-4" />
+                                                </a>
                                                 <button
                                                     onClick={() =>
                                                         setPostToDelete(post)

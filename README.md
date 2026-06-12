@@ -159,6 +159,7 @@ Controllers stay thin. Business rules live in one place.
 - Soft delete with trash / restore / force delete
 - Activity logging on all mutations
 - Fully separated module — removable without touching LaraKit core
+- PDF export via DomPDF - streams a styled PDF directly from the posts index
 
 ---
 
