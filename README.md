@@ -185,6 +185,7 @@ Controllers stay thin. Business rules live in one place.
 - Cache / Maintenance Panel - clear config/route/view cache, maintenance mode toggle, system info
 - Global Search - Ctrl+K across users, settings, posts
 - Role-Based Sidebar Visibility - editors see only content modules
+- Multilingual content (EN + KA) - UI labels via Laravel lang files, post content via Spatie Translatable
 
 ### ⬜ Deployment
 
