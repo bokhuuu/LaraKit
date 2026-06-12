@@ -18,7 +18,7 @@ class PermissionSeeder extends Seeder
         foreach (config('permissions') as $module => $actions) {
             foreach ($actions as $action) {
                 Permission::firstOrCreate([
-                    'name' => $module.'.'.$action,
+                    'name' => $module . '.' . $action,
                     'guard_name' => 'web',
                 ]);
             }
@@ -29,7 +29,7 @@ class PermissionSeeder extends Seeder
 
         $admin = Role::findByName('admin');
         $admin->syncPermissions(
-            Permission::whereNotIn('name', ['roles.view', 'roles.edit'])->get()
+            Permission::whereNotIn('name', config('larakit.permissions.admin_excluded'))->get()
         );
 
         $editor = Role::findByName('editor');

@@ -148,33 +148,48 @@ Controllers stay thin. Business rules live in one place.
 - Flash messages with timestamp-based re-triggering
 - Confirmation dialogs for destructive actions
 
+### ✅ Posts Module
+
+- Full CRUD with categories (many-to-one) and tags (many-to-many pivot)
+- TipTap rich text editor with toolbar (bold, italic, headings, lists, links, alignment)
+- Featured image upload via Spatie Media Library
+- SEO fields (meta title, meta description)
+- Status: draft / published / scheduled (with publish date)
+- Author assignment
+- Soft delete with trash / restore / force delete
+- Activity logging on all mutations
+- Fully separated module — removable without touching LaraKit core
+
 ---
 
 ## Coming Soon
 
-### Content
-
-- Posts Module - full CRUD with categories, tags, TipTap rich text editor, SEO fields, draft/published/scheduled status, featured image, soft delete, activity logging, multilingual content (EN + KA), PDF export, Excel export
-
-### API
+### ⬜ API
 
 - API Layer - Sanctum token management, versioned API (v1/), API Resources, rate limiting on all endpoints, health check endpoint, Postman collection
 
-### Quality
+### ⬜ Quality
 
 - Pest Test Suite - full coverage (auth, users, settings,notifications, API),`Mail::fake()`, `Notification::fake()`, `Queue::fake()`
 
-### Advanced
+### ⬜ Advanced
 
 - Security Hardening - rate limiting on login, OWASP basics, Sentry error tracking
 - Cache / Maintenance Panel - clear config/route/view cache, maintenance mode toggle, system info
 - Global Search - Ctrl+K across users, settings, posts
 - Role-Based Sidebar Visibility - editors see only content modules
 
-### Deployment
+### ⬜ Deployment
 
 - Docker - `docker-compose.yml` with app, MySQL, Redis, Horizon
 - GitHub Actions CI/CD - run Pest and Pint on every push, deploy on merge to main
 - Deployment guides - VPS and Vultr, `.env.example` fully documented, production checklist
 
 ---
+
+## Known Limitations
+
+- No multi-tenancy support - see larakit-saas (planned)
+- No page builder - see larakit-cms (planned)
+- Pest test suite not yet complete - not recommended for production as-is
+- Security hardening pass not done - review before any live deployment
