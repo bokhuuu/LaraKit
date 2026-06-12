@@ -4,6 +4,7 @@ import settings from './settings'
 import roles from './roles'
 import activityLog from './activity-log'
 import notifications from './notifications'
+import tokens from './tokens'
 import posts from './posts'
 /**
 * @see \App\Http\Controllers\Admin\DashboardController::dashboard
@@ -56,6 +57,7 @@ const admin = {
     roles: Object.assign(roles, roles),
     activityLog: Object.assign(activityLog, activityLog),
     notifications: Object.assign(notifications, notifications),
+    tokens: Object.assign(tokens, tokens),
     posts: Object.assign(posts, posts),
 }
 
