@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Admin\NotificationController::markAsRead
 * @see app/Http/Controllers/Admin/NotificationController.php:26
@@ -52,28 +52,6 @@ markAsRead.post = (args: { id: string | number } | [id: string | number ] | stri
 })
 
 /**
-* @see \App\Http\Controllers\Admin\NotificationController::markAsRead
-* @see app/Http/Controllers/Admin/NotificationController.php:26
-* @route '/admin/notifications/{id}/read'
-*/
-const markAsReadForm = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: markAsRead.url(args, options),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Admin\NotificationController::markAsRead
-* @see app/Http/Controllers/Admin/NotificationController.php:26
-* @route '/admin/notifications/{id}/read'
-*/
-markAsReadForm.post = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: markAsRead.url(args, options),
-    method: 'post',
-})
-
-markAsRead.form = markAsReadForm
-
-/**
 * @see \App\Http\Controllers\Admin\NotificationController::markAllAsRead
 * @see app/Http/Controllers/Admin/NotificationController.php:37
 * @route '/admin/notifications/read-all'
@@ -106,28 +84,6 @@ markAllAsRead.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => (
     url: markAllAsRead.url(options),
     method: 'post',
 })
-
-/**
-* @see \App\Http\Controllers\Admin\NotificationController::markAllAsRead
-* @see app/Http/Controllers/Admin/NotificationController.php:37
-* @route '/admin/notifications/read-all'
-*/
-const markAllAsReadForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: markAllAsRead.url(options),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Admin\NotificationController::markAllAsRead
-* @see app/Http/Controllers/Admin/NotificationController.php:37
-* @route '/admin/notifications/read-all'
-*/
-markAllAsReadForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: markAllAsRead.url(options),
-    method: 'post',
-})
-
-markAllAsRead.form = markAllAsReadForm
 
 const NotificationController = { markAsRead, markAllAsRead }
 

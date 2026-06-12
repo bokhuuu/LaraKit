@@ -1,7 +1,7 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../wayfinder'
 /**
 * @see \App\Modules\Posts\Controllers\PostController::index
-* @see app/Modules/Posts/Controllers/PostController.php:29
+* @see app/Modules/Posts/Controllers/PostController.php:31
 * @route '/admin/posts'
 */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ index.definition = {
 
 /**
 * @see \App\Modules\Posts\Controllers\PostController::index
-* @see app/Modules/Posts/Controllers/PostController.php:29
+* @see app/Modules/Posts/Controllers/PostController.php:31
 * @route '/admin/posts'
 */
 index.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ index.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Modules\Posts\Controllers\PostController::index
-* @see app/Modules/Posts/Controllers/PostController.php:29
+* @see app/Modules/Posts/Controllers/PostController.php:31
 * @route '/admin/posts'
 */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Modules\Posts\Controllers\PostController::index
-* @see app/Modules/Posts/Controllers/PostController.php:29
+* @see app/Modules/Posts/Controllers/PostController.php:31
 * @route '/admin/posts'
 */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -44,45 +44,8 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see \App\Modules\Posts\Controllers\PostController::index
-* @see app/Modules/Posts/Controllers/PostController.php:29
-* @route '/admin/posts'
-*/
-const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Modules\Posts\Controllers\PostController::index
-* @see app/Modules/Posts/Controllers/PostController.php:29
-* @route '/admin/posts'
-*/
-indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Modules\Posts\Controllers\PostController::index
-* @see app/Modules/Posts/Controllers/PostController.php:29
-* @route '/admin/posts'
-*/
-indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-index.form = indexForm
-
-/**
 * @see \App\Modules\Posts\Controllers\PostController::create
-* @see app/Modules/Posts/Controllers/PostController.php:42
+* @see app/Modules/Posts/Controllers/PostController.php:44
 * @route '/admin/posts/create'
 */
 export const create = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -97,7 +60,7 @@ create.definition = {
 
 /**
 * @see \App\Modules\Posts\Controllers\PostController::create
-* @see app/Modules/Posts/Controllers/PostController.php:42
+* @see app/Modules/Posts/Controllers/PostController.php:44
 * @route '/admin/posts/create'
 */
 create.url = (options?: RouteQueryOptions) => {
@@ -106,7 +69,7 @@ create.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Modules\Posts\Controllers\PostController::create
-* @see app/Modules/Posts/Controllers/PostController.php:42
+* @see app/Modules/Posts/Controllers/PostController.php:44
 * @route '/admin/posts/create'
 */
 create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -116,7 +79,7 @@ create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Modules\Posts\Controllers\PostController::create
-* @see app/Modules/Posts/Controllers/PostController.php:42
+* @see app/Modules/Posts/Controllers/PostController.php:44
 * @route '/admin/posts/create'
 */
 create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -125,45 +88,8 @@ create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see \App\Modules\Posts\Controllers\PostController::create
-* @see app/Modules/Posts/Controllers/PostController.php:42
-* @route '/admin/posts/create'
-*/
-const createForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: create.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Modules\Posts\Controllers\PostController::create
-* @see app/Modules/Posts/Controllers/PostController.php:42
-* @route '/admin/posts/create'
-*/
-createForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: create.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Modules\Posts\Controllers\PostController::create
-* @see app/Modules/Posts/Controllers/PostController.php:42
-* @route '/admin/posts/create'
-*/
-createForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: create.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-create.form = createForm
-
-/**
 * @see \App\Modules\Posts\Controllers\PostController::store
-* @see app/Modules/Posts/Controllers/PostController.php:50
+* @see app/Modules/Posts/Controllers/PostController.php:52
 * @route '/admin/posts'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -178,7 +104,7 @@ store.definition = {
 
 /**
 * @see \App\Modules\Posts\Controllers\PostController::store
-* @see app/Modules/Posts/Controllers/PostController.php:50
+* @see app/Modules/Posts/Controllers/PostController.php:52
 * @route '/admin/posts'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -187,7 +113,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Modules\Posts\Controllers\PostController::store
-* @see app/Modules/Posts/Controllers/PostController.php:50
+* @see app/Modules/Posts/Controllers/PostController.php:52
 * @route '/admin/posts'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -196,30 +122,8 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 })
 
 /**
-* @see \App\Modules\Posts\Controllers\PostController::store
-* @see app/Modules/Posts/Controllers/PostController.php:50
-* @route '/admin/posts'
-*/
-const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: store.url(options),
-    method: 'post',
-})
-
-/**
-* @see \App\Modules\Posts\Controllers\PostController::store
-* @see app/Modules/Posts/Controllers/PostController.php:50
-* @route '/admin/posts'
-*/
-storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: store.url(options),
-    method: 'post',
-})
-
-store.form = storeForm
-
-/**
 * @see \App\Modules\Posts\Controllers\PostController::edit
-* @see app/Modules/Posts/Controllers/PostController.php:61
+* @see app/Modules/Posts/Controllers/PostController.php:63
 * @route '/admin/posts/{post}/edit'
 */
 export const edit = (args: { post: number | { id: number } } | [post: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -234,7 +138,7 @@ edit.definition = {
 
 /**
 * @see \App\Modules\Posts\Controllers\PostController::edit
-* @see app/Modules/Posts/Controllers/PostController.php:61
+* @see app/Modules/Posts/Controllers/PostController.php:63
 * @route '/admin/posts/{post}/edit'
 */
 edit.url = (args: { post: number | { id: number } } | [post: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -267,7 +171,7 @@ edit.url = (args: { post: number | { id: number } } | [post: number | { id: numb
 
 /**
 * @see \App\Modules\Posts\Controllers\PostController::edit
-* @see app/Modules/Posts/Controllers/PostController.php:61
+* @see app/Modules/Posts/Controllers/PostController.php:63
 * @route '/admin/posts/{post}/edit'
 */
 edit.get = (args: { post: number | { id: number } } | [post: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -277,7 +181,7 @@ edit.get = (args: { post: number | { id: number } } | [post: number | { id: numb
 
 /**
 * @see \App\Modules\Posts\Controllers\PostController::edit
-* @see app/Modules/Posts/Controllers/PostController.php:61
+* @see app/Modules/Posts/Controllers/PostController.php:63
 * @route '/admin/posts/{post}/edit'
 */
 edit.head = (args: { post: number | { id: number } } | [post: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -286,45 +190,8 @@ edit.head = (args: { post: number | { id: number } } | [post: number | { id: num
 })
 
 /**
-* @see \App\Modules\Posts\Controllers\PostController::edit
-* @see app/Modules/Posts/Controllers/PostController.php:61
-* @route '/admin/posts/{post}/edit'
-*/
-const editForm = (args: { post: number | { id: number } } | [post: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: edit.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Modules\Posts\Controllers\PostController::edit
-* @see app/Modules/Posts/Controllers/PostController.php:61
-* @route '/admin/posts/{post}/edit'
-*/
-editForm.get = (args: { post: number | { id: number } } | [post: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: edit.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Modules\Posts\Controllers\PostController::edit
-* @see app/Modules/Posts/Controllers/PostController.php:61
-* @route '/admin/posts/{post}/edit'
-*/
-editForm.head = (args: { post: number | { id: number } } | [post: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: edit.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-edit.form = editForm
-
-/**
 * @see \App\Modules\Posts\Controllers\PostController::update
-* @see app/Modules/Posts/Controllers/PostController.php:72
+* @see app/Modules/Posts/Controllers/PostController.php:74
 * @route '/admin/posts/{post}'
 */
 export const update = (args: { post: number | { id: number } } | [post: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -339,7 +206,7 @@ update.definition = {
 
 /**
 * @see \App\Modules\Posts\Controllers\PostController::update
-* @see app/Modules/Posts/Controllers/PostController.php:72
+* @see app/Modules/Posts/Controllers/PostController.php:74
 * @route '/admin/posts/{post}'
 */
 update.url = (args: { post: number | { id: number } } | [post: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -372,7 +239,7 @@ update.url = (args: { post: number | { id: number } } | [post: number | { id: nu
 
 /**
 * @see \App\Modules\Posts\Controllers\PostController::update
-* @see app/Modules/Posts/Controllers/PostController.php:72
+* @see app/Modules/Posts/Controllers/PostController.php:74
 * @route '/admin/posts/{post}'
 */
 update.put = (args: { post: number | { id: number } } | [post: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -381,40 +248,8 @@ update.put = (args: { post: number | { id: number } } | [post: number | { id: nu
 })
 
 /**
-* @see \App\Modules\Posts\Controllers\PostController::update
-* @see app/Modules/Posts/Controllers/PostController.php:72
-* @route '/admin/posts/{post}'
-*/
-const updateForm = (args: { post: number | { id: number } } | [post: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: update.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'PUT',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'post',
-})
-
-/**
-* @see \App\Modules\Posts\Controllers\PostController::update
-* @see app/Modules/Posts/Controllers/PostController.php:72
-* @route '/admin/posts/{post}'
-*/
-updateForm.put = (args: { post: number | { id: number } } | [post: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: update.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'PUT',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'post',
-})
-
-update.form = updateForm
-
-/**
 * @see \App\Modules\Posts\Controllers\PostController::destroy
-* @see app/Modules/Posts/Controllers/PostController.php:83
+* @see app/Modules/Posts/Controllers/PostController.php:85
 * @route '/admin/posts/{post}'
 */
 export const destroy = (args: { post: number | { id: number } } | [post: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -429,7 +264,7 @@ destroy.definition = {
 
 /**
 * @see \App\Modules\Posts\Controllers\PostController::destroy
-* @see app/Modules/Posts/Controllers/PostController.php:83
+* @see app/Modules/Posts/Controllers/PostController.php:85
 * @route '/admin/posts/{post}'
 */
 destroy.url = (args: { post: number | { id: number } } | [post: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -462,7 +297,7 @@ destroy.url = (args: { post: number | { id: number } } | [post: number | { id: n
 
 /**
 * @see \App\Modules\Posts\Controllers\PostController::destroy
-* @see app/Modules/Posts/Controllers/PostController.php:83
+* @see app/Modules/Posts/Controllers/PostController.php:85
 * @route '/admin/posts/{post}'
 */
 destroy.delete = (args: { post: number | { id: number } } | [post: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -471,40 +306,8 @@ destroy.delete = (args: { post: number | { id: number } } | [post: number | { id
 })
 
 /**
-* @see \App\Modules\Posts\Controllers\PostController::destroy
-* @see app/Modules/Posts/Controllers/PostController.php:83
-* @route '/admin/posts/{post}'
-*/
-const destroyForm = (args: { post: number | { id: number } } | [post: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: destroy.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'DELETE',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'post',
-})
-
-/**
-* @see \App\Modules\Posts\Controllers\PostController::destroy
-* @see app/Modules/Posts/Controllers/PostController.php:83
-* @route '/admin/posts/{post}'
-*/
-destroyForm.delete = (args: { post: number | { id: number } } | [post: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: destroy.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'DELETE',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'post',
-})
-
-destroy.form = destroyForm
-
-/**
 * @see \App\Modules\Posts\Controllers\PostController::trash
-* @see app/Modules/Posts/Controllers/PostController.php:94
+* @see app/Modules/Posts/Controllers/PostController.php:96
 * @route '/admin/posts/trash'
 */
 export const trash = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -519,7 +322,7 @@ trash.definition = {
 
 /**
 * @see \App\Modules\Posts\Controllers\PostController::trash
-* @see app/Modules/Posts/Controllers/PostController.php:94
+* @see app/Modules/Posts/Controllers/PostController.php:96
 * @route '/admin/posts/trash'
 */
 trash.url = (options?: RouteQueryOptions) => {
@@ -528,7 +331,7 @@ trash.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Modules\Posts\Controllers\PostController::trash
-* @see app/Modules/Posts/Controllers/PostController.php:94
+* @see app/Modules/Posts/Controllers/PostController.php:96
 * @route '/admin/posts/trash'
 */
 trash.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -538,7 +341,7 @@ trash.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Modules\Posts\Controllers\PostController::trash
-* @see app/Modules/Posts/Controllers/PostController.php:94
+* @see app/Modules/Posts/Controllers/PostController.php:96
 * @route '/admin/posts/trash'
 */
 trash.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -547,45 +350,8 @@ trash.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see \App\Modules\Posts\Controllers\PostController::trash
-* @see app/Modules/Posts/Controllers/PostController.php:94
-* @route '/admin/posts/trash'
-*/
-const trashForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: trash.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Modules\Posts\Controllers\PostController::trash
-* @see app/Modules/Posts/Controllers/PostController.php:94
-* @route '/admin/posts/trash'
-*/
-trashForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: trash.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Modules\Posts\Controllers\PostController::trash
-* @see app/Modules/Posts/Controllers/PostController.php:94
-* @route '/admin/posts/trash'
-*/
-trashForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: trash.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-trash.form = trashForm
-
-/**
 * @see \App\Modules\Posts\Controllers\PostController::restore
-* @see app/Modules/Posts/Controllers/PostController.php:104
+* @see app/Modules/Posts/Controllers/PostController.php:106
 * @route '/admin/posts/{id}/restore'
 */
 export const restore = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -600,7 +366,7 @@ restore.definition = {
 
 /**
 * @see \App\Modules\Posts\Controllers\PostController::restore
-* @see app/Modules/Posts/Controllers/PostController.php:104
+* @see app/Modules/Posts/Controllers/PostController.php:106
 * @route '/admin/posts/{id}/restore'
 */
 restore.url = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -627,7 +393,7 @@ restore.url = (args: { id: string | number } | [id: string | number ] | string |
 
 /**
 * @see \App\Modules\Posts\Controllers\PostController::restore
-* @see app/Modules/Posts/Controllers/PostController.php:104
+* @see app/Modules/Posts/Controllers/PostController.php:106
 * @route '/admin/posts/{id}/restore'
 */
 restore.post = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -636,30 +402,8 @@ restore.post = (args: { id: string | number } | [id: string | number ] | string 
 })
 
 /**
-* @see \App\Modules\Posts\Controllers\PostController::restore
-* @see app/Modules/Posts/Controllers/PostController.php:104
-* @route '/admin/posts/{id}/restore'
-*/
-const restoreForm = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: restore.url(args, options),
-    method: 'post',
-})
-
-/**
-* @see \App\Modules\Posts\Controllers\PostController::restore
-* @see app/Modules/Posts/Controllers/PostController.php:104
-* @route '/admin/posts/{id}/restore'
-*/
-restoreForm.post = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: restore.url(args, options),
-    method: 'post',
-})
-
-restore.form = restoreForm
-
-/**
 * @see \App\Modules\Posts\Controllers\PostController::forceDelete
-* @see app/Modules/Posts/Controllers/PostController.php:115
+* @see app/Modules/Posts/Controllers/PostController.php:117
 * @route '/admin/posts/{id}/force-delete'
 */
 export const forceDelete = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -674,7 +418,7 @@ forceDelete.definition = {
 
 /**
 * @see \App\Modules\Posts\Controllers\PostController::forceDelete
-* @see app/Modules/Posts/Controllers/PostController.php:115
+* @see app/Modules/Posts/Controllers/PostController.php:117
 * @route '/admin/posts/{id}/force-delete'
 */
 forceDelete.url = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -701,7 +445,7 @@ forceDelete.url = (args: { id: string | number } | [id: string | number ] | stri
 
 /**
 * @see \App\Modules\Posts\Controllers\PostController::forceDelete
-* @see app/Modules/Posts/Controllers/PostController.php:115
+* @see app/Modules/Posts/Controllers/PostController.php:117
 * @route '/admin/posts/{id}/force-delete'
 */
 forceDelete.delete = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -710,36 +454,72 @@ forceDelete.delete = (args: { id: string | number } | [id: string | number ] | s
 })
 
 /**
-* @see \App\Modules\Posts\Controllers\PostController::forceDelete
-* @see app/Modules/Posts/Controllers/PostController.php:115
-* @route '/admin/posts/{id}/force-delete'
+* @see \App\Modules\Posts\Controllers\PostController::exportPdf
+* @see app/Modules/Posts/Controllers/PostController.php:128
+* @route '/admin/posts/{post}/pdf'
 */
-const forceDeleteForm = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: forceDelete.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'DELETE',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
+export const exportPdf = (args: { post: number | { id: number } } | [post: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: exportPdf.url(args, options),
+    method: 'get',
+})
+
+exportPdf.definition = {
+    methods: ["get","head"],
+    url: '/admin/posts/{post}/pdf',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Modules\Posts\Controllers\PostController::exportPdf
+* @see app/Modules/Posts/Controllers/PostController.php:128
+* @route '/admin/posts/{post}/pdf'
+*/
+exportPdf.url = (args: { post: number | { id: number } } | [post: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { post: args }
+    }
+
+    if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
+        args = { post: args.id }
+    }
+
+    if (Array.isArray(args)) {
+        args = {
+            post: args[0],
         }
-    }),
-    method: 'post',
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        post: typeof args.post === 'object'
+        ? args.post.id
+        : args.post,
+    }
+
+    return exportPdf.definition.url
+            .replace('{post}', parsedArgs.post.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Modules\Posts\Controllers\PostController::exportPdf
+* @see app/Modules/Posts/Controllers/PostController.php:128
+* @route '/admin/posts/{post}/pdf'
+*/
+exportPdf.get = (args: { post: number | { id: number } } | [post: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: exportPdf.url(args, options),
+    method: 'get',
 })
 
 /**
-* @see \App\Modules\Posts\Controllers\PostController::forceDelete
-* @see app/Modules/Posts/Controllers/PostController.php:115
-* @route '/admin/posts/{id}/force-delete'
+* @see \App\Modules\Posts\Controllers\PostController::exportPdf
+* @see app/Modules/Posts/Controllers/PostController.php:128
+* @route '/admin/posts/{post}/pdf'
 */
-forceDeleteForm.delete = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: forceDelete.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'DELETE',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'post',
+exportPdf.head = (args: { post: number | { id: number } } | [post: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: exportPdf.url(args, options),
+    method: 'head',
 })
-
-forceDelete.form = forceDeleteForm
 
 const posts = {
     index: Object.assign(index, index),
@@ -751,6 +531,7 @@ const posts = {
     trash: Object.assign(trash, trash),
     restore: Object.assign(restore, restore),
     forceDelete: Object.assign(forceDelete, forceDelete),
+    exportPdf: Object.assign(exportPdf, exportPdf),
 }
 
 export default posts
