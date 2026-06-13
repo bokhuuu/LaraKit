@@ -15,6 +15,8 @@ Route::prefix('v1')->group(function () {
         'time'    => now()->toDateTimeString(),
     ]));
 
-    Route::get('/posts',        [PostApiController::class, 'index']);
-    Route::get('/posts/{slug}', [PostApiController::class, 'show']);
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::get('/posts',        [PostApiController::class, 'index']);
+        Route::get('/posts/{slug}', [PostApiController::class, 'show']);
+    });
 });
