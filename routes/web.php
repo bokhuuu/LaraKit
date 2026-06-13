@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Http\Controllers\Admin\ActivityLogController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\LocaleController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SettingController;
@@ -52,6 +53,8 @@ Route::middleware(['auth', 'admin'])
             Route::post('/', [TokenController::class, 'store'])->name('store');
             Route::delete('/{id}', [TokenController::class, 'destroy'])->name('destroy');
         });
+
+        Route::post('locale', [LocaleController::class, 'update'])->name('locale.update');
     });
 
 require __DIR__ . '/settings.php';

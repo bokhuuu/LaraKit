@@ -98,6 +98,10 @@ class HandleInertiaRequests extends Middleware
                         'created_at' => $n->created_at->diffForHumans(),
                     ]);
             },
+            'locale'       => app()->getLocale(),
+            'translations' => fn() => [
+                'posts' => trans('posts'),
+            ],
         ];
     }
 }

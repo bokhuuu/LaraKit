@@ -77,4 +77,16 @@ return [
     'permissions' => [
         'admin_excluded' => ['roles.view', 'roles.edit'],
     ],
+
+    /*
+|--------------------------------------------------------------------------
+| Locales
+|--------------------------------------------------------------------------
+| Supported locales for the admin panel interface and post content.
+| Add new locales to the available array and create matching lang/ files.
+*/
+    'locales' => [
+        'default'   => env('LARAKIT_DEFAULT_LOCALE', 'en'),
+        'available' => ['en', 'ka'],
+    ],
 ];
