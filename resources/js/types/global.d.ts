@@ -9,6 +9,8 @@ declare module '@inertiajs/core' {
             sidebarOpen: boolean;
             notifications: AdminNotification[];
             [key: string]: unknown;
+            locale: string;
+            translations: Record<string, Record<string, string>>;
         };
     }
 }

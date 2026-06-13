@@ -22,6 +22,7 @@ import {
     AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import AppLayout from '@/layouts/app-layout';
+import { useTranslations } from '@/lib/i18n';
 import type { BreadcrumbItem } from '@/types';
 import * as PostController from '@actions/App/Modules/Posts/Controllers/PostController';
 
@@ -108,6 +109,8 @@ export default function PostsIndex({ posts, filters }: Props) {
         );
     }
 
+    const { __ } = useTranslations();
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Posts" />
@@ -190,25 +193,25 @@ export default function PostsIndex({ posts, filters }: Props) {
                         <thead>
                             <tr className="border-b bg-muted/50">
                                 <th className="px-4 py-3 text-left font-medium">
-                                    Title
+                                    {__('posts.title')}
                                 </th>
                                 <th className="px-4 py-3 text-left font-medium">
-                                    Status
+                                    {__('posts.status')}
                                 </th>
                                 <th className="px-4 py-3 text-left font-medium">
-                                    Category
+                                    {__('posts.category')}
                                 </th>
                                 <th className="px-4 py-3 text-left font-medium">
-                                    Tags
+                                    {__('posts.tags')}
                                 </th>
                                 <th className="px-4 py-3 text-left font-medium">
-                                    Author
+                                    {__('posts.author')}
                                 </th>
                                 <th className="px-4 py-3 text-left font-medium">
-                                    Published
+                                    {__('posts.published_at')}
                                 </th>
                                 <th className="px-4 py-3 text-left font-medium">
-                                    Actions
+                                    {__('posts.actions')}
                                 </th>
                             </tr>
                         </thead>
