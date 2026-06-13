@@ -6,6 +6,7 @@ namespace App\Modules\Posts\Models;
 
 use App\Models\User;
 use App\Modules\Posts\Enums\PostStatus;
+use Database\Factories\PostFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -16,6 +17,7 @@ use Spatie\Activitylog\Models\Concerns\LogsActivity;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * Represents a blog post with full content, SEO, status and media support.
@@ -25,6 +27,7 @@ class Post extends Model implements HasMedia
     use SoftDeletes;
     use LogsActivity;
     use InteractsWithMedia;
+    use HasFactory;
 
     protected $fillable = [
         'title',
@@ -137,5 +140,10 @@ class Post extends Model implements HasMedia
     public function scopeByAuthor(Builder $query, int $authorId): Builder
     {
         return $query->where('author_id', $authorId);
+    }
+
+    protected static function newFactory(): PostFactory
+    {
+        return PostFactory::new();
     }
 }

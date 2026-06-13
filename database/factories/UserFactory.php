@@ -35,6 +35,7 @@ class UserFactory extends Factory
             'two_factor_secret' => null,
             'two_factor_recovery_codes' => null,
             'two_factor_confirmed_at' => null,
+            'is_active' => true
         ];
     }
 
@@ -43,7 +44,7 @@ class UserFactory extends Factory
      */
     public function unverified(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'email_verified_at' => null,
         ]);
     }
@@ -53,10 +54,24 @@ class UserFactory extends Factory
      */
     public function withTwoFactor(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'two_factor_secret' => encrypt('secret'),
             'two_factor_recovery_codes' => encrypt(json_encode(['recovery-code-1'])),
             'two_factor_confirmed_at' => now(),
         ]);
+    }
+
+    public function inactive(): static
+    {
+        return $this->state(fn(array $attributes) => [
+            'is_active' => false,
+        ]);
+    }
+
+    public function withRole(string $role): static
+    {
+        return $this->afterCreating(function (User $user) use ($role) {
+            $user->assignRole($role);
+        });
     }
 }
