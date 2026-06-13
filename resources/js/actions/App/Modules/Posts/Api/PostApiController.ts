@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Modules\Posts\Api\PostApiController::index
 * @see app/Modules/Posts/Api/PostApiController.php:21
@@ -42,6 +42,43 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: index.url(options),
     method: 'head',
 })
+
+/**
+* @see \App\Modules\Posts\Api\PostApiController::index
+* @see app/Modules/Posts/Api/PostApiController.php:21
+* @route '/api/v1/posts'
+*/
+const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Modules\Posts\Api\PostApiController::index
+* @see app/Modules/Posts/Api/PostApiController.php:21
+* @route '/api/v1/posts'
+*/
+indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Modules\Posts\Api\PostApiController::index
+* @see app/Modules/Posts/Api/PostApiController.php:21
+* @route '/api/v1/posts'
+*/
+indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+index.form = indexForm
 
 /**
 * @see \App\Modules\Posts\Api\PostApiController::show
@@ -104,6 +141,43 @@ show.head = (args: { slug: string | number } | [slug: string | number ] | string
     url: show.url(args, options),
     method: 'head',
 })
+
+/**
+* @see \App\Modules\Posts\Api\PostApiController::show
+* @see app/Modules/Posts/Api/PostApiController.php:37
+* @route '/api/v1/posts/{slug}'
+*/
+const showForm = (args: { slug: string | number } | [slug: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: show.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Modules\Posts\Api\PostApiController::show
+* @see app/Modules/Posts/Api/PostApiController.php:37
+* @route '/api/v1/posts/{slug}'
+*/
+showForm.get = (args: { slug: string | number } | [slug: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: show.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Modules\Posts\Api\PostApiController::show
+* @see app/Modules/Posts/Api/PostApiController.php:37
+* @route '/api/v1/posts/{slug}'
+*/
+showForm.head = (args: { slug: string | number } | [slug: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: show.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+show.form = showForm
 
 const PostApiController = { index, show }
 

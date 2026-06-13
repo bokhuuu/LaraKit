@@ -4,6 +4,9 @@ import settings from './settings'
 import roles from './roles'
 import activityLog from './activity-log'
 import notifications from './notifications'
+import tokens from './tokens'
+import locale from './locale'
+import posts from './posts'
 /**
 * @see \App\Http\Controllers\Admin\DashboardController::dashboard
 * @see app/Http/Controllers/Admin/DashboardController.php:20
@@ -92,6 +95,9 @@ const admin = {
     roles: Object.assign(roles, roles),
     activityLog: Object.assign(activityLog, activityLog),
     notifications: Object.assign(notifications, notifications),
+    tokens: Object.assign(tokens, tokens),
+    locale: Object.assign(locale, locale),
+    posts: Object.assign(posts, posts),
 }
 
 export default admin

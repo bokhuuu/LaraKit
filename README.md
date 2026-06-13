@@ -171,6 +171,13 @@ Controllers stay thin. Business rules live in one place.
 - Sanctum token authentication - Bearer token in Authorization header
 - Token management UI - create, list, revoke tokens from admin panel
 
+### ✅ Multilingual UI
+
+- Language switcher (EN / KA) in sidebar
+- Cookie-based locale persistence
+- Translation files via Laravel lang files
+- `useTranslations` hook for React components
+
 ---
 
 ## Coming Soon
@@ -182,10 +189,9 @@ Controllers stay thin. Business rules live in one place.
 ### ⬜ Advanced
 
 - Security Hardening - rate limiting on login, OWASP basics, Sentry error tracking
-- Cache / Maintenance Panel - clear config/route/view cache, maintenance mode toggle, system info
 - Global Search - Ctrl+K across users, settings, posts
 - Role-Based Sidebar Visibility - editors see only content modules
-- Multilingual content (EN + KA) - UI labels via Laravel lang files, post content via Spatie Translatable
+- System Health & Maintenance Panel - Horizon status, Redis memory,failed jobs, cache controls, maintenance mode toggle
 
 ### ⬜ Deployment
 
