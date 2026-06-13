@@ -178,13 +178,19 @@ Controllers stay thin. Business rules live in one place.
 - Translation files via Laravel lang files
 - `useTranslations` hook for React components
 
+### ✅ Test Suite
+
+- 39 tests, 111 assertions, all green
+- Auth tests - guest redirect, role protection
+- User tests - full CRUD + all protection rules
+- Settings tests - view, update, redirect, cache invalidation
+- Notification tests - welcome email and admin notification fakes
+- API tests - Sanctum auth, posts list, single post, health check
+- Factories for User, Post, Category, Tag
+
 ---
 
 ## Coming Soon
-
-### ⬜ Quality
-
-- Pest Test Suite - full coverage (auth, users, settings,notifications, API),`Mail::fake()`, `Notification::fake()`, `Queue::fake()`
 
 ### ⬜ Advanced
 
@@ -219,5 +225,4 @@ This regenerates all route types and restores the form helpers needed by auth an
 
 - No multi-tenancy support - see larakit-saas (planned)
 - No page builder - see larakit-cms (planned)
-- Pest test suite not yet complete - not recommended for production as-is
 - Security hardening pass not done - review before any live deployment
