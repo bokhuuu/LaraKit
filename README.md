@@ -141,6 +141,16 @@ Controllers stay thin. Business rules live in one place.
 - N+1 Protection - `preventLazyLoading()` in development, DB indexes on performance-critical columns
 - Telescope - query, request, mail and job inspection dashboard at `/telescope`
 
+### Security
+
+- Rate limiting on login - 5 attempts per 60 seconds per IP, config-driven via `config/larakit.php`
+- Rate limiting on API - 60 requests per 60 seconds, per user ID or IP
+- Security headers on every response - `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`
+- SQL injection protection via Eloquent PDO prepared statements
+- CSRF protection via Laravel's built-in token middleware
+- XSS protection via Blade's `{{ }}` escaping
+- Sentry error tracking - production only, zero config in local
+
 ### UI / UX
 
 - Dark / light mode
@@ -148,7 +158,7 @@ Controllers stay thin. Business rules live in one place.
 - Flash messages with timestamp-based re-triggering
 - Confirmation dialogs for destructive actions
 
-### ✅ Posts Module
+### Posts Module
 
 - Full CRUD with categories (many-to-one) and tags (many-to-many pivot)
 - TipTap rich text editor with toolbar (bold, italic, headings, lists, links, alignment)
@@ -162,7 +172,7 @@ Controllers stay thin. Business rules live in one place.
 - PDF export via DomPDF - streams a styled PDF directly from the posts index
 - Excel export via Laravel Excel - downloads all posts as a formatted .xlsx file
 
-### ✅ API Layer
+### API Layer
 
 - Versioned REST API at `/api/v1/`
 - Health check endpoint - `/api/v1/health`
@@ -171,16 +181,16 @@ Controllers stay thin. Business rules live in one place.
 - Sanctum token authentication - Bearer token in Authorization header
 - Token management UI - create, list, revoke tokens from admin panel
 
-### ✅ Multilingual UI
+### Multilingual UI
 
 - Language switcher (EN / KA) in sidebar
 - Cookie-based locale persistence
 - Translation files via Laravel lang files
 - `useTranslations` hook for React components
 
-### ✅ Test Suite
+### Test Suite
 
-- 39 tests, 111 assertions, all green
+- 39 tests, 111 assertions
 - Auth tests - guest redirect, role protection
 - User tests - full CRUD + all protection rules
 - Settings tests - view, update, redirect, cache invalidation
@@ -194,8 +204,6 @@ Controllers stay thin. Business rules live in one place.
 
 ### ⬜ Advanced
 
-- Security Hardening - rate limiting on login, OWASP basics, Sentry error tracking
-- Global Search - Ctrl+K across users, settings, posts
 - Role-Based Sidebar Visibility - editors see only content modules
 - System Health & Maintenance Panel - Horizon status, Redis memory,failed jobs, cache controls, maintenance mode toggle
 
@@ -225,4 +233,3 @@ This regenerates all route types and restores the form helpers needed by auth an
 
 - No multi-tenancy support - see larakit-saas (planned)
 - No page builder - see larakit-cms (planned)
-- Security hardening pass not done - review before any live deployment
