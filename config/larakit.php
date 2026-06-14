@@ -89,4 +89,22 @@ return [
         'default'   => env('LARAKIT_DEFAULT_LOCALE', 'en'),
         'available' => ['en', 'ka'],
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Rate Limiting
+    |--------------------------------------------------------------------------
+    | Max attempts and decay time (in seconds) for login and API throttling.
+    | Override via .env to tune per environment without touching code.
+    */
+    'rate_limiting' => [
+        'login' => [
+            'max_attempts' => env('LARAKIT_LOGIN_MAX_ATTEMPTS', 5),
+            'decay_seconds' => env('LARAKIT_LOGIN_DECAY_SECONDS', 60),
+        ],
+        'api' => [
+            'max_attempts' => env('LARAKIT_API_MAX_ATTEMPTS', 60),
+            'decay_seconds' => env('LARAKIT_API_DECAY_SECONDS', 60),
+        ],
+    ],
 ];
