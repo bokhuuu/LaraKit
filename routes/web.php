@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\LocaleController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\SystemHealthController;
 use App\Http\Controllers\Admin\TokenController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
@@ -52,6 +53,12 @@ Route::middleware(['auth', 'admin'])
             Route::get('/', [TokenController::class, 'index'])->name('index');
             Route::post('/', [TokenController::class, 'store'])->name('store');
             Route::delete('/{id}', [TokenController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('system-health')->name('system-health.')->group(function () {
+            Route::get('/', [SystemHealthController::class, 'index'])->name('index');
+            Route::post('/cache', [SystemHealthController::class, 'clearCache'])->name('cache.clear');
+            Route::post('/maintenance', [SystemHealthController::class, 'toggleMaintenance'])->name('maintenance.toggle');
         });
 
         Route::post('locale', [LocaleController::class, 'update'])->name('locale.update');

@@ -107,4 +107,17 @@ return [
             'decay_seconds' => env('LARAKIT_API_DECAY_SECONDS', 60),
         ],
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | System Health
+    |--------------------------------------------------------------------------
+    | Controls behaviour of the System Health and Maintenance Panel.
+    | Horizon check can be disabled in environments where Horizon is not used.
+    | maintenance_allow defines URLs that remain accessible during maintenance mode.
+    */
+    'health' => [
+        'horizon_check_enabled'  => env('LARAKIT_HORIZON_CHECK', true),
+        'maintenance_secret'     => env('LARAKIT_MAINTENANCE_SECRET', ''),
+    ],
 ];
