@@ -76,6 +76,7 @@ Controllers stay thin. Business rules live in one place.
     - Admins cannot edit other admins
     - Nobody can change their own role or deactivate themselves
     - Only super_admin can create admin accounts
+- Role-based sidebar visibility - editors see Posts and Dashboard only, admins see everything except System Health
 
 ### Roles & Permissions UI Manager
 
@@ -211,11 +212,6 @@ Controllers stay thin. Business rules live in one place.
 ---
 
 ## Coming Soon
-
-### ⬜ Advanced
-
-- Role-Based Sidebar Visibility - editors see only content modules
-- ✅ System Health & Maintenance Panel - Horizon status, Redis memory,failed jobs, cache controls, maintenance mode toggle
 
 ### ⬜ Deployment
 
