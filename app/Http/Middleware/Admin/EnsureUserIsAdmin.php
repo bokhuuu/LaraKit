@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
  * Guards all admin routes with three sequential checks.
  *
  * Verifies the user is authenticated, their account is active,
- * and they hold either the admin or super_admin role.
+ * and they hold either the super_admin, admin or editor role.
  * Inactive users are logged out rather than just redirected.
  */
 class EnsureUserIsAdmin
@@ -37,7 +37,7 @@ class EnsureUserIsAdmin
                 ->with('error', 'Your account has been disabled.');
         }
 
-        if (! $user->hasRole('admin') && ! $user->hasRole('super_admin')) {
+        if (! $user->hasAnyRole(['super_admin', 'admin', 'editor'])) {
             abort(403);
         }
 

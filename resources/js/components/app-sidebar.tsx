@@ -27,61 +27,69 @@ import { dashboard } from '@/routes/admin';
 import type { NavItem } from '@/types';
 import { LocaleSwitcher } from './locale-switcher';
 
+interface NavItemWithRoles extends NavItem {
+    roles: string[];
+}
+
 const footerNavItems: NavItem[] = [];
 
 export function AppSidebar() {
-    const { isSuperAdmin } = useAuth();
+    const { role } = useAuth();
 
-    const mainNavItems: NavItem[] = [
+    const allNavItems: NavItemWithRoles[] = [
         {
             title: 'Dashboard',
             href: dashboard(),
             icon: LayoutGrid,
+            roles: ['super_admin', 'admin', 'editor'],
         },
         {
             title: 'Users',
             href: '/admin/users',
             icon: Users,
+            roles: ['super_admin', 'admin'],
         },
-        ...(isSuperAdmin
-            ? [
-                  {
-                      title: 'Roles & Permissions',
-                      href: '/admin/roles',
-                      icon: ShieldCheck,
-                  },
-              ]
-            : []),
-        ...(isSuperAdmin
-            ? [
-                  {
-                      title: 'System Health',
-                      href: '/admin/system-health',
-                      icon: HeartPulse,
-                  },
-              ]
-            : []),
+        {
+            title: 'Roles & Permissions',
+            href: '/admin/roles',
+            icon: ShieldCheck,
+            roles: ['super_admin'],
+        },
+        {
+            title: 'System Health',
+            href: '/admin/system-health',
+            icon: HeartPulse,
+            roles: ['super_admin'],
+        },
         {
             title: 'Site Settings',
             href: '/admin/settings',
             icon: Settings,
+            roles: ['super_admin', 'admin'],
         },
         {
             title: 'Activity Log',
             href: '/admin/activity-log',
             icon: Activity,
+            roles: ['super_admin', 'admin'],
         },
         {
             title: 'Posts',
             href: '/admin/posts',
             icon: FileText,
+            roles: ['super_admin', 'admin', 'editor'],
         },
         {
             title: 'API Tokens',
             href: '/admin/tokens',
             icon: KeyRound,
+            roles: ['super_admin', 'admin'],
         },
     ];
+
+    const mainNavItems = allNavItems.filter((item) =>
+        item.roles.includes(role),
+    );
 
     return (
         <Sidebar collapsible="icon" variant="inset">

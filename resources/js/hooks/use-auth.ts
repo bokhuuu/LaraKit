@@ -52,6 +52,7 @@ export function useAuth() {
         role,
         isSuperAdmin: role === 'super_admin',
         isAdmin: role === 'admin',
+        isEditor: role === 'editor',
         canManageUser,
     };
 }
