@@ -7,6 +7,7 @@ import {
     ShieldCheck,
     FileText,
     KeyRound,
+    HeartPulse,
 } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
@@ -48,6 +49,15 @@ export function AppSidebar() {
                       title: 'Roles & Permissions',
                       href: '/admin/roles',
                       icon: ShieldCheck,
+                  },
+              ]
+            : []),
+        ...(isSuperAdmin
+            ? [
+                  {
+                      title: 'System Health',
+                      href: '/admin/system-health',
+                      icon: HeartPulse,
                   },
               ]
             : []),
