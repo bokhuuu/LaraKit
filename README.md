@@ -151,6 +151,16 @@ Controllers stay thin. Business rules live in one place.
 - XSS protection via Blade's `{{ }}` escaping
 - Sentry error tracking - production only, zero config in local
 
+### System Health & Maintenance Panel
+
+- Horizon queue status - running / paused / inactive
+- Redis memory usage
+- Failed job count with color indicator
+- Clear config / route / view cache from the browser
+- Maintenance mode toggle with secret bypass URL
+- PHP and Laravel version display
+- Accessible to super_admin onlyd
+
 ### UI / UX
 
 - Dark / light mode
@@ -205,7 +215,7 @@ Controllers stay thin. Business rules live in one place.
 ### ⬜ Advanced
 
 - Role-Based Sidebar Visibility - editors see only content modules
-- System Health & Maintenance Panel - Horizon status, Redis memory,failed jobs, cache controls, maintenance mode toggle
+- ✅ System Health & Maintenance Panel - Horizon status, Redis memory,failed jobs, cache controls, maintenance mode toggle
 
 ### ⬜ Deployment
 

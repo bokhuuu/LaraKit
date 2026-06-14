@@ -5,6 +5,7 @@ import roles from './roles'
 import activityLog from './activity-log'
 import notifications from './notifications'
 import tokens from './tokens'
+import systemHealth from './system-health'
 import locale from './locale'
 import posts from './posts'
 /**
@@ -96,6 +97,7 @@ const admin = {
     activityLog: Object.assign(activityLog, activityLog),
     notifications: Object.assign(notifications, notifications),
     tokens: Object.assign(tokens, tokens),
+    systemHealth: Object.assign(systemHealth, systemHealth),
     locale: Object.assign(locale, locale),
     posts: Object.assign(posts, posts),
 }

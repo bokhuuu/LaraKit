@@ -5,6 +5,7 @@ import RoleController from './RoleController'
 import ActivityLogController from './ActivityLogController'
 import NotificationController from './NotificationController'
 import TokenController from './TokenController'
+import SystemHealthController from './SystemHealthController'
 import LocaleController from './LocaleController'
 
 const Admin = {
@@ -15,6 +16,7 @@ const Admin = {
     ActivityLogController: Object.assign(ActivityLogController, ActivityLogController),
     NotificationController: Object.assign(NotificationController, NotificationController),
     TokenController: Object.assign(TokenController, TokenController),
+    SystemHealthController: Object.assign(SystemHealthController, SystemHealthController),
     LocaleController: Object.assign(LocaleController, LocaleController),
 }
 
