@@ -62,6 +62,11 @@ jobs:
       - name: Generate app key
         run: php artisan key:generate
 
+      - name: Create Vite manifest stub
+        run: |
+          mkdir -p public/build
+          echo '{"resources/js/app.tsx":{"file":"assets/app.js","src":"resources/js/app.tsx","isEntry":true}}' > public/build/manifest.json
+
       - name: Run tests
         env:
           APP_ENV: testing
