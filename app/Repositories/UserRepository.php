@@ -34,7 +34,7 @@ class UserRepository
                 });
             })
             ->when($filters['role'] ?? null, function ($query, $role) {
-                $query->whereHas('roles', fn($q) => $q->where('name', $role));
+                $query->whereHas('roles', fn ($q) => $q->where('name', $role));
             })
             ->when(isset($filters['status']), function ($query) use ($filters) {
                 $query->where('is_active', $filters['status'] === 'active');

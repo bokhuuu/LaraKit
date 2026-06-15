@@ -57,7 +57,6 @@ class NewUserRegistered extends Notification implements ShouldQueue
      * in the dropdown - message for display, user_id for the link,
      * event for filtering.
      */
-
     public function toArray(object $notifiable): array
     {
         return [

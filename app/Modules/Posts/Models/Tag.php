@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Modules\Posts\Models;
 
 use Database\Factories\TagFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * Represents a tag that can be attached to many posts.

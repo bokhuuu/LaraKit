@@ -64,5 +64,5 @@ Route::middleware(['auth', 'admin'])
         Route::post('locale', [LocaleController::class, 'update'])->name('locale.update');
     });
 
-require __DIR__ . '/settings.php';
-require __DIR__ . '/posts.php';
+require __DIR__.'/settings.php';
+require __DIR__.'/posts.php';

@@ -9,7 +9,7 @@ namespace App\Modules\Posts\Enums;
  */
 enum PostStatus: string
 {
-    case Draft     = 'draft';
+    case Draft = 'draft';
     case Published = 'published';
     case Scheduled = 'scheduled';
 
@@ -19,7 +19,7 @@ enum PostStatus: string
     public function label(): string
     {
         return match ($this) {
-            PostStatus::Draft     => 'Draft',
+            PostStatus::Draft => 'Draft',
             PostStatus::Published => 'Published',
             PostStatus::Scheduled => 'Scheduled',
         };
@@ -31,7 +31,7 @@ enum PostStatus: string
     public function color(): string
     {
         return match ($this) {
-            PostStatus::Draft     => 'gray',
+            PostStatus::Draft => 'gray',
             PostStatus::Published => 'green',
             PostStatus::Scheduled => 'yellow',
         };

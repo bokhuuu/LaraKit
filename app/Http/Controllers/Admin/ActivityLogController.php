@@ -30,11 +30,11 @@ class ActivityLogController extends Controller
         $activities = Activity::with(['causer'])
             ->when(
                 $filters['event'] ?? null,
-                fn($q, $event) => $q->where('event', $event)
+                fn ($q, $event) => $q->where('event', $event)
             )
             ->when(
                 $filters['model'] ?? null,
-                fn($q, $model) => $q->where('subject_type', 'like', "%{$model}%")
+                fn ($q, $model) => $q->where('subject_type', 'like', "%{$model}%")
             )
             ->latest()
             ->paginate(config('larakit.pagination'));

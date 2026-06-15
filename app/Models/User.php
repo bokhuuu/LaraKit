@@ -34,14 +34,14 @@ class User extends Authenticatable implements HasMedia
 {
     /** @use HasFactory<UserFactory> */
     use ClearsInertiaCache,
+        HasApiTokens,
         HasFactory,
         HasRoles,
         InteractsWithMedia,
         LogsActivity,
         Notifiable,
         SoftDeletes,
-        TwoFactorAuthenticatable,
-        HasApiTokens;
+        TwoFactorAuthenticatable;
 
     /**
      * The attributes that are mass assignable.

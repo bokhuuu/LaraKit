@@ -56,7 +56,7 @@ class SystemHealthController extends Controller
 
         $this->systemHealthService->clearCache($validated['type']);
 
-        return back()->with('success', ucfirst($validated['type']) . ' cache cleared successfully.');
+        return back()->with('success', ucfirst($validated['type']).' cache cleared successfully.');
     }
 
     /**

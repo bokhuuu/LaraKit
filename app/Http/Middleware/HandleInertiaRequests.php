@@ -61,21 +61,21 @@ class HandleInertiaRequests extends Middleware
             'name' => cache()->remember(
                 config('larakit.cache.keys.site_name'),
                 config('larakit.cache.site_settings_ttl'),
-                fn() => Setting::where('key', 'site_name')->value('value') ?? config('app.name')
+                fn () => Setting::where('key', 'site_name')->value('value') ?? config('app.name')
             ),
             'auth' => [
                 'user' => $request->user()?->load('roles'),
             ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
             'flash' => [
-                'success' => fn() => $request->session()->get('success'),
-                'error' => fn() => $request->session()->get('error'),
+                'success' => fn () => $request->session()->get('success'),
+                'error' => fn () => $request->session()->get('error'),
                 'timestamp' => now()->timestamp,
             ],
             'siteSettings' => cache()->remember(
                 config('larakit.cache.keys.site_settings'),
                 config('larakit.cache.site_settings_ttl'),
-                fn() => [
+                fn () => [
                     'logo' => Setting::where('key', 'site_logo')->first()?->getFirstMediaUrl(config('larakit.media.logo_collection')),
                     'favicon' => Setting::where('key', 'site_favicon')->first()?->getFirstMediaUrl(config('larakit.media.favicon_collection')),
                 ]
@@ -90,7 +90,7 @@ class HandleInertiaRequests extends Middleware
                     ->latest()
                     ->take(config('larakit.notifications.unread_limit'))
                     ->get()
-                    ->map(fn($n) => [
+                    ->map(fn ($n) => [
                         'id' => $n->id,
                         'message' => $n->data['message'],
                         'user_id' => $n->data['user_id'],
@@ -98,8 +98,8 @@ class HandleInertiaRequests extends Middleware
                         'created_at' => $n->created_at->diffForHumans(),
                     ]);
             },
-            'locale'       => app()->getLocale(),
-            'translations' => fn() => [
+            'locale' => app()->getLocale(),
+            'translations' => fn () => [
                 'posts' => trans('posts'),
             ],
         ];

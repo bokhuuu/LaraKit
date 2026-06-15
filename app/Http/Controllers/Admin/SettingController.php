@@ -34,7 +34,7 @@ class SettingController extends Controller
 
         $fileUrls = Setting::where('type', SettingType::FILE)
             ->get()
-            ->mapWithKeys(fn($setting) => [
+            ->mapWithKeys(fn ($setting) => [
                 $setting->key => $setting->getFirstMediaUrl($setting->key),
             ]);
 

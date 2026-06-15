@@ -24,9 +24,9 @@ return [
         'site_settings_ttl' => env('LARAKIT_SETTINGS_CACHE_TTL', 3600),
         'keys' => [
             'site_settings' => 'site_settings',
-            'site_name'     => 'site_name',
-            'favicon_url'   => 'favicon_url',
-            'og_image_url'  => 'og_image_url',
+            'site_name' => 'site_name',
+            'favicon_url' => 'favicon_url',
+            'og_image_url' => 'og_image_url',
         ],
     ],
 
@@ -38,9 +38,9 @@ return [
     | Change here to rename a collection without touching any other file.
     */
     'media' => [
-        'disk'               => env('LARAKIT_MEDIA_DISK', 'public'),
-        'avatar_collection'  => 'avatar',
-        'logo_collection'    => 'site_logo',
+        'disk' => env('LARAKIT_MEDIA_DISK', 'public'),
+        'avatar_collection' => 'avatar',
+        'logo_collection' => 'site_logo',
         'favicon_collection' => 'site_favicon',
     ],
 
@@ -53,8 +53,8 @@ return [
     */
     'notifications' => [
         'new_user_subject' => env('LARAKIT_NEW_USER_SUBJECT', 'New User Registered'),
-        'footer'                => env('LARAKIT_NOTIFICATION_FOOTER', ''),
-        'unread_limit'     => env('LARAKIT_UNREAD_NOTIFICATIONS_LIMIT', 10),
+        'footer' => env('LARAKIT_NOTIFICATION_FOOTER', ''),
+        'unread_limit' => env('LARAKIT_UNREAD_NOTIFICATIONS_LIMIT', 10),
         'welcome_email_subject' => env('LARAKIT_WELCOME_EMAIL_SUBJECT', 'Welcome'),
     ],
 
@@ -86,7 +86,7 @@ return [
 | Add new locales to the available array and create matching lang/ files.
 */
     'locales' => [
-        'default'   => env('LARAKIT_DEFAULT_LOCALE', 'en'),
+        'default' => env('LARAKIT_DEFAULT_LOCALE', 'en'),
         'available' => ['en', 'ka'],
     ],
 
@@ -117,7 +117,7 @@ return [
     | maintenance_allow defines URLs that remain accessible during maintenance mode.
     */
     'health' => [
-        'horizon_check_enabled'  => env('LARAKIT_HORIZON_CHECK', true),
-        'maintenance_secret'     => env('LARAKIT_MAINTENANCE_SECRET', ''),
+        'horizon_check_enabled' => env('LARAKIT_HORIZON_CHECK', true),
+        'maintenance_secret' => env('LARAKIT_MAINTENANCE_SECRET', ''),
     ],
 ];

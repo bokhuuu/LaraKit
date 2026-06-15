@@ -67,9 +67,9 @@ class PostsExport implements FromQuery, WithHeadings, WithMapping, WithStyles
     {
         return [
             1 => [
-                'font'    => ['bold' => true],
-                'fill'    => [
-                    'fillType'   => 'solid',
+                'font' => ['bold' => true],
+                'fill' => [
+                    'fillType' => 'solid',
                     'startColor' => ['rgb' => 'F3F4F6'],
                 ],
             ],

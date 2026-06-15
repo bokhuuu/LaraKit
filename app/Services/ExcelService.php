@@ -19,8 +19,8 @@ class ExcelService
     public function exportPosts(): BinaryFileResponse
     {
         return Excel::download(
-            new PostsExport(),
-            'posts-' . now()->format('Y-m-d') . '.xlsx',
+            new PostsExport,
+            'posts-'.now()->format('Y-m-d').'.xlsx',
         );
     }
 }

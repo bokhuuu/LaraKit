@@ -24,16 +24,16 @@ class TokenController extends Controller
             ->tokens()
             ->latest()
             ->get()
-            ->map(fn($token) => [
-                'id'         => $token->id,
-                'name'       => $token->name,
-                'last_used'  => $token->last_used_at?->diffForHumans(),
+            ->map(fn ($token) => [
+                'id' => $token->id,
+                'name' => $token->name,
+                'last_used' => $token->last_used_at?->diffForHumans(),
                 'created_at' => $token->created_at->toDateString(),
             ]);
 
         return Inertia::render('admin/tokens/index', [
-            'tokens'      => $tokens,
-            'newToken'    => session('newToken'),
+            'tokens' => $tokens,
+            'newToken' => session('newToken'),
         ]);
     }
 

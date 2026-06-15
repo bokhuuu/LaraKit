@@ -27,9 +27,9 @@ it('admin can update a setting value', function () {
     $admin = User::factory()->withRole('admin')->create();
 
     Setting::create([
-        'key'   => 'site_name',
+        'key' => 'site_name',
         'value' => 'Old Name',
-        'type'  => 'text',
+        'type' => 'text',
         'group' => 'general',
         'order' => 1,
         'label' => 'Site Name',
@@ -40,7 +40,7 @@ it('admin can update a setting value', function () {
     ]);
 
     $this->assertDatabaseHas('settings', [
-        'key'   => 'site_name',
+        'key' => 'site_name',
         'value' => 'New Name',
     ]);
 });

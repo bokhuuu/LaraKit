@@ -24,12 +24,12 @@ it('welcome email is sent when a new user is created', function () {
     $admin = User::factory()->withRole('admin')->create();
 
     $this->actingAs($admin)->post(route('admin.users.store'), [
-        'name'                  => 'New User',
-        'email'                 => 'newuser@example.com',
-        'password'              => 'password',
+        'name' => 'New User',
+        'email' => 'newuser@example.com',
+        'password' => 'password',
         'password_confirmation' => 'password',
-        'role'                  => 'viewer',
-        'is_active'             => true,
+        'role' => 'viewer',
+        'is_active' => true,
     ]);
 
     Mail::assertSent(WelcomeEmail::class, function ($mail) {
@@ -43,12 +43,12 @@ it('admins are notified when a new user is created', function () {
     $admin = User::factory()->withRole('admin')->create();
 
     $this->actingAs($admin)->post(route('admin.users.store'), [
-        'name'                  => 'New User',
-        'email'                 => 'newuser@example.com',
-        'password'              => 'password',
+        'name' => 'New User',
+        'email' => 'newuser@example.com',
+        'password' => 'password',
         'password_confirmation' => 'password',
-        'role'                  => 'viewer',
-        'is_active'             => true,
+        'role' => 'viewer',
+        'is_active' => true,
     ]);
 
     Notification::assertSentTo($admin, NewUserRegistered::class);

@@ -19,9 +19,9 @@ class LocaleController extends Controller
     public function update(Request $request): RedirectResponse
     {
         $available = config('larakit.locales.available');
-        $locale    = $request->input('locale');
+        $locale = $request->input('locale');
 
-        if (!in_array($locale, $available, strict: true)) {
+        if (! in_array($locale, $available, strict: true)) {
             abort(422);
         }
 

@@ -41,7 +41,7 @@ trait ClearsInertiaCache
      */
     protected static function bootClearsInertiaCache(): void
     {
-        $invalidate = fn() => static::invalidateCache();
+        $invalidate = fn () => static::invalidateCache();
 
         static::created($invalidate);
         static::updated($invalidate);

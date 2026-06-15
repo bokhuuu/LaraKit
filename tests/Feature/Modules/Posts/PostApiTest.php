@@ -22,7 +22,7 @@ it('unauthenticated request to api is rejected', function () {
 });
 
 it('authenticated request returns posts', function () {
-    $user  = User::factory()->withRole('viewer')->create();
+    $user = User::factory()->withRole('viewer')->create();
     $token = $user->createToken('test-token')->plainTextToken;
 
     Post::factory()->published()->count(3)->create(['author_id' => $user->id]);
@@ -34,7 +34,7 @@ it('authenticated request returns posts', function () {
 });
 
 it('can fetch a single post by slug', function () {
-    $user  = User::factory()->withRole('viewer')->create();
+    $user = User::factory()->withRole('viewer')->create();
     $token = $user->createToken('test-token')->plainTextToken;
 
     $post = Post::factory()->published()->create(['author_id' => $user->id]);

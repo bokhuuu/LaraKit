@@ -42,7 +42,7 @@ class PostService
     {
         return [
             'categories' => $this->repository->allCategories(),
-            'tags'       => $this->repository->allTags(),
+            'tags' => $this->repository->allTags(),
         ];
     }
 
@@ -51,9 +51,9 @@ class PostService
      */
     public function create(array $data, int $authorId): Post
     {
-        $data['slug']      = $this->generateSlug($data['title']);
+        $data['slug'] = $this->generateSlug($data['title']);
         $data['author_id'] = $authorId;
-        $data['status']    = $data['status'] ?? PostStatus::Draft->value;
+        $data['status'] = $data['status'] ?? PostStatus::Draft->value;
 
         $data['published_at'] = $this->resolvePublishedAt($data);
 
@@ -120,14 +120,14 @@ class PostService
      */
     private function generateSlug(string $title, ?int $excludeId = null): string
     {
-        $slug  = Str::slug($title);
-        $base  = $slug;
+        $slug = Str::slug($title);
+        $base = $slug;
         $count = 1;
 
         while (
             Post::where('slug', $slug)
-            ->when($excludeId, fn($q) => $q->where('id', '!=', $excludeId))
-            ->exists()
+                ->when($excludeId, fn ($q) => $q->where('id', '!=', $excludeId))
+                ->exists()
         ) {
             $slug = "{$base}-{$count}";
             $count++;
@@ -167,7 +167,7 @@ class PostService
         return match ($status) {
             PostStatus::Published->value => $data['published_at'] ?? now()->toDateString(),
             PostStatus::Scheduled->value => $data['published_at'],
-            default                      => null,
+            default => null,
         };
     }
 }

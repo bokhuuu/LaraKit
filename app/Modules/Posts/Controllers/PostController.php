@@ -36,7 +36,7 @@ class PostController extends Controller
         $filters = $request->only(['search', 'status', 'category_id', 'author_id']);
 
         return Inertia::render('admin/posts/index', [
-            'posts'   => $this->service->getPaginatedPosts($filters),
+            'posts' => $this->service->getPaginatedPosts($filters),
             'filters' => $filters,
         ]);
     }

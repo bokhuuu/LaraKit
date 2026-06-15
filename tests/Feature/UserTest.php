@@ -18,12 +18,12 @@ it('admin can create a user', function () {
     $admin = User::factory()->withRole('admin')->create();
 
     $response = $this->actingAs($admin)->post(route('admin.users.store'), [
-        'name'                  => 'Test User',
-        'email'                 => 'test@example.com',
-        'password'              => 'password',
+        'name' => 'Test User',
+        'email' => 'test@example.com',
+        'password' => 'password',
         'password_confirmation' => 'password',
-        'role'                  => 'viewer',
-        'is_active'             => true,
+        'role' => 'viewer',
+        'is_active' => true,
     ]);
 
     $response->assertRedirect(route('admin.users.index'));
@@ -32,12 +32,12 @@ it('admin can create a user', function () {
 
 it('admin can update a user', function () {
     $admin = User::factory()->withRole('admin')->create();
-    $user  = User::factory()->withRole('viewer')->create();
+    $user = User::factory()->withRole('viewer')->create();
 
     $response = $this->actingAs($admin)->put(route('admin.users.update', $user), [
-        'name'     => 'Updated Name',
-        'email'    => $user->email,
-        'role'     => 'viewer',
+        'name' => 'Updated Name',
+        'email' => $user->email,
+        'role' => 'viewer',
         'is_active' => true,
     ]);
 
@@ -47,9 +47,9 @@ it('admin can update a user', function () {
 
 it('admin can soft delete a user', function () {
     $admin = User::factory()->withRole('admin')->create();
-    $user  = User::factory()->withRole('viewer')->create();
+    $user = User::factory()->withRole('viewer')->create();
 
-    $response = $this->actingAs($admin)->delete(route('admin.users.delete', $user));;
+    $response = $this->actingAs($admin)->delete(route('admin.users.delete', $user));
 
     $response->assertRedirect(route('admin.users.index'));
     $this->assertSoftDeleted('users', ['id' => $user->id]);
@@ -57,10 +57,10 @@ it('admin can soft delete a user', function () {
 
 it('admin can restore a trashed user', function () {
     $admin = User::factory()->withRole('admin')->create();
-    $user  = User::factory()->withRole('viewer')->create();
+    $user = User::factory()->withRole('viewer')->create();
     $user->delete();
 
-    $response = $this->actingAs($admin)->patch(route('admin.users.restore', $user->id));;
+    $response = $this->actingAs($admin)->patch(route('admin.users.restore', $user->id));
 
     $response->assertRedirect(route('admin.users.index'));
     $this->assertNotSoftDeleted('users', ['id' => $user->id]);
@@ -68,7 +68,7 @@ it('admin can restore a trashed user', function () {
 
 it('admin can force delete a user', function () {
     $admin = User::factory()->withRole('admin')->create();
-    $user  = User::factory()->withRole('viewer')->create();
+    $user = User::factory()->withRole('viewer')->create();
     $user->delete();
 
     $response = $this->actingAs($admin)->delete(route('admin.users.force-delete', $user->id));
@@ -87,13 +87,13 @@ it('admin cannot delete himself', function () {
 });
 
 it('admin cannot modify another admin', function () {
-    $admin      = User::factory()->withRole('admin')->create();
+    $admin = User::factory()->withRole('admin')->create();
     $otherAdmin = User::factory()->withRole('admin')->create();
 
     $response = $this->actingAs($admin)->put(route('admin.users.update', $otherAdmin), [
-        'name'      => 'Hacked',
-        'email'     => $otherAdmin->email,
-        'role'      => 'admin',
+        'name' => 'Hacked',
+        'email' => $otherAdmin->email,
+        'role' => 'admin',
         'is_active' => true,
     ]);
 
@@ -105,9 +105,9 @@ it('admin cannot deactivate their own account', function () {
     $admin = User::factory()->withRole('admin')->create();
 
     $response = $this->actingAs($admin)->put(route('admin.users.update', $admin), [
-        'name'      => $admin->name,
-        'email'     => $admin->email,
-        'role'      => 'admin',
+        'name' => $admin->name,
+        'email' => $admin->email,
+        'role' => 'admin',
         'is_active' => false,
     ]);
 
@@ -119,12 +119,12 @@ it('admin cannot create another admin account', function () {
     $admin = User::factory()->withRole('admin')->create();
 
     $response = $this->actingAs($admin)->post(route('admin.users.store'), [
-        'name'                  => 'New Admin',
-        'email'                 => 'newadmin@example.com',
-        'password'              => 'password',
+        'name' => 'New Admin',
+        'email' => 'newadmin@example.com',
+        'password' => 'password',
         'password_confirmation' => 'password',
-        'role'                  => 'admin',
-        'is_active'             => true,
+        'role' => 'admin',
+        'is_active' => true,
     ]);
 
     $response->assertRedirect();

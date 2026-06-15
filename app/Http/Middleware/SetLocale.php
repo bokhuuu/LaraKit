@@ -16,11 +16,11 @@ class SetLocale
     public function handle(Request $request, Closure $next): Response
     {
         $available = config('larakit.locales.available');
-        $default   = config('larakit.locales.default');
+        $default = config('larakit.locales.default');
 
         $locale = $request->cookie('locale', $default);
 
-        if (!in_array($locale, $available, strict: true)) {
+        if (! in_array($locale, $available, strict: true)) {
             $locale = $default;
         }
 

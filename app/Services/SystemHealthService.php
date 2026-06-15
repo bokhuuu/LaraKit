@@ -27,11 +27,11 @@ class SystemHealthService
     public function getSnapshot(): array
     {
         return [
-            'horizon'      => $this->getHorizonStatus(),
-            'redis'        => $this->getRedisMemory(),
-            'failed_jobs'  => $this->getFailedJobCount(),
-            'versions'     => $this->getVersions(),
-            'maintenance'  => app()->isDownForMaintenance(),
+            'horizon' => $this->getHorizonStatus(),
+            'redis' => $this->getRedisMemory(),
+            'failed_jobs' => $this->getFailedJobCount(),
+            'versions' => $this->getVersions(),
+            'maintenance' => app()->isDownForMaintenance(),
         ];
     }
 
@@ -54,7 +54,7 @@ class SystemHealthService
             }
 
             return collect($masters)->every(
-                fn($master) => $master->status === 'paused'
+                fn ($master) => $master->status === 'paused'
             ) ? 'paused' : 'running';
         } catch (\Exception) {
             return 'inactive';
@@ -71,6 +71,7 @@ class SystemHealthService
     {
         try {
             $info = Redis::info('memory');
+
             return $info['used_memory_human'] ?? 'unavailable';
         } catch (\Exception) {
             return 'unavailable';
@@ -95,7 +96,7 @@ class SystemHealthService
     private function getVersions(): array
     {
         return [
-            'php'     => phpversion(),
+            'php' => phpversion(),
             'laravel' => app()->version(),
         ];
     }
@@ -126,6 +127,7 @@ class SystemHealthService
     {
         if (app()->isDownForMaintenance()) {
             Artisan::call('up');
+
             return false;
         }
 

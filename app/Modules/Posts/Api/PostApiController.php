@@ -23,8 +23,8 @@ class PostApiController extends Controller
         $posts = Post::query()
             ->with(['author', 'category', 'tags', 'media'])
             ->published()
-            ->when($request->search, fn($q) => $q->where('title', 'like', "%{$request->search}%"))
-            ->when($request->category, fn($q) => $q->whereHas('category', fn($q) => $q->where('slug', $request->category)))
+            ->when($request->search, fn ($q) => $q->where('title', 'like', "%{$request->search}%"))
+            ->when($request->category, fn ($q) => $q->whereHas('category', fn ($q) => $q->where('slug', $request->category)))
             ->latest('published_at')
             ->paginate(config('larakit.posts.per_page', 10));
 
