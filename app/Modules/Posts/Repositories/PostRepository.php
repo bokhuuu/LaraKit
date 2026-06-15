@@ -18,8 +18,8 @@ use Illuminate\Database\Eloquent\Collection;
  */
 class PostRepository
 {
-    /** 
-     * Returns paginated posts with optional search, status, category and author filters. 
+    /**
+     * Returns paginated posts with optional search, status, category and author filters.
      */
     public function paginate(array $filters = []): LengthAwarePaginator
     {

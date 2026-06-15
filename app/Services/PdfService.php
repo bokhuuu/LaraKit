@@ -37,6 +37,6 @@ class PdfService
      */
     private function postFilename(Post $post): string
     {
-        return 'post-' . $post->slug . '.pdf';
+        return 'post-'.$post->slug.'.pdf';
     }
 }

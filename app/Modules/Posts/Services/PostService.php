@@ -51,7 +51,7 @@ class PostService
     }
 
     /**
-     * Creates a new post, generates its slug, sets the author, 
+     * Creates a new post, generates its slug, sets the author,
      * syncs tags and handles the featured image.
      */
     public function create(array $data, int $authorId): Post
@@ -71,7 +71,7 @@ class PostService
     }
 
     /**
-     * Updates a post, regenerates the slug if the title changed, 
+     * Updates a post, regenerates the slug if the title changed,
      * syncs tags and handles media.
      */
     public function update(Post $post, array $data): Post
@@ -122,7 +122,7 @@ class PostService
     }
 
     /**
-     * Generates a unique slug from a title, 
+     * Generates a unique slug from a title,
      * incrementing a suffix if the base slug is already taken.
      */
     private function generateSlug(string $title, ?int $excludeId = null): string
@@ -133,8 +133,8 @@ class PostService
 
         while (
             Post::where('slug', $slug)
-            ->when($excludeId, fn($q) => $q->where('id', '!=', $excludeId))
-            ->exists()
+                ->when($excludeId, fn ($q) => $q->where('id', '!=', $excludeId))
+                ->exists()
         ) {
             $slug = "{$base}-{$count}";
             $count++;
@@ -164,8 +164,8 @@ class PostService
     }
 
     /**
-     * Resolves the published_at timestamp based on the post's target status. 
-     * Sets now() when publishing, uses the provided date when scheduling, 
+     * Resolves the published_at timestamp based on the post's target status.
+     * Sets now() when publishing, uses the provided date when scheduling,
      * clears it when reverting to draft.
      */
     private function resolvePublishedAt(array $data, ?Post $existing = null): ?string

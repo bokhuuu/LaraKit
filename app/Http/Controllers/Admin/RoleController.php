@@ -8,10 +8,10 @@ use App\Enums\UserRole;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UpdateRolePermissionsRequest;
 use App\Services\RoleService;
-use Inertia\Inertia;
-use Spatie\Permission\Models\Role;
-use Inertia\Response;
 use Illuminate\Http\RedirectResponse;
+use Inertia\Inertia;
+use Inertia\Response;
+use Spatie\Permission\Models\Role;
 
 /**
  * Handles HTTP requests for the roles and permissions manager.

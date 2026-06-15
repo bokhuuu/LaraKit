@@ -47,12 +47,12 @@ class UserController extends Controller
 
         if (! auth()->user()->hasRole(UserRole::SUPER_ADMIN)) {
             $roles = $roles->filter(
-                fn($role) => $role->name !== UserRole::SUPER_ADMIN->value &&
+                fn ($role) => $role->name !== UserRole::SUPER_ADMIN->value &&
                     $role->name !== UserRole::ADMIN->value
             )->values();
         }
 
-        $roles = $roles->map(fn($role) => [
+        $roles = $roles->map(fn ($role) => [
             'id' => $role->id,
             'name' => $role->name,
             'label' => UserRole::from($role->name)->label(),
@@ -98,12 +98,12 @@ class UserController extends Controller
 
         if (! auth()->user()->hasRole(UserRole::SUPER_ADMIN)) {
             $roles = $roles->filter(
-                fn($role) => $role->name !== UserRole::SUPER_ADMIN->value &&
+                fn ($role) => $role->name !== UserRole::SUPER_ADMIN->value &&
                     $role->name !== UserRole::ADMIN->value
             )->values();
         }
 
-        $roles = $roles->map(fn($role) => [
+        $roles = $roles->map(fn ($role) => [
             'id' => $role->id,
             'name' => $role->name,
             'label' => UserRole::from($role->name)->label(),

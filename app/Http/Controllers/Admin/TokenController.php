@@ -31,7 +31,7 @@ class TokenController extends Controller
             ->tokens()
             ->latest()
             ->get()
-            ->map(fn($token) => [
+            ->map(fn ($token) => [
                 'id' => $token->id,
                 'name' => $token->name,
                 'last_used' => $token->last_used_at?->diffForHumans(),

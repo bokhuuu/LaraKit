@@ -7,10 +7,10 @@ namespace App\Http\Controllers\Admin;
 use App\Enums\Settings\SettingType;
 use App\Http\Controllers\Controller;
 use App\Models\Setting;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
-use Illuminate\Http\RedirectResponse;
 
 /**
  * Handles HTTP requests for the site settings module.
@@ -36,7 +36,7 @@ class SettingController extends Controller
 
         $fileUrls = Setting::where('type', SettingType::FILE)
             ->get()
-            ->mapWithKeys(fn($setting) => [
+            ->mapWithKeys(fn ($setting) => [
                 $setting->key => $setting->getFirstMediaUrl($setting->key),
             ]);
 

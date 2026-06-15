@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Exports;
 
 use App\Modules\Posts\Models\Post;
+use Illuminate\Database\Eloquent\Builder;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
@@ -22,7 +23,7 @@ class PostsExport implements FromQuery, WithHeadings, WithMapping, WithStyles
     /**
      * Provides the base query for the export, ordered newest first.
      */
-    public function query(): \Illuminate\Database\Eloquent\Builder
+    public function query(): Builder
     {
         return Post::query()
             ->with(['author', 'category', 'tags'])

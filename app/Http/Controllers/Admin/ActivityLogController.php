@@ -7,8 +7,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Spatie\Activitylog\Models\Activity;
 use Inertia\Response;
+use Spatie\Activitylog\Models\Activity;
 
 /**
  * Handles the activity log viewer page.
@@ -31,11 +31,11 @@ class ActivityLogController extends Controller
         $activities = Activity::with(['causer'])
             ->when(
                 $filters['event'] ?? null,
-                fn($q, $event) => $q->where('event', $event)
+                fn ($q, $event) => $q->where('event', $event)
             )
             ->when(
                 $filters['model'] ?? null,
-                fn($q, $model) => $q->where('subject_type', 'like', "%{$model}%")
+                fn ($q, $model) => $q->where('subject_type', 'like', "%{$model}%")
             )
             ->latest()
             ->paginate(config('larakit.pagination'));

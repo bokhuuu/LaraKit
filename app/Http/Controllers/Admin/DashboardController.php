@@ -7,8 +7,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Inertia\Inertia;
-use Spatie\Activitylog\Models\Activity;
 use Inertia\Response;
+use Spatie\Activitylog\Models\Activity;
 
 /**
  * Handles the admin dashboard page.

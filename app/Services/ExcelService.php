@@ -26,7 +26,7 @@ class ExcelService
     {
         return Excel::download(
             new PostsExport,
-            'posts-' . now()->format('Y-m-d') . '.xlsx',
+            'posts-'.now()->format('Y-m-d').'.xlsx',
         );
     }
 }

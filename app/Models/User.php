@@ -8,7 +8,6 @@ namespace App\Models;
 
 use App\Modules\Posts\Models\Post;
 use App\Traits\ClearsInertiaCache;
-use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;

@@ -54,7 +54,7 @@ class Post extends Model implements HasMedia
     }
 
     /**
-     * Registers featured image and OG image as single-file media collections. 
+     * Registers featured image and OG image as single-file media collections.
      */
     public function registerMediaCollections(): void
     {
@@ -68,7 +68,7 @@ class Post extends Model implements HasMedia
     }
 
     /**
-     * Generates a thumbnail conversion for the featured image at config-driven dimensions. 
+     * Generates a thumbnail conversion for the featured image at config-driven dimensions.
      */
     public function registerMediaConversions(?Media $media = null): void
     {
@@ -79,7 +79,7 @@ class Post extends Model implements HasMedia
     }
 
     /**
-     *  Logs all fillable field changes, only when values actually differ. 
+     *  Logs all fillable field changes, only when values actually differ.
      */
     public function getActivitylogOptions(): LogOptions
     {
@@ -113,32 +113,32 @@ class Post extends Model implements HasMedia
         return $this->belongsTo(User::class, 'author_id');
     }
 
-    /** 
-     * Filters to posts with a published status. 
+    /**
+     * Filters to posts with a published status.
      */
     public function scopePublished(Builder $query): Builder
     {
         return $query->where('status', PostStatus::Published);
     }
 
-    /** 
-     * Filters to posts with a draft status. 
+    /**
+     * Filters to posts with a draft status.
      */
     public function scopeDraft(Builder $query): Builder
     {
         return $query->where('status', PostStatus::Draft);
     }
 
-    /** 
-     * Filters to posts with a scheduled status. 
+    /**
+     * Filters to posts with a scheduled status.
      */
     public function scopeScheduled(Builder $query): Builder
     {
         return $query->where('status', PostStatus::Scheduled);
     }
 
-    /** 
-     * Filters to posts belonging to the given author. 
+    /**
+     * Filters to posts belonging to the given author.
      */
     public function scopeByAuthor(Builder $query, int $authorId): Builder
     {
