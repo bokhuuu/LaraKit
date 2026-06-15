@@ -13,13 +13,13 @@ use Spatie\Permission\Models\Role;
 /**
  * Handles all database operations for the User model.
  *
- * This is the only place in the application that directly queries users.
- * Business logic and protection rules live in UserService, not here.
+ * This is the only place in the app that directly queries users.
+ * Business logic and protection rules live in UserService.
  */
 class UserRepository
 {
     /**
-     * Returns a paginated list of users with optional search, role, and status filters.
+     * Returns a paginated list of users with optional search, role and status filters.
      *
      * Uses Laravel's when() to conditionally apply each filter,
      * keeping the query clean without nested if statements.
@@ -34,7 +34,7 @@ class UserRepository
                 });
             })
             ->when($filters['role'] ?? null, function ($query, $role) {
-                $query->whereHas('roles', fn ($q) => $q->where('name', $role));
+                $query->whereHas('roles', fn($q) => $q->where('name', $role));
             })
             ->when(isset($filters['status']), function ($query) use ($filters) {
                 $query->where('is_active', $filters['status'] === 'active');
@@ -43,16 +43,25 @@ class UserRepository
             ->paginate(config('larakit.pagination'));
     }
 
+    /**
+     * Finds a user by ID with their roles eagerly loaded, or throws a 404.
+     */
     public function findById(int $id)
     {
         return User::with('roles')->findOrFail($id);
     }
 
+    /**
+     * Finds a soft-deleted user by ID, or throws a 404.
+     */
     public function findTrashedById(int $id): User
     {
         return User::onlyTrashed()->with('roles')->findOrFail($id);
     }
 
+    /**
+     * Returns all available roles for use in dropdowns and role assignment.
+     */
     public function getAllRoles()
     {
         return Role::all();

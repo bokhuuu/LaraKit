@@ -24,6 +24,9 @@ class WelcomeEmail extends Mailable
 
     public function __construct(public User $user) {}
 
+    /**
+     * Defines the email subject, pulled from config so it stays brand-agnostic.
+     */
     public function envelope(): Envelope
     {
         return new Envelope(
@@ -31,6 +34,9 @@ class WelcomeEmail extends Mailable
         );
     }
 
+    /**
+     * Points to the Markdown Blade template used to render the email body.
+     */
     public function content(): Content
     {
         return new Content(

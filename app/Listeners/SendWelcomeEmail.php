@@ -18,14 +18,6 @@ use Illuminate\Support\Facades\Mail;
 class SendWelcomeEmail implements ShouldQueue
 {
     /**
-     * Create the event listener.
-     */
-    public function __construct()
-    {
-        //
-    }
-
-    /**
      * Sends the WelcomeEmail mailable to the newly created user's email address.
      */
     public function handle(UserCreated $event): void

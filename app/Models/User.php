@@ -24,15 +24,12 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
- * Represents an admin panel user.
- *
  * Combines authentication, role-based permissions, avatar management,
  * activity logging, soft deletes and two-factor authentication.
  * Acts as the central model that most other systems in LaraKit interact with.
  */
 class User extends Authenticatable implements HasMedia
 {
-    /** @use HasFactory<UserFactory> */
     use ClearsInertiaCache,
         HasApiTokens,
         HasFactory,
@@ -43,11 +40,6 @@ class User extends Authenticatable implements HasMedia
         SoftDeletes,
         TwoFactorAuthenticatable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
         'name',
         'email',
@@ -59,11 +51,6 @@ class User extends Authenticatable implements HasMedia
         'last_login_agent',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
     protected $hidden = [
         'password',
         'two_factor_secret',
@@ -71,11 +58,6 @@ class User extends Authenticatable implements HasMedia
         'remember_token',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
     protected function casts(): array
     {
         return [

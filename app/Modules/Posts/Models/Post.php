@@ -20,7 +20,10 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 /**
- * Represents a blog post with full content, SEO, status and media support.
+ * Represents a blog post within the Posts module.
+ *
+ * Supports rich content via TipTap, featured images via Media Library,
+ * status management, SEO fields, soft deletes and full activity logging.
  */
 class Post extends Model implements HasMedia
 {
@@ -51,7 +54,7 @@ class Post extends Model implements HasMedia
     }
 
     /**
-     * Register media collections for featured image and OG image.
+     * Registers featured image and OG image as single-file media collections. 
      */
     public function registerMediaCollections(): void
     {
@@ -65,7 +68,7 @@ class Post extends Model implements HasMedia
     }
 
     /**
-     * Register media conversions - thumbnail for featured image.
+     * Generates a thumbnail conversion for the featured image at config-driven dimensions. 
      */
     public function registerMediaConversions(?Media $media = null): void
     {
@@ -76,7 +79,7 @@ class Post extends Model implements HasMedia
     }
 
     /**
-     * Configure activity logging options for posts.
+     *  Logs all fillable field changes, only when values actually differ. 
      */
     public function getActivitylogOptions(): LogOptions
     {
@@ -110,32 +113,32 @@ class Post extends Model implements HasMedia
         return $this->belongsTo(User::class, 'author_id');
     }
 
-    /**
-     * Scope to only published posts.
+    /** 
+     * Filters to posts with a published status. 
      */
     public function scopePublished(Builder $query): Builder
     {
         return $query->where('status', PostStatus::Published);
     }
 
-    /**
-     * Scope to only draft posts.
+    /** 
+     * Filters to posts with a draft status. 
      */
     public function scopeDraft(Builder $query): Builder
     {
         return $query->where('status', PostStatus::Draft);
     }
 
-    /**
-     * Scope to only scheduled posts.
+    /** 
+     * Filters to posts with a scheduled status. 
      */
     public function scopeScheduled(Builder $query): Builder
     {
         return $query->where('status', PostStatus::Scheduled);
     }
 
-    /**
-     * Scope to posts belonging to a specific author.
+    /** 
+     * Filters to posts belonging to the given author. 
      */
     public function scopeByAuthor(Builder $query, int $authorId): Builder
     {

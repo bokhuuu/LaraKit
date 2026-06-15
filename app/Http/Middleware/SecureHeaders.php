@@ -8,13 +8,14 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Attaches security-related HTTP headers to every outgoing web response.
+ *
+ * Prevents clickjacking, MIME sniffing and restricts access
+ * to sensitive browser APIs on every response.
+ */
 class SecureHeaders
 {
-    /**
-     * Attaches security-related HTTP response headers to every outgoing response.
-     * These headers instruct the browser on safe behaviour - preventing clickjacking,
-     * MIME sniffing and restricting access to sensitive browser APIs.
-     */
     public function handle(Request $request, Closure $next): Response
     {
         $response = $next($request);

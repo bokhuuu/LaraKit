@@ -11,7 +11,11 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Str;
 
 /**
- * Handles business logic for creating, updating and managing posts.
+ * Handles business logic for the Posts module.
+ *
+ * Responsible for slug generation, status-aware publish date resolution,
+ * tag syncing, media handling and coordinating repository calls.
+ * Controllers stay thin because all decisions are made here.
  */
 class PostService
 {
@@ -20,7 +24,7 @@ class PostService
     ) {}
 
     /**
-     * Return paginated posts with filters for the index view.
+     * Returns paginated posts with optional filters for the index view.
      */
     public function getPaginatedPosts(array $filters = []): LengthAwarePaginator
     {
@@ -28,7 +32,7 @@ class PostService
     }
 
     /**
-     * Return paginated trashed posts for the trash view.
+     * Returns paginated soft-deleted posts for the trash view.
      */
     public function getTrashedPosts(): LengthAwarePaginator
     {
@@ -36,7 +40,7 @@ class PostService
     }
 
     /**
-     * Return all categories and tags for form dropdowns.
+     * Returns all categories and tags formatted for form dropdowns.
      */
     public function getFormOptions(): array
     {
@@ -47,7 +51,8 @@ class PostService
     }
 
     /**
-     * Create a new post, generate slug, handle media and tags.
+     * Creates a new post, generates its slug, sets the author, 
+     * syncs tags and handles the featured image.
      */
     public function create(array $data, int $authorId): Post
     {
@@ -66,7 +71,8 @@ class PostService
     }
 
     /**
-     * Update an existing post, regenerate slug if title changed, sync tags.
+     * Updates a post, regenerates the slug if the title changed, 
+     * syncs tags and handles media.
      */
     public function update(Post $post, array $data): Post
     {
@@ -85,7 +91,7 @@ class PostService
     }
 
     /**
-     * Soft delete a post.
+     * Soft deletes the post, leaving it recoverable from trash.
      */
     public function delete(Post $post): void
     {
@@ -93,7 +99,7 @@ class PostService
     }
 
     /**
-     * Restore a soft-deleted post.
+     * Restores a soft-deleted post by ID.
      */
     public function restore(int $id): void
     {
@@ -101,7 +107,7 @@ class PostService
     }
 
     /**
-     * Permanently delete a post and its media.
+     * Clears all media collections before permanently deleting the post.
      */
     public function forceDelete(int $id): void
     {
@@ -116,7 +122,8 @@ class PostService
     }
 
     /**
-     * Generate a unique slug from a title, excluding current post on update.
+     * Generates a unique slug from a title, 
+     * incrementing a suffix if the base slug is already taken.
      */
     private function generateSlug(string $title, ?int $excludeId = null): string
     {
@@ -126,8 +133,8 @@ class PostService
 
         while (
             Post::where('slug', $slug)
-                ->when($excludeId, fn ($q) => $q->where('id', '!=', $excludeId))
-                ->exists()
+            ->when($excludeId, fn($q) => $q->where('id', '!=', $excludeId))
+            ->exists()
         ) {
             $slug = "{$base}-{$count}";
             $count++;
@@ -137,7 +144,7 @@ class PostService
     }
 
     /**
-     * Sync tags on the post pivot table.
+     * Syncs the post's tags via the pivot table, replacing any previous selection.
      */
     private function syncTags(Post $post, array $tagIds): void
     {
@@ -145,7 +152,7 @@ class PostService
     }
 
     /**
-     * Handle featured image upload via Spatie Media Library.
+     * Replaces the featured image in Media Library if a new file was uploaded.
      */
     private function handleFeaturedImage(Post $post, array $data): void
     {
@@ -157,8 +164,9 @@ class PostService
     }
 
     /**
-     * Resolve published_at based on status - sets timestamp when publishing,
-     * clears it when moving back to draft.
+     * Resolves the published_at timestamp based on the post's target status. 
+     * Sets now() when publishing, uses the provided date when scheduling, 
+     * clears it when reverting to draft.
      */
     private function resolvePublishedAt(array $data, ?Post $existing = null): ?string
     {

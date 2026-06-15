@@ -6,10 +6,16 @@ namespace App\Listeners;
 
 use Illuminate\Auth\Events\Login;
 
+/**
+ * Records the timestamp, IP address and user agent whenever a user logs in.
+ *
+ * Attached to Laravel's built-in Login event, which fires automatically
+ * after every successful authentication.
+ */
 class TrackLastLogin
 {
     /**
-     * Handle the Login event and record the user's last login details.
+     * Saves the current login details to the authenticated user's record.
      */
     public function handle(Login $event): void
     {

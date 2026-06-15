@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace App\Modules\Posts\Enums;
 
 /**
- * Represents the publication status of a post.
+ * Defines the publication states a post can be in.
+ *
+ * Carries display logic for labels and badge colors so status
+ * presentation is defined once on the enum rather than scattered across views.
  */
 enum PostStatus: string
 {

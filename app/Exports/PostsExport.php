@@ -12,23 +12,23 @@ use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 /**
- * Exports posts to an Excel spreadsheet with headings and formatted rows.
+ * Defines the Excel export for the posts index.
+ *
+ * Implements FromQuery so Laravel Excel streams the data directly
+ * from the database without loading all posts into memory at once.
  */
 class PostsExport implements FromQuery, WithHeadings, WithMapping, WithStyles
 {
     /**
-     * Base query for posts with eager loaded relationships.
+     * Provides the base query for the export, ordered newest first.
      */
-    public function query()
+    public function query(): \Illuminate\Database\Eloquent\Builder
     {
         return Post::query()
             ->with(['author', 'category', 'tags'])
             ->orderBy('created_at', 'desc');
     }
 
-    /**
-     * Column headings for the spreadsheet.
-     */
     public function headings(): array
     {
         return [
@@ -44,7 +44,7 @@ class PostsExport implements FromQuery, WithHeadings, WithMapping, WithStyles
     }
 
     /**
-     * Map each post row to spreadsheet columns.
+     * Maps a single post to an array of spreadsheet column values.
      */
     public function map($post): array
     {
@@ -61,7 +61,7 @@ class PostsExport implements FromQuery, WithHeadings, WithMapping, WithStyles
     }
 
     /**
-     * Style the heading row - bold and background color.
+     * Applies bold font and a light gray background to the heading row.
      */
     public function styles(Worksheet $sheet): array
     {

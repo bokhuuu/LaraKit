@@ -9,12 +9,18 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Response;
 
 /**
- * Handles PDF generation for exportable resources.
+ * Generates and streams PDF exports using DomPDF.
+ *
+ * Streams the output directly to the browser so no file is
+ * written to disk - the PDF is generated and served in one step.
  */
 class PdfService
 {
     /**
-     * Generate and stream a PDF for a single post.
+     * Streams a styled A4 PDF for the given post directly to the browser.
+     *
+     * Eagerly loads author, category and tags if not already loaded
+     * so the PDF view has all the data it needs without extra queries.
      */
     public function generatePostPdf(Post $post): Response
     {
@@ -27,10 +33,10 @@ class PdfService
     }
 
     /**
-     * Generate a clean filename for the post PDF.
+     * Builds a consistent filename using the post slug.
      */
     private function postFilename(Post $post): string
     {
-        return 'post-'.$post->slug.'.pdf';
+        return 'post-' . $post->slug . '.pdf';
     }
 }

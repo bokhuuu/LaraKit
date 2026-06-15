@@ -9,7 +9,9 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Reads the locale cookie and sets the application locale for the request.
+ * Reads the locale cookie and sets the application locale for the current request.
+ *
+ * Falls back to the default locale if the cookie is missing or invalid.
  */
 class SetLocale
 {

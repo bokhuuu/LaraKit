@@ -19,6 +19,9 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**
  * Handles HTTP requests for the Posts admin module.
+ *
+ * Delegates all business logic to PostService, PdfService and ExcelService.
+ * Responsible only for receiving requests and returning Inertia responses or redirects.
  */
 class PostController extends Controller
 {
@@ -29,7 +32,7 @@ class PostController extends Controller
     ) {}
 
     /**
-     * Display paginated list of posts with filters.
+     * Renders the posts index with pagination and active filters.
      */
     public function index(Request $request): Response
     {
@@ -42,7 +45,7 @@ class PostController extends Controller
     }
 
     /**
-     * Display the create post form.
+     * Renders the create post form with categories and tags.
      */
     public function create(): Response
     {
@@ -50,7 +53,7 @@ class PostController extends Controller
     }
 
     /**
-     * Store a newly created post.
+     * Validates, creates a new post and redirects to the index.
      */
     public function store(StorePostRequest $request): RedirectResponse
     {
@@ -61,7 +64,7 @@ class PostController extends Controller
     }
 
     /**
-     * Display the edit post form.
+     * Renders the edit form with the post's current data, categories and tags.
      */
     public function edit(Post $post): Response
     {
@@ -72,7 +75,7 @@ class PostController extends Controller
     }
 
     /**
-     * Update an existing post.
+     * Validates and applies updates to an existing post.
      */
     public function update(UpdatePostRequest $request, Post $post): RedirectResponse
     {
@@ -83,7 +86,7 @@ class PostController extends Controller
     }
 
     /**
-     * Soft delete a post.
+     * Soft deletes the post and redirects to the index.
      */
     public function destroy(Post $post): RedirectResponse
     {
@@ -94,7 +97,7 @@ class PostController extends Controller
     }
 
     /**
-     * Display trashed posts.
+     * Renders the trash view with soft-deleted posts.
      */
     public function trash(Request $request): Response
     {
@@ -104,7 +107,7 @@ class PostController extends Controller
     }
 
     /**
-     * Restore a soft-deleted post.
+     * Restores a soft-deleted post and redirects to trash.
      */
     public function restore(int $id): RedirectResponse
     {
@@ -115,7 +118,7 @@ class PostController extends Controller
     }
 
     /**
-     * Permanently delete a post.
+     * Permanently deletes a post and its media, then redirects to trash.
      */
     public function forceDelete(int $id): RedirectResponse
     {
@@ -126,7 +129,7 @@ class PostController extends Controller
     }
 
     /**
-     * Stream a PDF export of the post.
+     * Streams a styled PDF of the post directly to the browser.
      */
     public function exportPdf(Post $post): \Illuminate\Http\Response
     {
@@ -134,7 +137,7 @@ class PostController extends Controller
     }
 
     /**
-     * Download all posts as an Excel export.
+     * Downloads all posts as a date-stamped Excel file.
      */
     public function exportExcel(): BinaryFileResponse
     {

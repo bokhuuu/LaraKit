@@ -34,6 +34,9 @@ class NotificationController extends Controller
         return back();
     }
 
+    /**
+     * Marks all unread notifications as read for the authenticated user.
+     */
     public function markAllAsRead(Request $request): RedirectResponse
     {
         $request->user()

@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Spatie\Activitylog\Models\Activity;
+use Inertia\Response;
 
 /**
  * Handles the activity log viewer page.
@@ -23,18 +24,18 @@ class ActivityLogController extends Controller
      * Filters by partial model name match to avoid exposing full
      * namespaced class names in the query string.
      */
-    public function index(Request $request)
+    public function index(Request $request): Response
     {
         $filters = $request->only(['event', 'model']);
 
         $activities = Activity::with(['causer'])
             ->when(
                 $filters['event'] ?? null,
-                fn ($q, $event) => $q->where('event', $event)
+                fn($q, $event) => $q->where('event', $event)
             )
             ->when(
                 $filters['model'] ?? null,
-                fn ($q, $model) => $q->where('subject_type', 'like', "%{$model}%")
+                fn($q, $model) => $q->where('subject_type', 'like', "%{$model}%")
             )
             ->latest()
             ->paginate(config('larakit.pagination'));

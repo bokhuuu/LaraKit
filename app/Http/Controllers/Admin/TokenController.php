@@ -11,12 +11,19 @@ use Inertia\Inertia;
 use Inertia\Response;
 
 /**
- * Manages personal access tokens for API authentication.
+ * Manages personal access tokens for Sanctum API authentication.
+ *
+ * Tokens are created, listed and revoked from the admin panel.
+ * The plain text token is only available immediately after creation -
+ * it is flashed to the session and shown once, then discarded.
  */
 class TokenController extends Controller
 {
     /**
-     * Display all tokens for the authenticated user.
+     * Renders the token list for the authenticated user.
+     *
+     * Passes the newToken session value so the UI can display
+     * the plain text token immediately after creation.
      */
     public function index(Request $request): Response
     {
@@ -24,7 +31,7 @@ class TokenController extends Controller
             ->tokens()
             ->latest()
             ->get()
-            ->map(fn ($token) => [
+            ->map(fn($token) => [
                 'id' => $token->id,
                 'name' => $token->name,
                 'last_used' => $token->last_used_at?->diffForHumans(),
@@ -38,7 +45,10 @@ class TokenController extends Controller
     }
 
     /**
-     * Issue a new personal access token.
+     * Issues a new named Sanctum token and flashes the plain text value to the session.
+     *
+     * The plain text token is only accessible on the next request -
+     * after that it cannot be retrieved again.
      */
     public function store(Request $request): RedirectResponse
     {
@@ -53,7 +63,7 @@ class TokenController extends Controller
     }
 
     /**
-     * Revoke a token.
+     * Revokes the specified token by deleting it from the database.
      */
     public function destroy(Request $request, int $id): RedirectResponse
     {

@@ -9,8 +9,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreUserRequest;
 use App\Http\Requests\Admin\UpdateUserRequest;
 use App\Services\UserService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Inertia\Response;
 
 /**
  * Handles HTTP requests for the users management module.
@@ -23,7 +25,7 @@ class UserController extends Controller
 {
     public function __construct(protected UserService $userService) {}
 
-    public function index(Request $request)
+    public function index(Request $request): Response
     {
         $filters = $request->only(['search', 'role', 'status']);
 
@@ -39,18 +41,18 @@ class UserController extends Controller
      * Non-super-admins cannot see or assign admin or super admin roles.
      * This mirrors the protection rule enforced in UserService::store().
      */
-    public function create()
+    public function create(): Response
     {
         $roles = $this->userService->getAllRoles();
 
         if (! auth()->user()->hasRole(UserRole::SUPER_ADMIN)) {
             $roles = $roles->filter(
-                fn ($role) => $role->name !== UserRole::SUPER_ADMIN->value &&
+                fn($role) => $role->name !== UserRole::SUPER_ADMIN->value &&
                     $role->name !== UserRole::ADMIN->value
             )->values();
         }
 
-        $roles = $roles->map(fn ($role) => [
+        $roles = $roles->map(fn($role) => [
             'id' => $role->id,
             'name' => $role->name,
             'label' => UserRole::from($role->name)->label(),
@@ -61,7 +63,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function trashed()
+    public function trashed(): Response
     {
         $trashedUsers = $this->userService->trashed();
 
@@ -70,7 +72,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function store(StoreUserRequest $request)
+    public function store(StoreUserRequest $request): RedirectResponse
     {
         $data = $request->validated();
 
@@ -89,19 +91,19 @@ class UserController extends Controller
      *
      * Role list is filtered by the same rules as the create form.
      */
-    public function edit(int $user)
+    public function edit(int $user): Response
     {
         $foundUser = $this->userService->findById($user);
         $roles = $this->userService->getAllRoles();
 
         if (! auth()->user()->hasRole(UserRole::SUPER_ADMIN)) {
             $roles = $roles->filter(
-                fn ($role) => $role->name !== UserRole::SUPER_ADMIN->value &&
+                fn($role) => $role->name !== UserRole::SUPER_ADMIN->value &&
                     $role->name !== UserRole::ADMIN->value
             )->values();
         }
 
-        $roles = $roles->map(fn ($role) => [
+        $roles = $roles->map(fn($role) => [
             'id' => $role->id,
             'name' => $role->name,
             'label' => UserRole::from($role->name)->label(),
@@ -116,7 +118,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function update(UpdateUserRequest $request, int $user)
+    public function update(UpdateUserRequest $request, int $user): RedirectResponse
     {
         $data = $request->validated();
         $foundUser = $this->userService->findById($user);
@@ -131,7 +133,7 @@ class UserController extends Controller
             ->with('success', 'User updated successfully.');
     }
 
-    public function destroy(int $user)
+    public function destroy(int $user): RedirectResponse
     {
         $foundUser = $this->userService->findById($user);
 
@@ -145,7 +147,7 @@ class UserController extends Controller
             ->with('success', 'User deleted successfully.');
     }
 
-    public function restore(int $user)
+    public function restore(int $user): RedirectResponse
     {
         $foundUser = $this->userService->findTrashedById($user);
 
@@ -159,7 +161,7 @@ class UserController extends Controller
             ->with('success', 'User was restored successfully.');
     }
 
-    public function forceDelete(int $user)
+    public function forceDelete(int $user): RedirectResponse
     {
         $foundUser = $this->userService->findTrashedById($user);
 

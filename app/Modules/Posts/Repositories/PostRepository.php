@@ -11,12 +11,15 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
- * Handles all database queries for the Post model.
+ * Handles all database queries for the Posts module.
+ *
+ * The only place in the module that directly queries Post, Category and Tag.
+ * Business logic and permission checks live in PostService, not here.
  */
 class PostRepository
 {
-    /**
-     * Return paginated posts with filters applied, eager loading relationships.
+    /** 
+     * Returns paginated posts with optional search, status, category and author filters. 
      */
     public function paginate(array $filters = []): LengthAwarePaginator
     {
@@ -43,7 +46,7 @@ class PostRepository
     }
 
     /**
-     * Return paginated soft-deleted posts for the trash view.
+     * Returns paginated soft-deleted posts ordered by deletion date.
      */
     public function paginateTrashed(): LengthAwarePaginator
     {
@@ -55,7 +58,7 @@ class PostRepository
     }
 
     /**
-     * Find a post by ID, including soft-deleted records.
+     * Finds a post by ID including soft-deleted records, or returns null.
      */
     public function findById(int $id): ?Post
     {
@@ -63,7 +66,7 @@ class PostRepository
     }
 
     /**
-     * Find a post by slug for public-facing or API access.
+     * Finds a published post by slug for API or public access, or returns null.
      */
     public function findBySlug(string $slug): ?Post
     {
@@ -73,7 +76,7 @@ class PostRepository
     }
 
     /**
-     * Create a new post record.
+     * Creates and returns a new post record.
      */
     public function create(array $data): Post
     {
@@ -81,7 +84,7 @@ class PostRepository
     }
 
     /**
-     * Update an existing post record.
+     * Updates the post and returns a fresh instance with the latest data.
      */
     public function update(Post $post, array $data): Post
     {
@@ -91,7 +94,7 @@ class PostRepository
     }
 
     /**
-     * Soft delete a post.
+     * Soft deletes the post, making it recoverable from trash.
      */
     public function delete(Post $post): void
     {
@@ -99,7 +102,7 @@ class PostRepository
     }
 
     /**
-     * Restore a soft-deleted post.
+     * Restores a soft-deleted post by ID.
      */
     public function restore(int $id): void
     {
@@ -107,7 +110,7 @@ class PostRepository
     }
 
     /**
-     * Permanently delete a post.
+     * Permanently deletes a post by ID, bypassing soft delete.
      */
     public function forceDelete(int $id): void
     {
@@ -115,7 +118,7 @@ class PostRepository
     }
 
     /**
-     * Return all categories for dropdowns.
+     * Returns all categories ordered alphabetically for use in dropdowns.
      */
     public function allCategories(): Collection
     {
@@ -123,7 +126,7 @@ class PostRepository
     }
 
     /**
-     * Return all tags for the tag picker.
+     * Returns all tags ordered alphabetically for use in the tag picker.
      */
     public function allTags(): Collection
     {

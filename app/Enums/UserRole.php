@@ -8,7 +8,7 @@ namespace App\Enums;
  * Defines the available user roles in the admin panel.
  *
  * Used throughout the application to assign roles via Spatie Permission,
- * restrict access in middleware and services, and display role labels in the UI.
+ * restrict access in middleware and services and display role labels in the UI.
  */
 enum UserRole: string
 {

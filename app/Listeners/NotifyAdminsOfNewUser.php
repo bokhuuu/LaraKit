@@ -20,14 +20,6 @@ use Illuminate\Support\Facades\Notification;
 class NotifyAdminsOfNewUser implements ShouldQueue
 {
     /**
-     * Create the event listener.
-     */
-    public function __construct()
-    {
-        //
-    }
-
-    /**
      * Fetches all admin and super admin users and dispatches
      * the NewUserRegistered notification to each of them.
      */

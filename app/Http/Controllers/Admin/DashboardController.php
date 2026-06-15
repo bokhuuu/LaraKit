@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Inertia\Inertia;
 use Spatie\Activitylog\Models\Activity;
+use Inertia\Response;
 
 /**
  * Handles the admin dashboard page.
@@ -17,7 +18,10 @@ use Spatie\Activitylog\Models\Activity;
  */
 class DashboardController extends Controller
 {
-    public function index()
+    /**
+     * Renders the dashboard with aggregated user and activity stats.
+     */
+    public function index(): Response
     {
         $stats = [
             'total_users' => User::count(),

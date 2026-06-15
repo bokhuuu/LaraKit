@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Inertia\Response;
+use Illuminate\Http\RedirectResponse;
 
 /**
  * Handles HTTP requests for the site settings module.
@@ -25,7 +27,7 @@ class SettingController extends Controller
      * File-based settings are resolved to their Media Library URLs separately,
      * since their value column doesn't hold the file path directly.
      */
-    public function index()
+    public function index(): Response
     {
         $settings = Setting::orderBy('group')
             ->orderBy('order')
@@ -34,7 +36,7 @@ class SettingController extends Controller
 
         $fileUrls = Setting::where('type', SettingType::FILE)
             ->get()
-            ->mapWithKeys(fn ($setting) => [
+            ->mapWithKeys(fn($setting) => [
                 $setting->key => $setting->getFirstMediaUrl($setting->key),
             ]);
 
@@ -52,7 +54,7 @@ class SettingController extends Controller
      * and file uploads. Invalidates the settings cache after saving so
      * changes are reflected immediately across the panel.
      */
-    public function update(Request $request)
+    public function update(Request $request): RedirectResponse
     {
         $request->validate([
             'settings' => ['required', 'array'],

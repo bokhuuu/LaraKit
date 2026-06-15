@@ -23,23 +23,15 @@ class NewUserRegistered extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    /**
-     * Create a new notification instance.
-     */
     public function __construct(private User $user) {}
 
-    /**
-     * Get the notification's delivery channels.
-     *
-     * @return array<int, string>
-     */
     public function via(object $notifiable): array
     {
         return ['mail', 'database'];
     }
 
     /**
-     * Get the mail representation of the notification.
+     * Builds the email alert with a direct link to the new user's edit page.
      */
     public function toMail(object $notifiable): MailMessage
     {

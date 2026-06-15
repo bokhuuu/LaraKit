@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 use App\Services\SystemHealthService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Inertia\Response;
+use Illuminate\Http\RedirectResponse;
 
 /**
  * Handles HTTP requests for the System Health and Maintenance panel.
@@ -25,7 +27,7 @@ class SystemHealthController extends Controller
      *
      * Aborts with 403 if the authenticated user is not a super admin.
      */
-    public function index()
+    public function index(): Response
     {
         abort_unless(
             auth()->user()->hasRole(UserRole::SUPER_ADMIN),
@@ -43,7 +45,7 @@ class SystemHealthController extends Controller
      * Accepts: config, route, view.
      * Returns a success flash message on completion.
      */
-    public function clearCache(Request $request)
+    public function clearCache(Request $request): RedirectResponse
     {
         abort_unless(
             auth()->user()->hasRole(UserRole::SUPER_ADMIN),
@@ -56,7 +58,7 @@ class SystemHealthController extends Controller
 
         $this->systemHealthService->clearCache($validated['type']);
 
-        return back()->with('success', ucfirst($validated['type']).' cache cleared successfully.');
+        return back()->with('success', ucfirst($validated['type']) . ' cache cleared successfully.');
     }
 
     /**
@@ -64,7 +66,7 @@ class SystemHealthController extends Controller
      *
      * Returns a flash message reflecting the new state.
      */
-    public function toggleMaintenance()
+    public function toggleMaintenance(): RedirectResponse
     {
         abort_unless(
             auth()->user()->hasRole(UserRole::SUPER_ADMIN),

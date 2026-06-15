@@ -10,6 +10,8 @@ use App\Http\Requests\Admin\UpdateRolePermissionsRequest;
 use App\Services\RoleService;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Role;
+use Inertia\Response;
+use Illuminate\Http\RedirectResponse;
 
 /**
  * Handles HTTP requests for the roles and permissions manager.
@@ -24,7 +26,7 @@ class RoleController extends Controller
     /**
      * Renders the permissions matrix with all roles and their assigned permissions.
      */
-    public function index()
+    public function index(): Response
     {
         if (! auth()->user()->hasRole(UserRole::SUPER_ADMIN)) {
             abort(403);
@@ -41,7 +43,7 @@ class RoleController extends Controller
      *
      * Uses sync, so any permissions not included in the request are detached.
      */
-    public function update(UpdateRolePermissionsRequest $request, Role $role)
+    public function update(UpdateRolePermissionsRequest $request, Role $role): RedirectResponse
     {
         if (! auth()->user()->hasRole(UserRole::SUPER_ADMIN)) {
             abort(403);

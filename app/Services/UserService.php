@@ -8,6 +8,8 @@ use App\Enums\UserRole;
 use App\Events\UserCreated;
 use App\Models\User;
 use App\Repositories\UserRepository;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 /**
  * Handles business logic and protection rules for user management.
@@ -20,7 +22,7 @@ class UserService
 {
     public function __construct(protected UserRepository $userRepository) {}
 
-    public function index(array $filters = [])
+    public function index(array $filters = []): LengthAwarePaginator
     {
         return $this->userRepository->index($filters);
     }
@@ -30,7 +32,7 @@ class UserService
         return $this->userRepository->findById($id);
     }
 
-    public function getAllRoles()
+    public function getAllRoles(): Collection
     {
         return $this->userRepository->getAllRoles();
     }
@@ -99,7 +101,7 @@ class UserService
         $this->userRepository->delete($user);
     }
 
-    public function trashed()
+    public function trashed(): LengthAwarePaginator
     {
         return $this->userRepository->trashed();
     }
