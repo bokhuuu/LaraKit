@@ -204,6 +204,7 @@ Controllers stay thin. Business rules live in one place. Any module can be remov
 - API Resources - clean JSON output, no raw database fields exposed
 - Sanctum token authentication - Bearer token in the Authorization header
 - Token management UI - create, list, and revoke tokens from the admin panel
+- Postman collection - importable JSON at `postman/larakit.postman_collection.json`
 
 ### Multilingual UI
 
