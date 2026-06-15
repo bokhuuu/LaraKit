@@ -22,7 +22,7 @@ LaraKit is built to be read and understood, not just used. Every architectural d
 
 | Layer       | Technology                |
 | ----------- | ------------------------- |
-| Backend     | Laravel 12, PHP 8.3       |
+| Backend     | Laravel 12, PHP 8.4       |
 | Frontend    | React 19, TypeScript      |
 | Bridge      | Inertia.js                |
 | Styling     | Tailwind CSS, shadcn/ui   |
@@ -160,7 +160,7 @@ Controllers stay thin. Business rules live in one place.
 - Clear config / route / view cache from the browser
 - Maintenance mode toggle with secret bypass URL
 - PHP and Laravel version display
-- Accessible to super_admin onlyd
+- Accessible to super_admin only
 
 ### UI / UX
 
@@ -209,15 +209,24 @@ Controllers stay thin. Business rules live in one place.
 - API tests - Sanctum auth, posts list, single post, health check
 - Factories for User, Post, Category, Tag
 
+### ✅ Deployment
+
+- Docker - docker-compose.yml with app, MySQL, Redis, Horizon
+- GitHub Actions CI/CD - Pint check + Pest on every push
+- Deployment guides - VPS guide, production checklist, .env.example documented
+- Setup script - scripts/setup.sh one command fresh install
+
 ---
 
 ## Coming Soon
 
-### ⬜ Deployment
+### ⬜ Polish & Developer Experience
 
-- Docker - `docker-compose.yml` with app, MySQL, Redis, Horizon
-- GitHub Actions CI/CD - run Pest and Pint on every push, deploy on merge to main
-- Deployment guides - VPS and Vultr, `.env.example` fully documented, production checklist
+- CONTRIBUTING.md - how to add a new module, run tests, coding standards
+- Postman Collection - all API endpoints, importable JSON committed to repo
+- Architecture Diagram - visual layer diagram and module separation, added to README
+- Setup Script - `scripts/setup.sh` one command fresh install
+- Docblock Review Pass - simplify and verify coverage across all PHP files
 
 ---
 
