@@ -1,0 +1,140 @@
+{
+    "info": {
+        "name": "LaraKit API",
+        "description": "REST API endpoints for LaraKit. Import this collection into Postman, then set the base_url and token variables in your environment.",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "variable": [
+        {
+            "key": "base_url",
+            "value": "http://localhost:8000",
+            "description": "Base URL of your LaraKit instance"
+        },
+        {
+            "key": "token",
+            "value": "",
+            "description": "Sanctum API token — create one from the admin panel under API Tokens"
+        }
+    ],
+    "item": [
+        {
+            "name": "Health",
+            "item": [
+                {
+                    "name": "Health check",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/health",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "v1", "health"]
+                        },
+                        "description": "Returns the current status of the application. No authentication required."
+                    },
+                    "response": [
+                        {
+                            "name": "200 OK",
+                            "status": "OK",
+                            "code": 200,
+                            "body": "{\n  \"status\": \"ok\"\n}"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Posts",
+            "item": [
+                {
+                    "name": "List posts",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/posts?page=1",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "v1", "posts"],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1",
+                                    "description": "Page number for pagination"
+                                }
+                            ]
+                        },
+                        "description": "Returns a paginated list of published posts. Requires a valid Sanctum Bearer token."
+                    },
+                    "response": [
+                        {
+                            "name": "200 OK",
+                            "status": "OK",
+                            "code": 200,
+                            "body": "{\n  \"data\": [\n    {\n      \"id\": 1,\n      \"title\": \"Example post\",\n      \"slug\": \"example-post\",\n      \"status\": \"published\",\n      \"author\": \"John Doe\",\n      \"published_at\": \"2025-01-01T00:00:00Z\"\n    }\n  ],\n  \"links\": {},\n  \"meta\": {}\n}"
+                        },
+                        {
+                            "name": "401 Unauthorized",
+                            "status": "Unauthorized",
+                            "code": 401,
+                            "body": "{\n  \"message\": \"Unauthenticated.\"\n}"
+                        }
+                    ]
+                },
+                {
+                    "name": "Get post by slug",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/posts/example-post",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "v1", "posts", "example-post"]
+                        },
+                        "description": "Returns a single post by its slug. Requires a valid Sanctum Bearer token."
+                    },
+                    "response": [
+                        {
+                            "name": "200 OK",
+                            "status": "OK",
+                            "code": 200,
+                            "body": "{\n  \"data\": {\n    \"id\": 1,\n    \"title\": \"Example post\",\n    \"slug\": \"example-post\",\n    \"content\": \"<p>Post content here</p>\",\n    \"status\": \"published\",\n    \"author\": \"John Doe\",\n    \"published_at\": \"2025-01-01T00:00:00Z\"\n  }\n}"
+                        },
+                        {
+                            "name": "404 Not Found",
+                            "status": "Not Found",
+                            "code": 404,
+                            "body": "{\n  \"message\": \"No query results for model [Post].\"\n}"
+                        },
+                        {
+                            "name": "401 Unauthorized",
+                            "status": "Unauthorized",
+                            "code": 401,
+                            "body": "{\n  \"message\": \"Unauthenticated.\"\n}"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
