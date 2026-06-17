@@ -227,7 +227,7 @@ Controllers stay thin. Business rules live in one place. Any module can be remov
 
 - Docker - `docker-compose.yml` with app, MySQL, Redis, and Horizon
 - GitHub Actions CI/CD - Pint check and Pest suite on every push
-- Deployment guides - VPS guide, production checklist, fully documented `.env.example`
+- Deployment guides - production checklist, fully documented `.env.example`
 - Setup script - `scripts/setup.sh` for a one-command fresh install
 
 ---
