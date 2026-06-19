@@ -39,7 +39,6 @@ php artisan key:generate
 # Waits a moment first to ensure MySQL container is fully ready.
 # -----------------------------------------------------------------------
 echo "[3/7] Running database migrations..."
-sleep 3
 php artisan migrate --force
 
 # -----------------------------------------------------------------------

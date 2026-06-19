@@ -9,8 +9,10 @@ services:
     volumes:
       - .:/var/www
     depends_on:
-      - mysql
-      - redis
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_started
     networks:
       - larakit
 
@@ -41,6 +43,11 @@ services:
       - mysql_data:/var/lib/mysql
     networks:
       - larakit
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
   redis:
     image: redis:7-alpine
@@ -62,8 +69,10 @@ services:
       - .:/var/www
     command: php artisan horizon
     depends_on:
-      - mysql
-      - redis
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_started
     networks:
       - larakit
 
