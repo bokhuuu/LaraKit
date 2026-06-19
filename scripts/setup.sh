@@ -70,7 +70,8 @@ echo "[6/7] Skipping npm build - run 'npm install && npm run build' on your mach
 # -----------------------------------------------------------------------
 echo "[7/8] Fixing permissions..."
 chmod -R 777 /tmp
-chown -R www-data:www-data /var/www/storage
+chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
+chmod -R 775 /var/www/storage /var/www/bootstrap/cache
 
 # -----------------------------------------------------------------------
 # Step 8 - Cache
